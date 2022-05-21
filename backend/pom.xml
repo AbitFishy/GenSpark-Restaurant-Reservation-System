@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.genspark</groupId>
-	<artifactId>Restaurant</artifactId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Restaurant</name>
-	<description>Demo project for Spring Boot</description>
+	<name>backend</name>
+	<description>backend for restaurant reservation</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

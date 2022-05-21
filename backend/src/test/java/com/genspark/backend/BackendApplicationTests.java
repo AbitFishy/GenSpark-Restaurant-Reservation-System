@@ -1,10 +1,10 @@
-package com.genspark.Restaurant;
+package com.genspark.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestaurantApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
