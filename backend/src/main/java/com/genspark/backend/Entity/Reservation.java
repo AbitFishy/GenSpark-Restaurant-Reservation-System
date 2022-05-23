@@ -11,7 +11,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private long id;
-    private long reservationHolder;
+    @OneToOne
+    @MapsId
+    private UserAccount reservationHolder;
     @Column(nullable = false)
     private LocalDate timeDate;
     @Column(nullable = false)
@@ -26,7 +28,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(long reservationHolder, LocalDate timeDate, int numberOfGuests, Status status) {
+    public Reservation(UserAccount reservationHolder, LocalDate timeDate, int numberOfGuests, Status status) {
         this.reservationHolder = reservationHolder;
         this.timeDate = timeDate;
         this.numberOfGuests = numberOfGuests;
@@ -41,11 +43,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public long getReservationHolder() {
+    public UserAccount getReservationHolder() {
         return reservationHolder;
     }
 
-    public void setReservationHolder(long reservationHolder) {
+    public void setReservationHolder(UserAccount reservationHolder) {
         this.reservationHolder = reservationHolder;
     }
 
