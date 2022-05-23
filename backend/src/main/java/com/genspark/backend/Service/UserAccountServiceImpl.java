@@ -3,10 +3,12 @@ package com.genspark.backend.Service;
 import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired

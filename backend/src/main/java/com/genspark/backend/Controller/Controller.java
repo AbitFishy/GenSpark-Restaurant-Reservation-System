@@ -64,17 +64,17 @@ public class Controller {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
     }
 
-    @PostMapping("/userAccounts")
+    @PostMapping("/reservations")
     public Reservation addReservation(@RequestBody Reservation reservation) {
         return this.reservationService.addReservation(reservation);
     }
 
-    @PutMapping("/userAccounts")
+    @PutMapping("/reservations")
     public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
         return this.reservationService.updateReservation(reservation, reservationID);
     }
 
-    @DeleteMapping("/userAccounts/{userID}")
+    @DeleteMapping("/reservations/{reservationID}")
     public String deleteReservation(@PathVariable String reservationID)
     {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
