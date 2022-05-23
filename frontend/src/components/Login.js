@@ -66,16 +66,6 @@ const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="user"
-            label="user name"
-            name="user"
-            autoComplete="user-name"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
             id="email"
             label="Email Address"
             name="email"
