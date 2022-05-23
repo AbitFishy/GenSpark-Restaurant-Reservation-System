@@ -10,10 +10,10 @@ import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 const Post = () => {
   // const [firstName, setFirstName] = useState("");
@@ -37,11 +37,9 @@ const Post = () => {
 
   return (
     <Container maxWidth="md" sx={{ marginTop: 15, marginBottom: 3 }}>
-      <Grid container sx={{marginBottom: 2}}>
+      <Grid container sx={{ marginBottom: 2 }}>
         <Grid item xs={12}>
-          <Typography variant="h2">
-            Add Reservation
-          </Typography>
+          <Typography variant="h2">Add Reservation</Typography>
         </Grid>
       </Grid>
       <Grid container maxWidth="md">
@@ -81,6 +79,8 @@ const Post = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  type="number"
+                  InputProps={{ inputProps: { min: 0, max: 10 } }}
                   label="Guest"
                   variant="outlined"
                   fullWidth
@@ -90,27 +90,27 @@ const Post = () => {
                 />
               </Grid>
               <Grid item xs={2}>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-                <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={age}
-                  label="Status"
-                  // onChange={handleChange}
-                >
-                  <MenuItem value={0}>Pending</MenuItem>
-                  <MenuItem value={1}>Confirmed</MenuItem>
-                  <MenuItem value={2}>Arrived</MenuItem>
-                  <MenuItem value={3}>Cancelled</MenuItem>
-                  <MenuItem value={4}>Completed</MenuItem>
-                </Select>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
+                  <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    // value={age}
+                    label="Status"
+                    // onChange={handleChange}
+                  >
+                    <MenuItem value={0}>Pending</MenuItem>
+                    <MenuItem value={1}>Confirmed</MenuItem>
+                    <MenuItem value={2}>Arrived</MenuItem>
+                    <MenuItem value={3}>Cancelled</MenuItem>
+                    <MenuItem value={4}>Completed</MenuItem>
+                  </Select>
                 </FormControl>
               </Grid>
             </Grid>
             <div className="post-button">
               <Button
-              sx={{marginTop: 1}}
+                sx={{ marginTop: 1 }}
                 type="submit"
                 variant="contained"
                 fullWidth
