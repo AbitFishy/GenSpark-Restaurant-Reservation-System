@@ -11,17 +11,22 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private long id;
-    private String reservationHolder;
+    private UserAccount reservationHolder;
     @Column(nullable = false)
     private LocalDate timeDate;
     @Column(nullable = false)
     private int numberOfGuests;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        Pending, Confirmed, Arrived, Cancelled, Completed
+    }
 
     public Reservation() {
     }
 
-    public Reservation(String reservationHolder, LocalDate timeDate, int numberOfGuests, String status) {
+    public Reservation(UserAccount reservationHolder, LocalDate timeDate, int numberOfGuests, Status status) {
         this.reservationHolder = reservationHolder;
         this.timeDate = timeDate;
         this.numberOfGuests = numberOfGuests;
@@ -36,11 +41,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public String getReservationHolder() {
+    public UserAccount getReservationHolder() {
         return reservationHolder;
     }
 
-    public void setReservationHolder(String reservationHolder) {
+    public void setReservationHolder(UserAccount reservationHolder) {
         this.reservationHolder = reservationHolder;
     }
 
@@ -60,11 +65,11 @@ public class Reservation {
         this.numberOfGuests = numberOfGuests;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -72,10 +77,10 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "id=" + id +
-                ", reservationHolder='" + reservationHolder + '\'' +
+                ", reservationHolder=" + reservationHolder +
                 ", timeDate=" + timeDate +
                 ", numberOfGuests=" + numberOfGuests +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
