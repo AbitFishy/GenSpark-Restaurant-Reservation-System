@@ -5,8 +5,9 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
-import About from "./About";
+import Post from "./Post";
 import Navbar from "./Navbar";
+import Contact from "./Contact";
 
 //material imports
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -37,7 +38,8 @@ const Main = () => {
         <Route path="/" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="home" element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="post" element={<Post />} />
+        <Route path="contact" element={<Contact />} />
       </Routes>
     </ThemeProvider>
   );

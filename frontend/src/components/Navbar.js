@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
@@ -32,7 +33,7 @@ const Navbar = () => {
     <>
       <AppBar sx={{ background: "#000000"}}>
         <Toolbar>
-          <AddBusinessRoundedIcon sx={{ transform: "scale(2)" }} />
+          <AddBusinessRoundedIcon sx={{ transform: "scale(2)", color: "#097969" }} />
           {isMatch ? (
             <>
               <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>
@@ -50,7 +51,7 @@ const Navbar = () => {
                 onChange={handleChange}
               >
                 <Tab label="Home" value="0" onClick={() => navigate("/home")}/>
-                <Tab label="About" value="1" onClick={() => navigate("/about")}/>
+                <Tab label="Post" value="1" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="2" onClick={() => navigate("/faq")}/>
                 <Tab label="Contact" value="3" onClick={() => navigate("/contact")}/>
               </Tabs>
