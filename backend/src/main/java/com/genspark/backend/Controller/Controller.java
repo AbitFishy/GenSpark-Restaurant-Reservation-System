@@ -33,11 +33,6 @@ public class Controller {
         return this.userAccountService.getAllUserAccount();
     }
 
-    @GetMapping("/registration")
-    public String register(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.register(userAccount);
-    }
-
     @GetMapping("/userAccounts/{userID}")
     public UserAccount getUserAccount(@PathVariable String userID) {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
@@ -46,6 +41,11 @@ public class Controller {
     @PostMapping("/userAccounts")
     public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);
+    }
+
+    @PostMapping("/registration")
+    public String register(@RequestBody UserAccount userAccount) {
+        return this.userAccountService.register(userAccount);
     }
 
     @PutMapping("/userAccounts")
