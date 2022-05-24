@@ -67,6 +67,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    public String register(UserAccount userAccount) {
+        return null;
+    }
+
+    @Override
     public UserAccount authenticateUserAccount(String username, String clearTextPassword) {
         UserAccount validAuthAccount=  null;
         UserAccount toAuthenticate = new UserAccount();

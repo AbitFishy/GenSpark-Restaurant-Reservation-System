@@ -16,4 +16,4 @@ public interface UserAccountService {
     String hashNewPassword(String clearTextPassword);
     boolean checkPasswordComplexity(String clearTextPassword);
 }
-}
+
