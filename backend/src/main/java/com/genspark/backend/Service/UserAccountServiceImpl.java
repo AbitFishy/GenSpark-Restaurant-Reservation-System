@@ -64,4 +64,9 @@ public class UserAccountServiceImpl implements UserAccountService {
     public String register(UserAccount userAccount) {
         return userAccount.getEmail();
     }
+
+    @Override
+    public String login(UserAccount userAccount) {
+        return userAccount.getEmail();
+    }
 }
