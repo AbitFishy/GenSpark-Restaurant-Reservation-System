@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "api")
 public class Controller {
@@ -41,6 +42,11 @@ public class Controller {
     @PostMapping("/userAccounts")
     public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);
+    }
+
+    @PostMapping("/registration")
+    public String register(@RequestBody UserAccount userAccount) {
+        return this.userAccountService.register(userAccount);
     }
 
     @PutMapping("/userAccounts")
