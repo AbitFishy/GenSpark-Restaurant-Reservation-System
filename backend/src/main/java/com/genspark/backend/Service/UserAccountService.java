@@ -10,6 +10,6 @@ public interface UserAccountService {
     UserAccount addUserAccount(UserAccount userAccount);
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
-    String login(UserAccount userAccount);
     UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID);
+    UserAccount login(UserAccount userAccount);
 }

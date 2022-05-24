@@ -52,7 +52,7 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserAccount userAccount) {
+    public UserAccount login(@RequestBody UserAccount userAccount) {
         return this.userAccountService.login(userAccount);
     }
 
