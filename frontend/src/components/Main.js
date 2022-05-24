@@ -8,6 +8,7 @@ import Home from "./Home";
 import Post from "./Post";
 import Navbar from "./Navbar";
 import Contact from "./Contact";
+import FaqComponent from "./FaqComponent";
 
 //material imports
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -39,6 +40,7 @@ const Main = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="home" element={<Home />} />
         <Route path="post" element={<Post />} />
+        <Route path="faq" element={<FaqComponent />} />
         <Route path="contact" element={<Contact />} />
       </Routes>
     </ThemeProvider>
