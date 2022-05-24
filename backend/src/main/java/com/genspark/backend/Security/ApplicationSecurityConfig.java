@@ -1,5 +1,6 @@
 package com.genspark.backend.Security;
 
+        import com.genspark.backend.Entity.UserAccount;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.context.annotation.Bean;
         import org.springframework.context.annotation.Configuration;
@@ -30,27 +31,33 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails josephTharpeUser = User.builder()
                 .username("josephtharpe")
                 .password(passwordEncoder.encode("password"))
-                .roles("QA") // Role
+                .roles(ApplicationUserRole.DEV.name())
                 .build();
         UserDetails taeKimUser = User.builder()
                 .username("taekim")
                 .password(passwordEncoder.encode("password"))
-                .roles("LEAD") // Role
+                .roles(ApplicationUserRole.DEV.name())
                 .build();
         UserDetails robertKowalczykUser = User.builder()
                 .username("robertkowalczyk")
                 .password(passwordEncoder.encode("password"))
-                .roles("DEV") // Role
+                .roles(ApplicationUserRole.DEV.name())
                 .build();
         UserDetails jatinPatelUser = User.builder()
                 .username("jatinpatel")
                 .password(passwordEncoder.encode("password"))
-                .roles("DEV") // Role
+                .roles(ApplicationUserRole.DEV.name())
                 .build();
         UserDetails kevinLinUser = User.builder()
                 .username("kevinlin")
                 .password(passwordEncoder.encode("password"))
-                .roles("DEV") // Role
+                .roles(ApplicationUserRole.DEV.name())
+                .build();
+        UserAccount newUser = new UserAccount(); // for new users making account
+        UserAccount userAccount = (UserAccount) User.builder() // needs testing
+                .username(newUser.getPrimaryName() + newUser.getSecondaryName1())
+                .password(passwordEncoder.encode(newUser.getPassword()))
+                .roles(ApplicationUserRole.USER.name())
                 .build();
         return new InMemoryUserDetailsManager(
                 josephTharpeUser,

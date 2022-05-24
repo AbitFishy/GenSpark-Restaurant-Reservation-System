@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordConfig {
-
+    // Password Encode Class --> very simple in nature actually
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
