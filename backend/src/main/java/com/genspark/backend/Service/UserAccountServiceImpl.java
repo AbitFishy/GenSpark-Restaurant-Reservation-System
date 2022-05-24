@@ -103,4 +103,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
         return true;
     }
+
+    @Override
+    public String login(UserAccount userAccount) {
+        return userAccount.getEmail();
+    }
 }
