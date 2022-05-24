@@ -1,6 +1,6 @@
 import React from "react";
 // import Post from "./Post";
-import axios from "axios";
+// import axios from "axios";
 
 import { Container, Grid, Typography } from "@mui/material";
 
@@ -18,7 +18,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
