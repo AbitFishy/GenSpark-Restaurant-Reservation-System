@@ -48,7 +48,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         Optional<UserAccount> o = userAccountDao.findById(userAccountID);
 
         u = o.orElse(userAccount);
-        
+
         return this.userAccountDao.save(u);
     }
 
