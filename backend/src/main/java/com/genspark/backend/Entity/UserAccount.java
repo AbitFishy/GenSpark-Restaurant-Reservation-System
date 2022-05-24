@@ -23,8 +23,6 @@ public class UserAccount {
     }
 
     public UserAccount(String primaryName,
-                       String secondaryName1,
-                       String secondaryName2,
                        String phoneNumber,
                        String password,
                        String email) {
