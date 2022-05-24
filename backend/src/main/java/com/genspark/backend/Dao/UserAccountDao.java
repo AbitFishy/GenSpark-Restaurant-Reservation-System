@@ -10,6 +10,6 @@ public interface UserAccountDao extends JpaRepository<UserAccount, Long> {
 
     Logger logger = LoggerFactory.getLogger(UserAccountDao.class);
 
-    @Query("SELECT u FROM userAccount u WHERE u.email = ?1")
+    @Query("SELECT u FROM UserAccount u WHERE u.email = ?1")
     UserAccount findUserAccountByEmail(String email);
 }
