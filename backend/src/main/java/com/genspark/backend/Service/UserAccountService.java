@@ -10,4 +10,6 @@ public interface UserAccountService {
     UserAccount addUserAccount(UserAccount userAccount);
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
+
+    UserAccount authenticateUserAccount(String username, String clearTextPassword);
 }
