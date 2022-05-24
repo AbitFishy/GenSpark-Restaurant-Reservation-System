@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### application.properties doens't need to be updated ###
+backend/src/main/resources/application.properties
