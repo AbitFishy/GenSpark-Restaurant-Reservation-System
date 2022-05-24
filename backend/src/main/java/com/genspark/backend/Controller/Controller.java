@@ -44,11 +44,6 @@ public class Controller {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
-    @PostMapping("/registration")
-    public String register(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.register(userAccount);
-    }
-
     @PostMapping("/login")
     public String login(@RequestBody UserAccount userAccount) {
         return this.userAccountService.login(userAccount);
