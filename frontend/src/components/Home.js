@@ -193,7 +193,7 @@ const Home = () => {
                     <StyledTableCell>ID</StyledTableCell>
                     <StyledTableCell align="right">Name</StyledTableCell>
                     <StyledTableCell align="right">Phone</StyledTableCell>
-                    <StyledTableCell align="right">Time/Date</StyledTableCell>
+                    <StyledTableCell align="right">Date</StyledTableCell>
                     <StyledTableCell align="right">Guest</StyledTableCell>
                     <StyledTableCell align="right">Status</StyledTableCell>
                     <StyledTableCell align="right">
@@ -259,7 +259,7 @@ const Home = () => {
                             <Grid item xs={6} sm={6}>
                               <input
                                 className="form-control"
-                                placeholder="name"
+                                placeholder="Name"
                                 type="text"
                                 // value={firstName}
                                 // onChange={(e) => setFirstName(e.target.value)}
@@ -277,8 +277,8 @@ const Home = () => {
                             <Grid item xs={6} sm={6}>
                               <input
                                 className="form-control"
-                                placeholder="time/date"
-                                type="text"
+                                placeholder="Date"
+                                type="datetime-local"
                                 // value={lastName}
                                 // onChange={(e) => setLastName(e.target.value)}
                               />
@@ -286,7 +286,7 @@ const Home = () => {
                             <Grid item xs={6}>
                               <input
                                 className="form-control"
-                                placeholder="guest"
+                                placeholder="Guest"
                                 type="number"
                                 min="0"
                                 // value={lastName}

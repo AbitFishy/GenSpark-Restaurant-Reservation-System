@@ -69,7 +69,7 @@ const Post = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Time/ date"
+                  type="datetime-local"
                   variant="outlined"
                   fullWidth
                   required

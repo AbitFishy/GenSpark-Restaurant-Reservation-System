@@ -27,8 +27,8 @@ function Contact() {
         </FormControl>
 
         <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="email">Message</InputLabel>
-          <Input id="email" multiline rows={10} />
+          <InputLabel htmlFor="message">Message</InputLabel>
+          <Input id="message" multiline rows={10} />
         </FormControl>
 
         <Button variant="contained" fullWidth color="primary" size="medium" sx={{MarginTop:0, '&:hover':{backgroundColor: "secondary.main" }}}>
