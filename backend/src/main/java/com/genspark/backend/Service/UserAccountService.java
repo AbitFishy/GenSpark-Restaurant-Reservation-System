@@ -12,4 +12,6 @@ public interface UserAccountService {
     String deleteUserAccountById(Long id);
 
     UserAccount authenticateUserAccount(String username, String clearTextPassword);
+    String hashNewPassword(String clearTextPassword);
+    boolean checkPasswordComplexity(String clearTextPassword);
 }

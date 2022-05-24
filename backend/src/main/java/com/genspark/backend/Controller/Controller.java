@@ -44,10 +44,10 @@ public class Controller {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
-    @PostMapping("/registration")
+/*    @PostMapping("/registration")
     public String register(@RequestBody UserAccount userAccount) {
         return this.userAccountService.register(userAccount);
-    }
+    }*/
 
     @PutMapping("/userAccounts")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
@@ -84,5 +84,13 @@ public class Controller {
     public String deleteReservation(@PathVariable String reservationID)
     {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
+    }
+
+    @GetMapping("/testing/createAndRetrieveTestUserAccount")
+    public UserAccount createAndRetrieveTestUserAccount(){
+        return new UserAccount("Jessica",
+                "45612389",
+                userAccountService.hashNewPassword("asdfSDF"),
+                "sldfj@asdf.asdf");
     }
 }

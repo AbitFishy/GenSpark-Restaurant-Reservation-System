@@ -82,10 +82,12 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     SecureRandom secureRandom = new SecureRandom();
+    @Override
     public String hashNewPassword(String clearTextPassword){
         return BCrypt.hashpw(clearTextPassword, BCrypt.gensalt(10000, secureRandom));
     }
 
+    @Override
     public boolean checkPasswordComplexity(String clearTextPassword){
         if ( clearTextPassword.length() < 8){
             return false;
