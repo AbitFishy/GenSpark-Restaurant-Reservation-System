@@ -64,7 +64,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 taeKimUser,
                 robertKowalczykUser,
                 jatinPatelUser,
-                kevinLinUser
+                kevinLinUser,
+                (UserDetails) userAccount
         );
     }
 
