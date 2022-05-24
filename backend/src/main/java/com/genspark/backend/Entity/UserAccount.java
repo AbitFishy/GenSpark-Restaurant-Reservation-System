@@ -17,17 +17,9 @@ public class UserAccount {
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
     @Column(name = "password", nullable = false)
-    private String password;
+    private String password = "";
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-
-    public UserAccount(String primaryName, String secondaryName1, String phoneNumber, String password, String email) {
-        this.primaryName = primaryName;
-        this.secondaryName1 = secondaryName1;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.email = email;
-    }
 
     public UserAccount() {
     }
