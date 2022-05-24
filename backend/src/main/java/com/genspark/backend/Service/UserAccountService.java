@@ -10,4 +10,5 @@ public interface UserAccountService {
     UserAccount addUserAccount(UserAccount userAccount);
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
+    String register(UserAccount userAccount);
 }

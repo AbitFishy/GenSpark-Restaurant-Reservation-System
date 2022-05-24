@@ -24,7 +24,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
         Optional<UserAccount> a = this.userAccountDao.findById(id);
 
-        UserAccount userAccount = null;
+        UserAccount userAccount;
 
         if (a.isPresent())
         {
@@ -47,12 +47,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
         Optional<UserAccount> o = userAccountDao.findById(userAccountID);
 
-        if (o.isPresent()) {
-            u = o.get();
-        } else {
-            u = userAccount;
-        }
-
+        u = o.orElse(userAccount);
+        
         return this.userAccountDao.save(u);
     }
 
@@ -62,5 +58,10 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.userAccountDao.deleteById(id);
 
         return "Deleted Successfully";
+    }
+
+    @Override
+    public String register(UserAccount userAccount) {
+        return userAccount.getEmail();
     }
 }
