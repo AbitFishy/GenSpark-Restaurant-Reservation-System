@@ -1,6 +1,6 @@
 import React from "react";
 // import Post from "./Post";
-import axios from "axios";
+// import axios from "axios";
 
 import { Container, Grid, Typography } from "@mui/material";
 
@@ -14,17 +14,15 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { styled, alpha } from "@mui/material/styles";
-import { useHistory } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+// import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -65,47 +63,7 @@ const style = {
   p: 4,
 };
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.25),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.black, 0.15),
-  },
-  marginLeft: 0,
-  // width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    // width: "auto",
-  },
-}));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
 
 const Home = () => {
   // const history = useHistory();
@@ -191,19 +149,38 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        <Grid container maxWidth="lg"  sx={{display: 'flex', marginTop: 10, alignItems:"center", justifyContent: "center" }}>
-          <Grid item  sx={{display:'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: "100%",
-                }}
-              >
-                <TextField fullWidth label="Search Name.." id="fullWidth"  
+        <Grid
+          container
+          maxWidth="lg"
+          sx={{
+            display: "flex",
+            marginTop: 10,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "100%",
+              }}
+            >
+              <TextField
+                fullWidth
+                label="Search Name.."
+                id="fullWidth"
                 // onChange={(e)=> setSearchTerm(e.target.value)}
-                // value={searchTerm} 
-                />
-              </Box>
+                // value={searchTerm}
+              />
+            </Box>
           </Grid>
         </Grid>
 
