@@ -21,6 +21,10 @@ public class UserAccount {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    // for 2 factor auth
+    private boolean mfa;
+    private String secret;
+
     public UserAccount() {
     }
 
