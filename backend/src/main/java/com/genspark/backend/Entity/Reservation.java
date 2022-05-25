@@ -1,9 +1,16 @@
 package com.genspark.backend.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tbl_reservations")
 public class Reservation {
 
@@ -23,56 +30,6 @@ public class Reservation {
 
     public enum Status {
         Pending, Confirmed, Arrived, Cancelled, Completed
-    }
-
-    public Reservation() {
-    }
-
-    public Reservation(UserAccount reservationHolder, LocalDateTime dateTime, int numberOfGuests, Status status) {
-        this.reservationHolder = reservationHolder;
-        this.dateTime = dateTime;
-        this.numberOfGuests = numberOfGuests;
-        this.status = status;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public UserAccount getReservationHolder() {
-        return reservationHolder;
-    }
-
-    public void setReservationHolder(UserAccount reservationHolder) {
-        this.reservationHolder = reservationHolder;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public int getNumberOfGuests() {
-        return numberOfGuests;
-    }
-
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     @Override
