@@ -1,7 +1,7 @@
 package com.genspark.backend.Entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_reservations")
@@ -15,7 +15,7 @@ public class Reservation {
     @MapsId
     private UserAccount reservationHolder;
     @Column(nullable = false)
-    private LocalDate timeDate;
+    private LocalDateTime dateTime;
     @Column(nullable = false)
     private int numberOfGuests;
     @Enumerated(EnumType.STRING)
@@ -28,9 +28,9 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(UserAccount reservationHolder, LocalDate timeDate, int numberOfGuests, Status status) {
+    public Reservation(UserAccount reservationHolder, LocalDateTime dateTime, int numberOfGuests, Status status) {
         this.reservationHolder = reservationHolder;
-        this.timeDate = timeDate;
+        this.dateTime = dateTime;
         this.numberOfGuests = numberOfGuests;
         this.status = status;
     }
@@ -51,12 +51,12 @@ public class Reservation {
         this.reservationHolder = reservationHolder;
     }
 
-    public LocalDate getTimeDate() {
-        return timeDate;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setTimeDate(LocalDate timeDate) {
-        this.timeDate = timeDate;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public int getNumberOfGuests() {
@@ -80,7 +80,7 @@ public class Reservation {
         return "Reservation{" +
                 "id=" + id +
                 ", reservationHolder=" + reservationHolder +
-                ", timeDate=" + timeDate +
+                ", dateTime=" + dateTime +
                 ", numberOfGuests=" + numberOfGuests +
                 ", status=" + status +
                 '}';
