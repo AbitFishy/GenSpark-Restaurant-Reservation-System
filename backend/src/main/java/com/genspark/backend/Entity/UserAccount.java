@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_userAccounts", uniqueConstraints = {
+@Table(name = "userAccounts", uniqueConstraints = {
         @UniqueConstraint(name="user_email_unique", columnNames = "user_email")
 })
 public class UserAccount {
@@ -31,5 +31,8 @@ public class UserAccount {
 
     @Column(name = "user_email", nullable = false)
     private String email;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Reservation res;
 
 }
