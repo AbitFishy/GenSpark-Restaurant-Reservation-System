@@ -52,24 +52,14 @@ const HaveQuestions = () => {
                   required
                   id="firstName"
                   name="firstName"
-                  label="First name"
+                  label="Full Name"
                   fullWidth
                   autoComplete="given-name"
                   variant="standard"
                 />
               </Grid>
+             
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="lastName"
-                  name="lastName"
-                  label="Last name"
-                  fullWidth
-                  autoComplete="family-name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
                   required
                   id="email"

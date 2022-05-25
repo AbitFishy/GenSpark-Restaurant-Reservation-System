@@ -13,18 +13,26 @@ import {
 } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
-import FormControlLabel from "@mui/material/FormControlLabel";
 
-import Checkbox from "@mui/material/Checkbox";
-
-const Signup = () => {
+const Signup = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  primaryName,
+  setPrimaryName,
+  phoneNumber,
+  setPhoneNumber,
+  postData,
+}) => {
+  console.log(email);
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
   const navigate = useNavigate();
 
   return (
-    <Container component="main" maxWidth="xs" sx={{marginTop: 20}}>
+    <Container component="main" maxWidth="xs" sx={{ marginTop: 20 }}>
       <Grid>
         <Paper elevation={20} style={paperStyle}>
           <Grid align="center">
@@ -36,36 +44,48 @@ const Signup = () => {
               Please fill this form to create an account !
             </Typography>
           </Grid>
-          <form>
-            <TextField fullWidth label="Name" placeholder="Enter your name"  required/>
-            <TextField fullWidth label="Email" type="email" placeholder="Enter your email"  required/>         
+          <form onSubmit={()=> navigate("/")}>
+            <TextField
+              fullWidth
+              label="Name"
+              placeholder="Enter your name"
+              required
+              value={primaryName}
+              onChange={(e)=> setPrimaryName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              value={email}
+              onChange={(e)=> setEmail(e.target.value)}
+            />
             <TextField
               fullWidth
               label="Phone Number"
+              type="tel"
               placeholder="Enter your phone number"
               required
+              value={phoneNumber}
+              onChange={(e)=> setPhoneNumber(e.target.value)}
             />
             <TextField
               fullWidth
               label="Password"
+              type="password"
               placeholder="Enter your password"
               required
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
             />
-            <TextField
-              fullWidth
-              label="Confirm Password"
-              placeholder="Confirm your password"
-              required
-            />
-            <FormControlLabel
-              control={<Checkbox name="checkedA" />}
-              label="I accept the terms and conditions."
-            />
-            <Button sx={{'&:hover':{backgroundColor: "secondary.main" }}}
+            <Button
+              sx={{ "&:hover": { backgroundColor: "secondary.main" } }}
               type="submit"
               variant="contained"
               color="primary"
-              onClick={() => navigate("/")}
+              onClick={postData}
             >
               Sign up
             </Button>
