@@ -33,10 +33,10 @@ class BackendApplicationTests {
 
 	@Test
 	void authenticateUser(){
-		UserAccount account = new UserAccount("Robert",
+		UserAccount account = new UserAccount(0,"Robert",
 				"45612389",userAccountService.hashNewPassword("sad;fjASDF156"), "sldfj@asdf.asdf");
 		userAccountDao.saveAndFlush(account);
-		account = new UserAccount("Jessica",
+		account = new UserAccount(0,"Jessica",
 				"45612389",userAccountService.hashNewPassword("asdfSDF"), "sldfj@asdf.asdf");
 		userAccountDao.saveAndFlush(account);
 

@@ -1,7 +1,6 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.UserAccount;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -19,7 +18,9 @@ public interface UserAccountService {
     String login(UserAccount userAccount);
     UserAccount authenticateUserAccount(String username, String clearTextPassword);
     String hashNewPassword(String clearTextPassword);
-    boolean checkPasswordComplexity(String clearTextPassword);
     UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID);
+    String checkPasswordComplexity(String clearTextPassword);
+
+}
 
 }

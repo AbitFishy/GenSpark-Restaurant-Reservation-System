@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired
     UserAccountDao userAccountDao;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public List<UserAccount> getAllUserAccount() {
@@ -41,6 +46,12 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccount addUserAccount(UserAccount userAccount) {
         return this.userAccountDao.save(userAccount);
+    }
+
+    @Override
+    public UserAccount addUserAccount(String primaryName, String phoneNumber, String clearPassword, String email) {
+        var user = new UserAccount(0, primaryName, phoneNumber, this.hashNewPassword(clearPassword), email);
+        return  userAccountDao.saveAndFlush(user);
     }
 
     @Override
@@ -75,7 +86,11 @@ public class UserAccountServiceImpl implements UserAccountService {
         toAuthenticate.setEmail(username);
         toAuthenticate.setPassword(clearTextPassword);
 
-        UserAccount fromDatabase = this.userAccountDao.findAccountByUsername(toAuthenticate.getEmail());
+/*        Query q = em.createNamedQuery("findUserAccountByEmail");
+        q.setParameter(1, toAuthenticate.getEmail());
+        UserAccount fromDatabase = (UserAccount) q.getSingleResult();*/
+        UserAccount fromDatabase = this.userAccountDao.findUserAccountByEmail(toAuthenticate.getEmail());
+
 
         if (fromDatabase != null && BCrypt.checkpw(toAuthenticate.getPassword(), fromDatabase.getPassword())){
             validAuthAccount = fromDatabase;
@@ -90,22 +105,30 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public boolean checkPasswordComplexity(String clearTextPassword){
+    public String checkPasswordComplexity(String clearTextPassword){
         if ( clearTextPassword.length() < 8){
-            return false;
+            return "Too short";
         }
         if (!clearTextPassword.matches("\\d")){ //contains at least one number
-            return false;
+            return "Must contain at least one number";
         }
         if (!clearTextPassword.matches("[a-z]]")) {//contains at least one lowercase letter
-            return false;
+            return "Must contain at least one lowercase letter";
         }
         if (!clearTextPassword.matches("[A-Z]")) { //contains at least one uppercase letter
-            return false;
+            return "Must contain at least one uppercase letter";
         }
-        return true;
+        return "True";
     }
+    public String login(UserAccount userAccount) {
 
+        UserAccount u = this.userAccountDao.findUserAccountByEmail(userAccount.getEmail());
+
+        if (u != null) {
+            return String.valueOf(u.getUserId());
+        }
+
+        return "-1";
     @Override
     public UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID) {
         TwoFactorAuth token;

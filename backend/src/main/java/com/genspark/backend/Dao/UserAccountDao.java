@@ -10,5 +10,6 @@ public interface UserAccountDao extends JpaRepository<UserAccount, Long> {
 
     final Logger logger = LoggerFactory.getLogger(UserAccountDao.class);
 
+
     UserAccount findUserAccountByEmail(String email);
 }
