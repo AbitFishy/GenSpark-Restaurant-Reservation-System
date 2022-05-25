@@ -4,7 +4,9 @@ import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
         Optional<UserAccount> a = this.userAccountDao.findById(id);
 
-        UserAccount userAccount;
+        UserAccount userAccount = null;
 
         if (a.isPresent())
         {
@@ -61,6 +63,47 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    public String register(UserAccount userAccount) {
+        return null;
+    }
+
+    @Override
+    public UserAccount authenticateUserAccount(String username, String clearTextPassword) {
+        UserAccount validAuthAccount=  null;
+        UserAccount toAuthenticate = new UserAccount();
+        toAuthenticate.setEmail(username);
+        toAuthenticate.setPassword(clearTextPassword);
+
+        UserAccount fromDatabase = this.userAccountDao.findAccountByUsername(toAuthenticate.getEmail());
+
+        if (fromDatabase != null && BCrypt.checkpw(toAuthenticate.getPassword(), fromDatabase.getPassword())){
+            validAuthAccount = fromDatabase;
+        }
+        return validAuthAccount;
+    }
+
+    SecureRandom secureRandom = new SecureRandom();
+    @Override
+    public String hashNewPassword(String clearTextPassword){
+        return BCrypt.hashpw(clearTextPassword, BCrypt.gensalt(10000, secureRandom));
+    }
+
+    @Override
+    public boolean checkPasswordComplexity(String clearTextPassword){
+        if ( clearTextPassword.length() < 8){
+            return false;
+        }
+        if (!clearTextPassword.matches("\\d")){ //contains at least one number
+            return false;
+        }
+        if (!clearTextPassword.matches("[a-z]]")) {//contains at least one lowercase letter
+            return false;
+        }
+        if (!clearTextPassword.matches("[A-Z]")) { //contains at least one uppercase letter
+            return false;
+        }
+        return true;
+    }
     public UserAccount login(UserAccount userAccount) {
 
         UserAccount r = null;

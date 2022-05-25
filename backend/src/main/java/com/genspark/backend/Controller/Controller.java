@@ -68,7 +68,7 @@ public class Controller {
         return this.userAccountService.deleteUserAccountById(Long.parseLong(userID));
     }
 
-    @GetMapping("/reservations")
+    @GetMapping("/reservation")
     public List<Reservation> getReservations() {
         return this.reservationService.getAllReservation();
     }
