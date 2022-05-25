@@ -1,6 +1,5 @@
 package com.genspark.backend.Entity;
 
-import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,31 +10,26 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_userAccounts")
+@Table(name = "tbl_userAccounts", uniqueConstraints = {
+        @UniqueConstraint(name="user_email_unique", columnNames = "user_email")
+})
 public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
-    private long id;
+    @Column(name = "user_id", nullable = false)
+    private long userId;
+
     @Column(name = "primaryName", nullable = false)
     private String primaryName;
+
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
-    @Column(name = "password", nullable = false)
+
+    @Column(name = "user_password", nullable = false)
     private String password;
-    @Column(name = "email", unique = true, nullable = false)
+
+    @Column(name = "user_email", nullable = false)
     private String email;
 
-
-    @Override
-    public String toString() {
-        return "UserAccount{" +
-                "id=" + id +
-                ", primaryName='" + primaryName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

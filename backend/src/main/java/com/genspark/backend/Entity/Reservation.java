@@ -16,30 +16,21 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private long id;
-    @OneToOne
-    @MapsId
-    private UserAccount reservationHolder;
+    @Column(name = "reservation_id", nullable = false)
+    private long reservationId;
+
+
     @Column(nullable = false)
     private LocalDateTime dateTime;
+
     @Column(nullable = false)
     private int numberOfGuests;
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
-    public enum Status {
-        Pending, Confirmed, Arrived, Cancelled, Completed
-    }
+    @Column(name = "status")
+    private String status;
 
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "id=" + id +
-                ", reservationHolder=" + reservationHolder +
-                ", dateTime=" + dateTime +
-                ", numberOfGuests=" + numberOfGuests +
-                ", status=" + status +
-                '}';
-    }
+    @OneToOne
+    @MapsId
+    private UserAccount userAccount;
+
 }
