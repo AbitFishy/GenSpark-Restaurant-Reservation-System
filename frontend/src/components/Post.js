@@ -16,8 +16,8 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 
 const Post = () => {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
+  // const [primaryName, setPrimaryName] = useState("");
+  // const [] = useState("");
   // const [email, setEmail] = useState("");
 
   // const history = useHistory();
@@ -25,7 +25,7 @@ const Post = () => {
   // const postData = (e) => {
   //   e.preventDefault();
   //   axios
-  //     .post("http://employeemanagerservice-env.eba-azh5g6a4.us-west-1.elasticbeanstalk.com/api/employee", {
+  //     .post("http://localhost:8080/api/reservation", {
   //       firstName,
   //       lastName,
   //       email,
@@ -59,6 +59,7 @@ const Post = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Phone"
+                  type="tel"
                   variant="outlined"
                   fullWidth
                   required

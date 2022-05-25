@@ -1,6 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
 
 //material ui imports
 import Avatar from "@mui/material/Avatar";
@@ -31,18 +30,13 @@ function Copyright(props) {
   }
 
   //login function
-const Login = () => {
+const Login = ({ emailLog,
+  setEmailLog,
+  passwordLog,
+  setPasswordLog,
+  postLogin}
+  ) => {
   const navigate = useNavigate();
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          userName: data.get('userName'),
-          password: data.get('password'),
-        });
-      };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -54,6 +48,7 @@ const Login = () => {
           flexDirection: "column",
           alignItems: "center",
         }}
+       
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
@@ -61,7 +56,8 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+       
+        <Box component="form"  onSubmit={()=> navigate("/home")}  noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -70,7 +66,8 @@ const Login = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
+            value={emailLog}
+            onChange={(e)=> setEmailLog(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -81,6 +78,8 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={passwordLog}
+            onChange={(e)=> setPasswordLog(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -91,7 +90,7 @@ const Login = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2, '&:hover':{backgroundColor: "secondary.main" } }}
-            onClick={() => navigate("/home")}
+            onClick={postLogin}
           >
             Sign In
           </Button>

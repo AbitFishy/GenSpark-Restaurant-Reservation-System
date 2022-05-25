@@ -22,7 +22,7 @@ public class ReservationServiceImpl implements ReservationService{
     public Reservation getReservationById(Long id) {
 
         Optional<Reservation> r = this.reservationDao.findById(id);
-        Reservation reservation = null;
+        Reservation reservation;
         if (r.isPresent())
         {
             reservation = r.get();
@@ -45,11 +45,7 @@ public class ReservationServiceImpl implements ReservationService{
 
         Optional<Reservation> o = reservationDao.findById(reservationID);
 
-        if (o.isPresent()) {
-            r = o.get();
-        } else {
-            r = reservation;
-        }
+        r = o.orElse(reservation);
 
         return this.reservationDao.save(r);
     }

@@ -61,7 +61,16 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public String login(UserAccount userAccount) {
-        return userAccount.getEmail();
+    public UserAccount login(UserAccount userAccount) {
+
+        UserAccount r = null;
+
+        UserAccount u = this.userAccountDao.findUserAccountByEmail(userAccount.getEmail());
+
+        if (u != null) {
+            r = u;
+        }
+
+        return r;
     }
 }
