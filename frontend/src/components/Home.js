@@ -269,7 +269,7 @@ const Home = () => {
                               <input
                                 className="form-control"
                                 placeholder="phone"
-                                type="text"
+                                type="tel"
                                 // value={lastName}
                                 // onChange={(e) => setLastName(e.target.value)}
                               />
