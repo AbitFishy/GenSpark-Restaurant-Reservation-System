@@ -51,6 +51,10 @@ public class Controller {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
+/*    @PostMapping("/registration")
+    public String register(@RequestBody UserAccount userAccount) {
+        return this.userAccountService.register(userAccount);
+    }*/
     @PostMapping("/userAccounts")
     public UserAccount addUserAccount(@RequestBody String primaryName,
                                       @RequestBody String phoneNumber,
@@ -101,4 +105,11 @@ public class Controller {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
     }
 
+    @GetMapping("/testing/createAndRetrieveTestUserAccount")
+    public UserAccount createAndRetrieveTestUserAccount(){
+        return new UserAccount("Jessica",
+                "45612389",
+                userAccountService.hashNewPassword("asdfSDF"),
+                "sldfj@asdf.asdf");
+    }
 }

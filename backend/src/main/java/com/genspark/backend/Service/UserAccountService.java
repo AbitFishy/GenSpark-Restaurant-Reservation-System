@@ -15,6 +15,11 @@ public interface UserAccountService {
                                String email);
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
+    String register(UserAccount userAccount);
+    String login(UserAccount userAccount);
+    UserAccount authenticateUserAccount(String username, String clearTextPassword);
+    String hashNewPassword(String clearTextPassword);
+    boolean checkPasswordComplexity(String clearTextPassword);
     UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID);
-    UserAccount login(UserAccount userAccount);
+
 }
