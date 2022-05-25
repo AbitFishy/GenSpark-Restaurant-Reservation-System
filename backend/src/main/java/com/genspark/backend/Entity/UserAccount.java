@@ -24,6 +24,9 @@ public class UserAccount {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    // for 2fa
+    private boolean twofactorauth;
+
     public UserAccount() {
     }
 

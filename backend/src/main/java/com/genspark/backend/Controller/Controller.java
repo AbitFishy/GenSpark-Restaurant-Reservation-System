@@ -40,6 +40,12 @@ public class Controller {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
     }
 
+    @GetMapping("/userAccounts/{userID}/twofactorauth")
+    public UserAccount getUserTwoFactorAuthSettings(@PathVariable String userID){
+        return this.userAccountService.getUserAccountById(Long.parseLong(userID));
+    }
+
+
     @PostMapping("/userAccounts")
     public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);

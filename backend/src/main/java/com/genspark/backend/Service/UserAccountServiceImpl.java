@@ -2,6 +2,7 @@ package com.genspark.backend.Service;
 
 import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Security.TwoFactorAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +64,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public String login(UserAccount userAccount) {
         return userAccount.getEmail();
+    }
+
+    @Override
+    public UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID) {
+        TwoFactorAuth token;
+        return null;
     }
 }

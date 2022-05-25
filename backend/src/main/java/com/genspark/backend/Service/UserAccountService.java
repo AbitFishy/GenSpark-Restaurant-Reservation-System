@@ -11,4 +11,5 @@ public interface UserAccountService {
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
     String login(UserAccount userAccount);
+    UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID);
 }
