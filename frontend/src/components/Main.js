@@ -53,6 +53,7 @@ const Main = () => {
         email,
       })
       .then((res) => console.warn("posting data", res));
+      navigate("/")
   };
 
   const postLogin = (e) => {

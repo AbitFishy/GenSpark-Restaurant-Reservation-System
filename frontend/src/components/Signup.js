@@ -1,6 +1,6 @@
 import React from "react";
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   Grid,
@@ -13,9 +13,6 @@ import {
 } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
-import FormControlLabel from "@mui/material/FormControlLabel";
-
-import Checkbox from "@mui/material/Checkbox";
 
 const Signup = ({
   email,
@@ -32,7 +29,7 @@ const Signup = ({
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 20 }}>
@@ -47,7 +44,7 @@ const Signup = ({
               Please fill this form to create an account !
             </Typography>
           </Grid>
-          <form>
+          <form onSubmit={()=> navigate("/")}>
             <TextField
               fullWidth
               label="Name"
@@ -82,19 +79,6 @@ const Signup = ({
               required
               value={password}
               onChange={(e)=>setPassword(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              label="Confirm Password"
-              type="password"
-              placeholder="Confirm your password"
-              required
-              value={password}
-              onChange={(e)=> setPhoneNumber(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox name="checkedA" />}
-              label="I accept the terms and conditions."
             />
             <Button
               sx={{ "&:hover": { backgroundColor: "secondary.main" } }}
