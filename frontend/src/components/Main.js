@@ -1,5 +1,6 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //file imports
 import Login from "./Login";
@@ -32,12 +33,73 @@ const theme = createTheme({
 });
 
 const Main = () => {
+  const [primaryName, setPrimaryName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [passwordLog, setPasswordLog] = useState("");
+  const [emailLog, setEmailLog] = useState("");
+
+  const navigate = useNavigate();
+
+  const postData = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/userAccounts", {
+        primaryName,
+        phoneNumber,
+        password,
+        email,
+      })
+      .then((res) => console.warn("posting data", res));
+      navigate("/")
+  };
+
+  const postLogin = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/login", {
+        email: emailLog,
+        password: passwordLog,
+      })
+      .then((res) => console.warn("posting Login data", res));
+      navigate("/home")
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
+        <Route
+          path="/"
+          element={
+            <Login
+              passwordLog={passwordLog}
+              emailLog={emailLog}
+              setEmailLog={setEmailLog}
+              setPasswordLog={setPasswordLog}
+              postLogin={postLogin}
+            />
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <Signup
+              primaryName={primaryName}
+              phoneNumber={phoneNumber}
+              password={password}
+              email={email}
+              setEmail={setEmail}
+              setPassword={setPassword}
+              setPrimaryName={setPrimaryName}
+              setPhoneNumber={setPhoneNumber}
+              postData={postData}
+            />
+          }
+        />
+
         <Route path="home" element={<Home />} />
         <Route path="post" element={<Post />} />
         <Route path="faq" element={<FaqComponent />} />

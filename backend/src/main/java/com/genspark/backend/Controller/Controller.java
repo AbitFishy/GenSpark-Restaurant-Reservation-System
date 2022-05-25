@@ -48,9 +48,9 @@ public class Controller {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
-    @PostMapping("/registration")
-    public String register(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.register(userAccount);
+    @PostMapping("/login")
+    public UserAccount login(@RequestBody UserAccount userAccount) {
+        return this.userAccountService.login(userAccount);
     }
 
     @PutMapping("/userAccounts")
@@ -64,7 +64,7 @@ public class Controller {
         return this.userAccountService.deleteUserAccountById(Long.parseLong(userID));
     }
 
-    @GetMapping("/reservation")
+    @GetMapping("/reservations")
     public List<Reservation> getReservations() {
         return this.reservationService.getAllReservation();
     }
