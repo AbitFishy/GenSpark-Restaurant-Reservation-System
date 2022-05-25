@@ -1,5 +1,7 @@
 package com.genspark.backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,13 +19,10 @@ public class UserAccount {
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
     @Column(name = "password", nullable = false)
-    private String password = "";
+    @JsonIgnore
+    private String password;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-
-    // for 2 factor auth
-    private boolean mfa;
-    private String secret;
 
     public UserAccount() {
     }
@@ -97,6 +96,7 @@ public class UserAccount {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     @Override
     public String toString() {
