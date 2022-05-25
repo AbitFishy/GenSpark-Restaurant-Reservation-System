@@ -12,6 +12,8 @@ public class UserAccount {
     private long id;
     @Column(name = "primaryName", nullable = false)
     private String primaryName;
+    private String secondaryName1;
+    private String secondaryName2;
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
     @Column(name = "password", nullable = false)
@@ -19,24 +21,19 @@ public class UserAccount {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    // for 2factor auth
-    private boolean mfa;
-    private String secret;
-
     public UserAccount() {
     }
 
     public UserAccount(String primaryName,
+                       String secondaryName1,
+                       String secondaryName2,
                        String phoneNumber,
                        String password,
                        String email) {
         this.primaryName = primaryName;
+        this.secondaryName1 = secondaryName1;
+        this.secondaryName2 = secondaryName2;
         this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.email = email;
-    }
-
-    public UserAccount(String password, String email) {
         this.password = password;
         this.email = email;
     }
@@ -55,6 +52,22 @@ public class UserAccount {
 
     public void setPrimaryName(String primaryName) {
         this.primaryName = primaryName;
+    }
+
+    public String getSecondaryName1() {
+        return secondaryName1;
+    }
+
+    public void setSecondaryName1(String secondaryName1) {
+        this.secondaryName1 = secondaryName1;
+    }
+
+    public String getSecondaryName2() {
+        return secondaryName2;
+    }
+
+    public void setSecondaryName2(String secondaryName2) {
+        this.secondaryName2 = secondaryName2;
     }
 
     public String getPhoneNumber() {
@@ -86,6 +99,8 @@ public class UserAccount {
         return "UserAccount{" +
                 "id=" + id +
                 ", primaryName='" + primaryName + '\'' +
+                ", secondaryName1='" + secondaryName1 + '\'' +
+                ", secondaryName2='" + secondaryName2 + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
