@@ -44,7 +44,7 @@ public class Controller {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
-    @PostMapping("/userAccounts")
+    @PostMapping("/newUserAccounts")
     public UserAccount addUserAccount(@RequestBody String primaryName,
                                       @RequestBody String phoneNumber,
                                       @RequestBody String clearPassword,
@@ -53,8 +53,18 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public UserAccount login(@RequestBody UserAccount userAccount) {
+    public String login(@RequestBody UserAccount userAccount) {
         return this.userAccountService.login(userAccount);
+    }
+
+    @PostMapping("/auth")
+    public UserAccount authenticateUserAccount(@RequestBody String email, @RequestBody String clearPassword) {
+        return this.userAccountService.authenticateUserAccount(email, clearPassword);
+    }
+
+    @GetMapping("/auth/chk")
+    public String checkPWDReqs(@RequestBody String clearPassword){
+        return this.userAccountService.checkPasswordComplexity(clearPassword);
     }
 
     @PutMapping("/userAccounts")

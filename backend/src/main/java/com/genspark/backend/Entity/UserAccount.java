@@ -13,6 +13,10 @@ import javax.persistence.*;
 @Table(name = "tbl_userAccounts", uniqueConstraints = {
         @UniqueConstraint(name="user_email_unique", columnNames = "user_email")
 })
+@NamedQueries({
+        @NamedQuery(name = "UserAccount.findUserAccountByEmail",
+            query ="SELECT u FROM UserAccount u WHERE u.email = ?1")
+})
 public class UserAccount {
 
     @Id
