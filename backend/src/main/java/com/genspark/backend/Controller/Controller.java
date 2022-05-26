@@ -9,8 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.midi.SysexMessage;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -60,7 +64,7 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public UserAccount login(@RequestBody UserAccount userAccount) {
+    public String login(@RequestBody UserAccount userAccount) {
         return this.userAccountService.login(userAccount);
     }
 
@@ -113,9 +117,19 @@ public class Controller {
 
     @GetMapping("/testing/createAndRetrieveTestUserAccount")
     public UserAccount createAndRetrieveTestUserAccount(){
-        return new UserAccount("Jessica",
-                "45612389",
-                userAccountService.hashNewPassword("asdfSDF"),
-                "sldfj@asdf.asdf");
+        Random ran = new Random(LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(0)));
+/*        var user = new UserAccount("Jessica"+ ran.nextInt(),
+                String.valueOf(ran.nextInt()),
+                userAccountService.hashNewPassword(String.valueOf(ran.nextInt())),
+                "fake" + ran.nextInt());*/
+        String name = "Jessica"+ ran.nextInt();
+        String number = String.format("%d3",ran.nextInt(100)) + "-"
+                + String.format("%d3",ran.nextInt(100)) + "-"
+                + String.format("%d4",ran.nextInt(1000));
+        String password =  String.valueOf(ran.nextInt());
+        String email = "fake@" + ran.nextInt();
+
+        System.out.println("Generated UserAccount: " + name + ", " + number + ", " + password + ", " + email + ";\n");
+        return this.userAccountService.addUserAccount(name,number,password,email);
     }
 }

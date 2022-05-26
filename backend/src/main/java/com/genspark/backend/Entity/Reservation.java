@@ -29,7 +29,7 @@ public class Reservation {
     @Column(name = "status")
     private String status;
 
-    @OneToOne
+    @ManyToOne
     @MapsId
     private UserAccount userAccount;
 

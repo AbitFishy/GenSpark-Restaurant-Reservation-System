@@ -10,4 +10,6 @@ public interface ReservationService {
     Reservation addReservation(Reservation reservation);
     Reservation updateReservation(Reservation reservation, Long reservationID);
     String deleteReservationById(Long id);
+
+    boolean checkValidStatus(String status);
 }

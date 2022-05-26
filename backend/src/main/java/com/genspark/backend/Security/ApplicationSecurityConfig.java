@@ -1,6 +1,5 @@
 package com.genspark.backend.Security;
 
-import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
@@ -35,27 +35,27 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails josephTharpeUser = User.builder()
                 .username("josephtharpe")
                 .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
         UserDetails taeKimUser = User.builder()
                 .username("taekim")
                 .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
         UserDetails robertKowalczykUser = User.builder()
                 .username("robertkowalczyk")
                 .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
         UserDetails jatinPatelUser = User.builder()
                 .username("jatinpatel")
                 .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
         UserDetails kevinLinUser = User.builder()
                 .username("kevinlin")
                 .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
 
         return new InMemoryUserDetailsManager(
@@ -77,7 +77,31 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/login")
+                .failureUrl("/login.html?error=true")
+
+                .and()
+                .logout().deleteCookies("JSESSIONID")
+
+                .and()
+                .httpBasic()
+                .and()
+                .rememberMe((rememberMe) -> rememberMe
+                        .rememberMeServices(rememberMeServices())
+                .key("This is a key") //TODO
+                        .tokenValiditySeconds(86400))
+                ;
+    }
+
+    @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices =
+                new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
     }
 
 }

@@ -21,6 +21,7 @@ public interface UserAccountService {
     UserAccount updateTwoFactorAuth(UserAccount userAccount, Long userAccountID);
     String checkPasswordComplexity(String clearTextPassword);
 
-}
+    boolean checkEmailForAtSign(String email);
 
+    boolean checkNumber(String phoneNumber);
 }

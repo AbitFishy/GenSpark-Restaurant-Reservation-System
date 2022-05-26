@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -74,5 +75,10 @@ public class ReservationServiceImpl implements ReservationService{
         message.setText(body);
 
         mailSender.send(message);
+    }
+
+    @Override
+    public boolean checkValidStatus(String status) {
+        return Set.of("PENDING","CONFIRMED","ARRIVED","CANCELLED","DONE").contains(status);
     }
 }

@@ -21,7 +21,7 @@ public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "userId", nullable = false)
     private long userId;
 
     @Column(name = "primaryName", nullable = false)
@@ -40,13 +40,9 @@ public class UserAccount {
                        String phoneNumber,
                        String password,
                        String email) {
+        this.userId = -1;
         this.primaryName = primaryName;
         this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.email = email;
-    }
-
-    public UserAccount(String password, String email) {
         this.password = password;
         this.email = email;
     }
