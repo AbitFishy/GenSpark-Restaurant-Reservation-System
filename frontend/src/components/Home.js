@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, {useState, useEffect} from "react";
-// import Post from "./Post";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import { Container, Grid, Typography } from "@mui/material";
@@ -19,7 +20,7 @@ import { styled } from "@mui/material/styles";
 // import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-// import swal from "sweetalert";
+import swal from "sweetalert";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -67,7 +68,6 @@ const style = {
 
 
 const Home = () => {
-  // const history = useHistory();
 
   const [reservations, setReservations] = useState([]);
 
@@ -79,6 +79,9 @@ const Home = () => {
   // const [userId, setUserId] = useState(null);
 
   const [open, setOpen] = React.useState(false);
+
+  const navigate = useNavigate();
+
 
   const handleClose = () => {
     setOpen(false);
@@ -104,25 +107,25 @@ const Home = () => {
     // setUserId(item.id);
     setOpen(true);
   };
-  /*
+  
   function deletePost(id) {
-    axios.delete(`${baseURL}/${id}`).then((response) => {
+    axios.delete(`${baseURL}/reservations/${id}`).then((response) => {
       //   alert(`${id} deleted`);
-      setEmployees(null);
+      setReservations(null);
       // setLoading(false);
     });
     swal({
-      title: "Deleting Employee...",
-      text: `employee with id: ${id} deleted`,
+      title: "Deleting Reservation...",
+      text: `reservation with id: ${id} deleted`,
       icon: "error",
       dangerMode: true,
     });
     setTimeout(() => {
       window.location.reload(true);
     }, 1000);
-    history.push("/");
+    navigate("/home");
   }
-
+/*
   function updatePost(id) {
     let item = { firstName, lastName, email, userId };
     // console.warn("item", item);
@@ -325,7 +328,7 @@ const Home = () => {
                               value="Update"
                               fullWidth
                               endIcon={<SendIcon color="secondary" />}
-                              // onClick={() => updatePost(`${employee.id}`)}
+                              // onClick={() => updatePost(`${reservation.resId}`)}
                             >
                               done
                             </Button>
@@ -340,7 +343,7 @@ const Home = () => {
                         type="submit"
                         variant="none"
                         endIcon={<DeleteIcon color="error" />}
-                        // onClick={() => deletePost(`${employee.id}`)}
+                        onClick={() => deletePost(`${reservation.resId}`)}
                       >
                         Delete
                       </Button>
