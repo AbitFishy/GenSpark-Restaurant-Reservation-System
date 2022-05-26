@@ -46,7 +46,7 @@ const Main = () => {
   const postData = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/signup", {
+      .post("http://localhost:8080/api/user", {
         userName,
         userNumber,
         password,
