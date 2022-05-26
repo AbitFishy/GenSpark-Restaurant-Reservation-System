@@ -1,6 +1,6 @@
-import React, { } from "react";
+import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -16,24 +16,28 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 
 const Post = () => {
-  // const [primaryName, setPrimaryName] = useState("");
-  // const [] = useState("");
-  // const [email, setEmail] = useState("");
+  const [primaryName, setPrimaryName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dateTime, setDateTime] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState("");
+  const [type, setType] = useState("");
 
   // const history = useHistory();
 
-  // const postData = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:8080/api/reservation", {
-  //       firstName,
-  //       lastName,
-  //       email,
-  //     })
-  //     .then((res) => console.log("posting data", res));
+  const postData = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/userAccounts", {
+        primaryName,
+        phoneNumber,
+        dateTime,
+        numberOfGuests,
+        type
+      })
+      .then((res) => console.log("posting data", res));
   //     history.push('/');
   //     window.location.reload(true);
-  // };
+  };
 
   return (
     <Container maxWidth="md" sx={{ marginTop: 15, marginBottom: 3 }}>
@@ -52,8 +56,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={firstName}
-                  // onChange={(e)=> setFirstName(e.target.value)}
+                  value={primaryName}
+                  onChange={(e)=> setPrimaryName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -63,8 +67,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={lastName}
-                  // onChange={(e)=> setLastName(e.target.value)}
+                  value={phoneNumber}
+                  onChange={(e)=> setPhoneNumber(e.target.value)}
                 />
               </Grid>
 
@@ -74,8 +78,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={email}
-                  // onChange={(e)=> setEmail(e.target.value)}
+                  value={dateTime}
+                  onChange={(e)=> setDateTime(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -86,8 +90,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={email}
-                  // onChange={(e)=> setEmail(e.target.value)}
+                  value={numberOfGuests}
+                  onChange={(e)=> setNumberOfGuests(e.target.value)}
                 />
               </Grid>
               <Grid item xs={2}>
@@ -96,9 +100,9 @@ const Post = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    // value={age}
+                    value={type}
                     label="Status"
-                    // onChange={handleChange}
+                    onChange={(e)=>setType(e.target.value)}
                   >
                     <MenuItem value={0}>Pending</MenuItem>
                     <MenuItem value={1}>Confirmed</MenuItem>
@@ -116,7 +120,7 @@ const Post = () => {
                 variant="contained"
                 fullWidth
                 endIcon={<SendIcon color="secondary" />}
-                // onClick={postData}
+                onClick={postData}
               >
                 Add
               </Button>
