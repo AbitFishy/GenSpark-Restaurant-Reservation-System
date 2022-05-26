@@ -53,6 +53,11 @@ public class Controller {
         return this.userAccountService.login(userAccount);
     }
 
+    @PostMapping("/signup")
+    public UserAccount signup(@RequestBody UserAccount userAccount) {
+        return this.userAccountService.login(userAccount);
+    }
+
     @PutMapping("/userAccounts/{userID}")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
         return this.userAccountService.updateUserAccount(userAccount, userID);
