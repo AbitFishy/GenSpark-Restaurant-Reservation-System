@@ -69,7 +69,7 @@ const style = {
 const Home = () => {
   // const history = useHistory();
 
-  const [userAccounts, setUserAccounts] = useState([]);
+  const [reservations, setReservations] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -87,8 +87,8 @@ const Home = () => {
   const baseURL = "http://localhost:8080/api";
 
   useEffect(() => {
-    axios.get(baseURL + "/userAccounts").then((response) => {
-      setUserAccounts(response.data);
+    axios.get(baseURL + "/reservation").then((response) => {
+      setReservations(response.data);
     });
   }, []);
 
@@ -206,36 +206,36 @@ const Home = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {userAccounts.filter(userAccount => {
+                  {reservations.filter(reservation => {
                     if(searchTerm === ""){
-                      return userAccount
-                    } else if(userAccount.primaryName.toLowerCase().includes(searchTerm.toLowerCase())){
-                      return userAccount
+                      return reservation
+                    } else if(reservation.resName.toLowerCase().includes(searchTerm.toLowerCase())){
+                      return reservation
                     } 
                   }) 
-                  .map((userAccount, index) => ( 
+                  .map((reservation, index) => ( 
                   <StyledTableRow key={index}>
                     <StyledTableCell
                       className="table-cell"
                       component="th"
                       scope="row"
                     >
-                      {userAccount.userId}
+                      {reservation.resId}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {userAccount.primaryName}
+                      {reservation.resName}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {userAccount.phoneNumber}
+                      {reservation.resNumber}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {userAccount.res.dateTime}
+                      {reservation.dateTime}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {userAccount.res.numberOfGuests}
+                      {reservation.numberOfGuests}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {userAccount.res.type}
+                      {reservation.type}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
                       <Button

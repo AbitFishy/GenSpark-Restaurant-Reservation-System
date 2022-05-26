@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import Container from "@mui/material/Container";
@@ -16,27 +17,26 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 
 const Post = () => {
-  const [primaryName, setPrimaryName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [resName, setResName] = useState("");
+  const [resNumber, setResNumber] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [type, setType] = useState("");
 
-  // const history = useHistory();
+  const navigate = useNavigate();
 
-  const postData = (e) => {
+  const postRes = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/userAccounts", {
-        primaryName,
-        phoneNumber,
+      .post("http://localhost:8080/api/reservation", {
+        resName,
+        resNumber,
         dateTime,
         numberOfGuests,
         type
       })
       .then((res) => console.log("posting data", res));
-  //     history.push('/');
-  //     window.location.reload(true);
+      navigate("/home")
   };
 
   return (
@@ -56,8 +56,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  value={primaryName}
-                  onChange={(e)=> setPrimaryName(e.target.value)}
+                  value={resName}
+                  onChange={(e)=> setResName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -67,14 +67,15 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  value={phoneNumber}
-                  onChange={(e)=> setPhoneNumber(e.target.value)}
+                  value={resNumber}
+                  onChange={(e)=> setResNumber(e.target.value)}
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
                   type="datetime-local"
+                  pattern="\d{4}-\d{2}-\d{2}"
                   variant="outlined"
                   fullWidth
                   required
@@ -104,11 +105,11 @@ const Post = () => {
                     label="Status"
                     onChange={(e)=>setType(e.target.value)}
                   >
-                    <MenuItem value={0}>Pending</MenuItem>
-                    <MenuItem value={1}>Confirmed</MenuItem>
-                    <MenuItem value={2}>Arrived</MenuItem>
-                    <MenuItem value={3}>Cancelled</MenuItem>
-                    <MenuItem value={4}>Completed</MenuItem>
+                    <MenuItem value={"PENDING"}>PENDING</MenuItem>
+                    <MenuItem value={"CONFIRMED"}>CONFIRMED</MenuItem>
+                    <MenuItem value={"ARRIVED"}>ARRIVED</MenuItem>
+                    <MenuItem value={"CANCELLED"}>CANCELLED</MenuItem>
+                    <MenuItem value={"COMPLETED"}>COMPLETED</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -120,7 +121,7 @@ const Post = () => {
                 variant="contained"
                 fullWidth
                 endIcon={<SendIcon color="secondary" />}
-                onClick={postData}
+                onClick={postRes}
               >
                 Add
               </Button>
