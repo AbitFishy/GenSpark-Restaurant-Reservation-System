@@ -19,10 +19,10 @@ const Signup = ({
   setEmail,
   password,
   setPassword,
-  primaryName,
-  setPrimaryName,
-  phoneNumber,
-  setPhoneNumber,
+  userName,
+  setUserName,
+  userNumber,
+  setUserNumber,
   postData,
 }) => {
   console.log(email);
@@ -50,8 +50,8 @@ const Signup = ({
               label="Name"
               placeholder="Enter your name"
               required
-              value={primaryName}
-              onChange={(e)=> setPrimaryName(e.target.value)}
+              value={userName}
+              onChange={(e)=> setUserName(e.target.value)}
             />
             <TextField
               fullWidth
@@ -68,8 +68,8 @@ const Signup = ({
               type="tel"
               placeholder="Enter your phone number"
               required
-              value={phoneNumber}
-              onChange={(e)=> setPhoneNumber(e.target.value)}
+              value={userNumber}
+              onChange={(e)=> setUserNumber(e.target.value)}
             />
             <TextField
               fullWidth

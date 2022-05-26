@@ -33,8 +33,8 @@ const theme = createTheme({
 });
 
 const Main = () => {
-  const [primaryName, setPrimaryName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userNumber, setUserNumber] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -46,9 +46,9 @@ const Main = () => {
   const postData = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/userAccounts", {
-        primaryName,
-        phoneNumber,
+      .post("http://localhost:8080/api/signup", {
+        userName,
+        userNumber,
         password,
         email,
       })
@@ -87,14 +87,14 @@ const Main = () => {
           path="signup"
           element={
             <Signup
-              primaryName={primaryName}
-              phoneNumber={phoneNumber}
+              userName={userName}
+              userNumber={userNumber}
               password={password}
               email={email}
               setEmail={setEmail}
               setPassword={setPassword}
-              setPrimaryName={setPrimaryName}
-              setPhoneNumber={setPhoneNumber}
+              setUserName={setUserName}
+              setUserNumber={setUserNumber}
               postData={postData}
             />
           }

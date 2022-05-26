@@ -1,6 +1,7 @@
-import React, { } from "react";
-// import { useHistory } from "react-router-dom";
-// import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -16,24 +17,27 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 
 const Post = () => {
-  // const [primaryName, setPrimaryName] = useState("");
-  // const [] = useState("");
-  // const [email, setEmail] = useState("");
+  const [resName, setResName] = useState("");
+  const [resNumber, setResNumber] = useState("");
+  const [dateTime, setDateTime] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState("");
+  const [type, setType] = useState("");
 
-  // const history = useHistory();
+  const navigate = useNavigate();
 
-  // const postData = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:8080/api/reservation", {
-  //       firstName,
-  //       lastName,
-  //       email,
-  //     })
-  //     .then((res) => console.log("posting data", res));
-  //     history.push('/');
-  //     window.location.reload(true);
-  // };
+  const postRes = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/reservation", {
+        resName,
+        resNumber,
+        dateTime,
+        numberOfGuests,
+        type
+      })
+      .then((res) => console.log("posting data", res));
+      navigate("/home")
+  };
 
   return (
     <Container maxWidth="md" sx={{ marginTop: 15, marginBottom: 3 }}>
@@ -52,8 +56,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={firstName}
-                  // onChange={(e)=> setFirstName(e.target.value)}
+                  value={resName}
+                  onChange={(e)=> setResName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -63,19 +67,20 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={lastName}
-                  // onChange={(e)=> setLastName(e.target.value)}
+                  value={resNumber}
+                  onChange={(e)=> setResNumber(e.target.value)}
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
                   type="datetime-local"
+                  pattern="\d{4}-\d{2}-\d{2}"
                   variant="outlined"
                   fullWidth
                   required
-                  // value={email}
-                  // onChange={(e)=> setEmail(e.target.value)}
+                  value={dateTime}
+                  onChange={(e)=> setDateTime(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -86,8 +91,8 @@ const Post = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  // value={email}
-                  // onChange={(e)=> setEmail(e.target.value)}
+                  value={numberOfGuests}
+                  onChange={(e)=> setNumberOfGuests(e.target.value)}
                 />
               </Grid>
               <Grid item xs={2}>
@@ -96,15 +101,15 @@ const Post = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    // value={age}
+                    value={type}
                     label="Status"
-                    // onChange={handleChange}
+                    onChange={(e)=>setType(e.target.value)}
                   >
-                    <MenuItem value={0}>Pending</MenuItem>
-                    <MenuItem value={1}>Confirmed</MenuItem>
-                    <MenuItem value={2}>Arrived</MenuItem>
-                    <MenuItem value={3}>Cancelled</MenuItem>
-                    <MenuItem value={4}>Completed</MenuItem>
+                    <MenuItem value={"PENDING"}>PENDING</MenuItem>
+                    <MenuItem value={"CONFIRMED"}>CONFIRMED</MenuItem>
+                    <MenuItem value={"ARRIVED"}>ARRIVED</MenuItem>
+                    <MenuItem value={"CANCELLED"}>CANCELLED</MenuItem>
+                    <MenuItem value={"COMPLETED"}>COMPLETED</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -116,7 +121,7 @@ const Post = () => {
                 variant="contained"
                 fullWidth
                 endIcon={<SendIcon color="secondary" />}
-                // onClick={postData}
+                onClick={postRes}
               >
                 Add
               </Button>
