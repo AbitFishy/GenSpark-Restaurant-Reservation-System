@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 // import Post from "./Post";
-// import axios from "axios";
+import axios from "axios";
 
 import { Container, Grid, Typography } from "@mui/material";
 
@@ -68,9 +68,9 @@ const style = {
 const Home = () => {
   // const history = useHistory();
 
-  // const [employees, setEmployees] = useState([]);
+  const [userAccounts, setUserAccounts] = useState([]);
 
-  // const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // const [firstName, setFirstName] = useState("");
   // const [lastName, setLastName] = useState("");
@@ -83,13 +83,13 @@ const Home = () => {
     setOpen(false);
   };
 
-  // const baseURL = "http://employeemanagerservice-env.eba-azh5g6a4.us-west-1.elasticbeanstalk.com/api/employee";
+  const baseURL = "http://localhost:8080/api";
 
-  // useEffect(() => {
-  //   axios.get(baseURL).then((response) => {
-  //     setEmployees(response.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(baseURL + "/userAccounts").then((response) => {
+      setUserAccounts(response.data);
+    });
+  }, []);
 
   const handleOpen = () => {
     // console.log("id: " + employees[index].id);
@@ -177,8 +177,8 @@ const Home = () => {
                 fullWidth
                 label="Search Name.."
                 id="fullWidth"
-                // onChange={(e)=> setSearchTerm(e.target.value)}
-                // value={searchTerm}
+                onChange={(e)=> setSearchTerm(e.target.value)}
+                value={searchTerm}
               />
             </Box>
           </Grid>
@@ -205,36 +205,36 @@ const Home = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {employees.filter(employee => {
+                  {userAccounts.filter(userAccount => {
                     if(searchTerm === ""){
-                      return employee
-                    } else if(employee.firstName.toLowerCase().includes(searchTerm.toLowerCase())){
-                      return employee
+                      return userAccount
+                    } else if(userAccount.primaryName.toLowerCase().includes(searchTerm.toLowerCase())){
+                      return userAccount
                     } 
-                  }) */}
-                  {/* // .map((employee, index) => ( */}
-                  <StyledTableRow>
+                  }) 
+                  .map((userAccount, index) => ( 
+                  <StyledTableRow key={index}>
                     <StyledTableCell
                       className="table-cell"
                       component="th"
                       scope="row"
                     >
-                      {/* {employee.id} */}
+                      {userAccount.userId}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {/* {employee.Name} */}
+                      {userAccount.primaryName}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {/* {employee.number} */}
+                      {userAccount.phoneNumber}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {/* {employee.time} */}
+                      {userAccount.res.dateTime}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {/* {employee.guest} */}
+                      {userAccount.res.numberOfGuests}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
-                      {/* {employee.status} */}
+                      {userAccount.res.type}
                     </StyledTableCell>
                     <StyledTableCell className="table-cell" align="right">
                       <Button
@@ -261,7 +261,7 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Name"
                                 type="text"
-                                // value={firstName}
+                                // value={primaryName}
                                 // onChange={(e) => setFirstName(e.target.value)}
                               />
                             </Grid>
@@ -270,7 +270,7 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="phone"
                                 type="tel"
-                                // value={lastName}
+                                // value={phoneNumber}
                                 // onChange={(e) => setLastName(e.target.value)}
                               />
                             </Grid>
@@ -279,7 +279,7 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Date"
                                 type="datetime-local"
-                                // value={lastName}
+                                // value={dateTime}
                                 // onChange={(e) => setLastName(e.target.value)}
                               />
                             </Grid>
@@ -289,7 +289,7 @@ const Home = () => {
                                 placeholder="Guest"
                                 type="number"
                                 min="0"
-                                // value={lastName}
+                                // value={numberOfGuests}
                                 // onChange={(e) => setLastName(e.target.value)}
                               />
                             </Grid>
@@ -304,7 +304,7 @@ const Home = () => {
                                 <Select
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  // value={age}
+                                  // value={type}
                                   label="Status"
                                   // onChange={handleChange}
                                 >
@@ -345,7 +345,7 @@ const Home = () => {
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>
-                  {/* ))} */}
+                   ))} 
                 </TableBody>
               </Table>
             </TableContainer>
