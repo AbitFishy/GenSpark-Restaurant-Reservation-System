@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useState, useEffect} from "react";
 // import Post from "./Post";
 import axios from "axios";
