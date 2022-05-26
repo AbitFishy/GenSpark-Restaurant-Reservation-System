@@ -113,11 +113,13 @@ public class Controller {
                                  @RequestBody String time,
                                  @RequestBody String numGuests,
                                  @RequestBody String status) {
+        logger.info("/reservations called with " + name + " " + phone + " "+ time + " " +numGuests+" " +status);
         return this.reservationService.addReservation(name, phone, time, numGuests, status);
     }
 
     @PutMapping("/reservations")
     public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
+        logger.info("/reservations called with " + reservation.toString());
         return this.reservationService.updateReservation(reservation, reservationID);
     }
 
