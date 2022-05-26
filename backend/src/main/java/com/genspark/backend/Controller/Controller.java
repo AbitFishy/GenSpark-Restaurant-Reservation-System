@@ -53,7 +53,7 @@ public class Controller {
         return this.userAccountService.login(userAccount);
     }
 
-    @PutMapping("/userAccounts")
+    @PutMapping("/userAccounts/{userID}")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
         return this.userAccountService.updateUserAccount(userAccount, userID);
     }
@@ -79,7 +79,7 @@ public class Controller {
         return this.reservationService.addReservation(reservation);
     }
 
-    @PutMapping("/reservations")
+    @PutMapping("/reservations/{reservationID}")
     public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
         return this.reservationService.updateReservation(reservation, reservationID);
     }
