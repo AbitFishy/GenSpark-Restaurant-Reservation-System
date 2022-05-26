@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -72,36 +75,39 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // WhiteListing URL's below
-                .antMatchers("/","index","/css/*","/js*")
+                .antMatchers("/","index","/css/*","/js*","/api/","/api/login*","/api/user/login*"
+                , "/login*" )
                 .permitAll()
+                .antMatchers("/api/users/*").hasRole("USER")
+                .antMatchers("/api/admin*/").hasRole("ADMIN")
+                //.antMatchers("/api/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/login")
-                .failureUrl("/login.html?error=true")
+                .loginPage("/login")
+                //.loginProcessingUrl("/login")
+                .successForwardUrl("/success")
+                .failureUrl("/fail")
 
                 .and()
                 .logout().deleteCookies("JSESSIONID")
-
-                .and()
-                .httpBasic()
-                .and()
-                .rememberMe((rememberMe) -> rememberMe
-                        .rememberMeServices(rememberMeServices())
+                .and().rememberMe()
+                .alwaysRemember(true)
                 .key("This is a key") //TODO
-                        .tokenValiditySeconds(86400))
+                        .tokenValiditySeconds(86400)
+                .and()
+                .httpBasic(withDefaults())
                 ;
     }
 
-    @Bean
+/*    @Bean
     public SpringSessionRememberMeServices rememberMeServices() {
         SpringSessionRememberMeServices rememberMeServices =
                 new SpringSessionRememberMeServices();
         // optionally customize
         rememberMeServices.setAlwaysRemember(true);
         return rememberMeServices;
-    }
+    }*/
 
 }

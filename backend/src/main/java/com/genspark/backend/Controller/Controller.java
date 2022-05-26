@@ -63,9 +63,19 @@ public class Controller {
         return this.userAccountService.addUserAccount(primaryName,phoneNumber,clearPassword,email);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public String login(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.login(userAccount);
+        return "login";
+        //return this.userAccountService.login(userAccount);
+    }
+    @GetMapping("/user/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String login2(){
+        return "login.html";
     }
 
     @PostMapping("/auth")
