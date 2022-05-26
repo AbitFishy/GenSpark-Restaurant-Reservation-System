@@ -3,8 +3,8 @@ package com.genspark.backend.Service;
 import com.genspark.backend.Dao.ReservationDao;
 import com.genspark.backend.Entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.SimpleMailMessage;
+//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public class ReservationServiceImpl implements ReservationService{
     @Autowired
     ReservationDao reservationDao;
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
     @Override
     public List<Reservation> getAllReservation() {
         return this.reservationDao.findAll();
@@ -62,17 +62,17 @@ public class ReservationServiceImpl implements ReservationService{
         return "Deleted Successfully";
     }
 
-    public void sendEmail(String address, String subject, String body) {
-        String from = "restaurant@restaurant.fake";
-        String to = address;
-
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
-
-        mailSender.send(message);
-    }
+//    public void sendEmail(String address, String subject, String body) {
+//        String from = "restaurant@restaurant.fake";
+//        String to = address;
+//
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        message.setFrom(from);
+//        message.setTo(to);
+//        message.setSubject(subject);
+//        message.setText(body);
+//
+//        mailSender.send(message);
+//    }
 }

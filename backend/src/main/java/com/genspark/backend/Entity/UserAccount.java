@@ -21,10 +21,10 @@ public class UserAccount {
     private long userId;
 
     @Column(name = "primaryName", nullable = false)
-    private String primaryName;
+    private String userName;
 
     @Column(name = "phoneNumber", nullable = false)
-    private String phoneNumber;
+    private String userNumber;
 
     @Column(name = "user_password", nullable = false)
     private String password;

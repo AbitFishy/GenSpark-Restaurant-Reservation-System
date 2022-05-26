@@ -2,7 +2,7 @@ package com.genspark.backend.Controller;
 
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
-import com.genspark.backend.Service.EmailService;
+//import com.genspark.backend.Service.EmailService;
 import com.genspark.backend.Service.ReservationService;
 import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
@@ -25,15 +25,15 @@ public class Controller {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-    private EmailService emailService;
+//    @Autowired
+//    private EmailService emailService;
 
     @GetMapping("/")
     public String home() {
         return "Hi there.";
     }
 
-    @GetMapping("/userAccounts")
+    @GetMapping("/user")
     public List<UserAccount> getUserAccounts() {
         return this.userAccountService.getAllUserAccount();
     }
@@ -43,7 +43,7 @@ public class Controller {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
     }
 
-    @PostMapping("/userAccounts")
+    @PostMapping("/user")
     public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);
     }
@@ -64,17 +64,17 @@ public class Controller {
         return this.userAccountService.deleteUserAccountById(Long.parseLong(userID));
     }
 
-    @GetMapping("/reservations")
+    @GetMapping("/reservation")
     public List<Reservation> getReservations() {
         return this.reservationService.getAllReservation();
     }
 
-    @GetMapping("/reservations/{reservationID}")
+    @GetMapping("/reservations{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
     }
 
-    @PostMapping("/reservations")
+    @PostMapping("/reservation")
     public Reservation addReservation(@RequestBody Reservation reservation) {
         return this.reservationService.addReservation(reservation);
     }
@@ -90,14 +90,14 @@ public class Controller {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
     }
 
-    @GetMapping("/dev/testing/email")
-    public String sendTestEmail(){
-        return emailService.sendEmail("catdogramb@gmail.com",
-                "Test from Restaurant",
-                "this was a test message")
-                ?
-                "Successfully sent email"
-                :
-                "Error while sending email";
-    }
+//    @GetMapping("/dev/testing/email")
+//    public String sendTestEmail(){
+//        return emailService.sendEmail("catdogramb@gmail.com",
+//                "Test from Restaurant",
+//                "this was a test message")
+//                ?
+//                "Successfully sent email"
+//                :
+//                "Error while sending email";
+//    }
 }
