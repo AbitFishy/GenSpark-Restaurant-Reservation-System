@@ -1,17 +1,22 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
 import com.genspark.backend.Security.TwoFactorAuth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -180,5 +185,11 @@ public class UserAccountServiceImpl implements UserAccountService {
                 } else return phoneNumber.matches("\\(\\d{4}\\)-\\d{3}-\\d{3}");
         }
         return false;
+    }
+    private Random ran = new Random(LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(0)));
+    @Override
+    public UserAccount getNewGuestAccount(String name, String phone){
+        var guest = new UserAccount(name, phone, "aB" + ran.nextInt(), "GUESTACCOUNT"+ran.nextInt()+ "@" + ran.nextInt());
+        return userAccountDao.save(guest);
     }
 }

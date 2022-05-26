@@ -12,4 +12,9 @@ public interface ReservationService {
     String deleteReservationById(Long id);
 
     boolean checkValidStatus(String status);
+
+    String addReservation(String name, String phone, String time, String numGuests, String status);
+
+
+    String updateReservation(String reservationID, String time, String status);
 }

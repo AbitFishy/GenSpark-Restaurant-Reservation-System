@@ -9,10 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.midi.SysexMessage;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -110,13 +108,23 @@ public class Controller {
     }
 
     @PostMapping("/reservations")
-    public Reservation addReservation(@RequestBody Reservation reservation) {
-        return this.reservationService.addReservation(reservation);
+    public String addReservation(@RequestBody String name,
+                                 @RequestBody String phone,
+                                 @RequestBody String time,
+                                 @RequestBody String numGuests,
+                                 @RequestBody String status) {
+        return this.reservationService.addReservation(name, phone, time, numGuests, status);
     }
 
     @PutMapping("/reservations")
     public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
         return this.reservationService.updateReservation(reservation, reservationID);
+    }
+
+    @PutMapping("/reservation")
+    public String updateReservation(@RequestBody String reservationID, @RequestBody String time,
+                                    @RequestBody String status){
+        return this.reservationService.updateReservation(reservationID, time, status);
     }
 
     @DeleteMapping("/reservations/{reservationID}")

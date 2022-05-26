@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +17,9 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Autowired
     ReservationDao reservationDao;
+
+    @Autowired
+    private UserAccountService userAccountService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -34,7 +38,7 @@ public class ReservationServiceImpl implements ReservationService{
             reservation = r.get();
 
         } else {
-            throw new RuntimeException(" Course not found for id : " + id);
+            throw new RuntimeException("Reservation not found for id : " + id);
         }
         return reservation;
     }
@@ -81,4 +85,42 @@ public class ReservationServiceImpl implements ReservationService{
     public boolean checkValidStatus(String status) {
         return Set.of("PENDING","CONFIRMED","ARRIVED","CANCELLED","DONE").contains(status);
     }
+
+    @Override
+    public String addReservation(String name, String phone, String time, String numGuests, String status) {
+        var res = new Reservation(-1, LocalDateTime.parse(time), Integer.parseInt(numGuests), status,
+                userAccountService.getNewGuestAccount(name,phone));
+        res = reservationDao.save(res);
+        var id = res.getReservationId();
+        if (id > 0){
+            return String.valueOf(id);
+        }
+        else {
+            return "Reservation Failed";
+        }
+    }
+
+    @Override
+    public String updateReservation(String reservationID, String time, String status) {
+        var optreser = reservationDao.findById(Long.parseLong(reservationID));
+        if (optreser.isEmpty()){
+            return "Reservation Not Found";
+        }
+        var reser = optreser.get();
+        if (time != null && time.length() != 0){
+            reser.setDateTime(LocalDateTime.parse(time));
+        }
+        if (status != null && status.length() != 0){
+            reser.setStatus(status);
+        }
+        try {
+            reservationDao.save(reser);
+            return "Successfully Updated Reservation";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "Error Updating Reservation";
+        }
+    }
+
+
 }
