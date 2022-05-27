@@ -43,7 +43,7 @@ const Login = ({ emailLog,
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 20,
+          marginTop: 13,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -96,7 +96,7 @@ const Login = ({ emailLog,
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/contact" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
@@ -108,7 +108,7 @@ const Login = ({ emailLog,
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright sx={{ mt: 3, mb: 4 }} />
     </Container>
   );
 };

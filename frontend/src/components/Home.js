@@ -137,9 +137,9 @@ const Home = () => {
       .put(`${baseURL}/reservation/${id}`, item)
       .then((res) => console.warn("posting data", res));
     setOpen(false);
-    // setTimeout(() => {
-    //   window.location.reload(true);
-    // }, 1000);
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 1000);
     // navigate("/home")
     // window.location.reload(true);
   }
@@ -151,8 +151,8 @@ const Home = () => {
       <Container sx={{ marginTop: 8, marginBottom: 10 }}>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
-            <Typography variant="h3" sx={{}}>
-              Reservations
+            <Typography variant="h2" sx={{fontWeight: 'bold'}}>
+              Reservations List
             </Typography>
           </Grid>
         </Grid>
@@ -317,11 +317,11 @@ const Home = () => {
                                   label="Status"
                                   onChange={(e) => setType(e.target.value)}
                                 >
-                                  <MenuItem value={"PENDING"}>Pending</MenuItem>
-                                  <MenuItem value={"CONFIRMED"}>Confirmed</MenuItem>
-                                  <MenuItem value={"ARRIVED"}>Arrived</MenuItem>
-                                  <MenuItem value={"CANCELLED"}>Cancelled</MenuItem>
-                                  <MenuItem value={"COMPLETED"}>Completed</MenuItem>
+                                  <MenuItem value={"PENDING"} sx={{color: "#FFBF00"}}>Pending</MenuItem>
+                                  <MenuItem value={"CONFIRMED"} sx={{color: "#097969"}}>Confirmed</MenuItem>
+                                  <MenuItem value={"ARRIVED"} sx={{color: "#16EE1E"}}>Arrived</MenuItem>
+                                  <MenuItem value={"CANCELLED"} sx={{color: "#DC143C"}}>Cancelled</MenuItem>
+                                  <MenuItem value={"COMPLETED"} sx={{color: "#16EE1E"}}>Completed</MenuItem>
                                 </Select>
                               </FormControl>
                             </Grid>

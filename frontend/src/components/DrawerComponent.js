@@ -14,19 +14,27 @@ const pages = ["Home", "Post", "Faq", "Contact"];
 const DrawerComponent = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
+
+
   return (
     <React.Fragment>
       <Drawer
+      PaperProps={{
+        sx: {
+          backgroundColor: "#000000",
+          '&:hover':{backgroundColor: "white" } 
+        }
+      }}
         anchor="left"
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <List>
+        <List >
           {pages.map((page, index) => (
-            <ListItemButton key={index}>
-              <ListItemIcon>
-                <ListItemText>
-                <Link to={`/${page}`} >{page}</Link>
+            <ListItemButton key={index} sx={{backgroundColor: '#000000'}}>
+              <ListItemIcon >
+                <ListItemText >
+                <Link to={`/${page}`} style={{color: '#097969', textDecoration: "none", fontWeight: 'bold' }}>{page}</Link>
                   </ListItemText>
               </ListItemIcon>
             </ListItemButton>

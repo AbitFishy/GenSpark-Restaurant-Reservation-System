@@ -16,7 +16,7 @@ import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
 const Navbar = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("home");
   const theme = useTheme();
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -51,9 +51,9 @@ const Navbar = () => {
                 onChange={handleChange}
               >
                 <Tab label="Home" value="home" onClick={() => navigate("/home")}/>
-                <Tab label="Post" value="post" onClick={() => navigate("/post")}/>
+                <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
-                <Tab label="Contact" value="/contact" onClick={() => navigate("/contact")}/>
+                <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
               </Tabs>
               <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
