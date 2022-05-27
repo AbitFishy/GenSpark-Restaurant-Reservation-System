@@ -3,11 +3,14 @@ package com.genspark.backend.Controller;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
 //import com.genspark.backend.Service.EmailService;
+import com.genspark.backend.Service.QRCodeGenerator;
 import com.genspark.backend.Service.ReservationService;
 import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -100,4 +103,23 @@ public class Controller {
 //                :
 //                "Error while sending email";
 //    }
+
+    // 2fa
+    @GetMapping(value = "/generateQRCode/{codeText}/{width}/{height}")
+    public ResponseEntity<byte[]> generateQRCode(
+            @PathVariable("codeText") String codeText,
+            @PathVariable("width") Integer width,
+            @PathVariable("height") Integer height)
+            throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(QRCodeGenerator.getQRCodeImage(codeText, width, height));
+    }
+    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
+    @GetMapping(value = "/generateAndDownloadQRCode/{codeText}/{width}/{height}")
+    public void download(
+            @PathVariable("codeText") String codeText,
+            @PathVariable("width") Integer width,
+            @PathVariable("height") Integer height)
+            throws Exception {
+        QRCodeGenerator.generateQRCodeImage(codeText, width, height, QR_CODE_IMAGE_PATH);
+    }
 }
