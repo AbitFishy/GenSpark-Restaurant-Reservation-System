@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button, Container } from "@mui/material
 
 function Contact() {
   return (
-      <Container componet="div" sx={{marginTop: 20}}>
+      <Container componet="div" sx={{marginTop: 8}}>
     <div
       style={{
         display: "flex",

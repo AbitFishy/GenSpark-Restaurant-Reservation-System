@@ -32,7 +32,7 @@ const Signup = ({
   const navigate = useNavigate();
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: 20 }}>
+    <Container component="main" maxWidth="xs" sx={{ marginTop: 13, marginBottom: 10 }}>
       <Grid>
         <Paper elevation={20} style={paperStyle}>
           <Grid align="center">

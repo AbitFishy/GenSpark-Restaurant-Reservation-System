@@ -17,7 +17,6 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
-// import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
@@ -73,10 +72,12 @@ const Home = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [userId, setUserId] = useState(null);
+  const [resName, setResName] = useState("");
+  const [resNumber, setResNumber] = useState("");
+  const [dateTime, setDateTime] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState("");
+  const[resId, setResId] = useState(null);
+  const [type, setType] = useState("");
 
   const [open, setOpen] = React.useState(false);
 
@@ -95,24 +96,22 @@ const Home = () => {
     });
   }, []);
 
-  const handleOpen = () => {
-    // console.log("id: " + employees[index].id);
-    // console.log("firstName: " + employees[index].firstName);
-    // console.log("lastName: " + employees[index].lastName);
-    // console.log("email: " + employees[index].email);
-    // let item = employees[index];
-    // setEmail(item.email);
-    // setFirstName(item.firstName);
-    // setLastName(item.lastName);
-    // setUserId(item.id);
+  const handleOpen = (index) => {
+    console.log("id: " + reservations[index].resId);
+ 
+    let item = reservations[index];
+    setDateTime(item.dateTime);
+    setResName(item.resName);
+    setResNumber(item.resNumber);
+    setType(item.type);
+    setResId(item.resId);
+    setNumberOfGuests(item.numberOfGuests);
     setOpen(true);
   };
   
   function deletePost(id) {
-    axios.delete(`${baseURL}/reservations/${id}`).then((response) => {
-      //   alert(`${id} deleted`);
+    axios.delete(`${baseURL}/reservation/${id}`).then((response) => {
       setReservations(null);
-      // setLoading(false);
     });
     swal({
       title: "Deleting Reservation...",
@@ -125,30 +124,30 @@ const Home = () => {
     }, 1000);
     navigate("/home");
   }
-/*
+
   function updatePost(id) {
-    let item = { firstName, lastName, email, userId };
-    // console.warn("item", item);
+    let item = { resName, resNumber, type, resId, numberOfGuests, dateTime };
+    console.warn("item", item);
     axios
-      .put(`${baseURL}/${userId}`, item)
+      .put(`${baseURL}/reservation/${id}`, item)
       .then((res) => console.warn("posting data", res));
     setOpen(false);
     setTimeout(() => {
       window.location.reload(true);
     }, 1000);
-    // history.push("/");
-    // window.location.reload(true);
+    // navigate("/home")
+   
   }
 
-  */
+  
   return (
     <>
       <img className="img-home" src="images/home-banner2.jpg" alt="home" />
       <Container sx={{ marginTop: 8, marginBottom: 10 }}>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
-            <Typography variant="h3" sx={{}}>
-              Reservations
+            <Typography variant="h2" sx={{fontWeight: 'bold'}}>
+              Reservations List
             </Typography>
           </Grid>
         </Grid>
@@ -245,7 +244,7 @@ const Home = () => {
                         type="submit"
                         variant="none"
                         endIcon={<EditIcon color="secondary" />}
-                        onClick={handleOpen}
+                        onClick={()=> handleOpen(`${index}`)}
                       >
                         Edit
                       </Button>
@@ -265,8 +264,8 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Name"
                                 type="text"
-                                // value={primaryName}
-                                // onChange={(e) => setFirstName(e.target.value)}
+                                value={resName}
+                                onChange={(e) => setResName(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6} sm={6}>
@@ -274,8 +273,8 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="phone"
                                 type="tel"
-                                // value={phoneNumber}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                value={resNumber}
+                                onChange={(e) => setResNumber(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6} sm={6}>
@@ -283,8 +282,9 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Date"
                                 type="datetime-local"
-                                // value={dateTime}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                pattern="\d{4}-\d{2}-\d{2}"
+                                value={dateTime}
+                                onChange={(e) => setDateTime(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6}>
@@ -293,8 +293,8 @@ const Home = () => {
                                 placeholder="Guest"
                                 type="number"
                                 min="0"
-                                // value={numberOfGuests}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                value={numberOfGuests}
+                                onChange={(e) => setNumberOfGuests(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={12}>
@@ -308,15 +308,15 @@ const Home = () => {
                                 <Select
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  // value={type}
+                                  value={type}
                                   label="Status"
-                                  // onChange={handleChange}
+                                  onChange={(e) => setType(e.target.value)}
                                 >
-                                  <MenuItem value={0}>Pending</MenuItem>
-                                  <MenuItem value={1}>Confirmed</MenuItem>
-                                  <MenuItem value={2}>Arrived</MenuItem>
-                                  <MenuItem value={3}>Cancelled</MenuItem>
-                                  <MenuItem value={4}>Completed</MenuItem>
+                                  <MenuItem value={"PENDING"} sx={{color: "#FFBF00"}}>Pending</MenuItem>
+                                  <MenuItem value={"CONFIRMED"} sx={{color: "#097969"}}>Confirmed</MenuItem>
+                                  <MenuItem value={"ARRIVED"} sx={{color: "#16EE1E"}}>Arrived</MenuItem>
+                                  <MenuItem value={"CANCELLED"} sx={{color: "#DC143C"}}>Cancelled</MenuItem>
+                                  <MenuItem value={"COMPLETED"} sx={{color: "#16EE1E"}}>Completed</MenuItem>
                                 </Select>
                               </FormControl>
                             </Grid>
@@ -328,7 +328,7 @@ const Home = () => {
                               value="Update"
                               fullWidth
                               endIcon={<SendIcon color="secondary" />}
-                              // onClick={() => updatePost(`${reservation.resId}`)}
+                              onClick={() => updatePost(`${reservation.resId}`)}
                             >
                               done
                             </Button>
