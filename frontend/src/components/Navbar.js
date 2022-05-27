@@ -15,8 +15,10 @@ import {
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
-const Navbar = () => {
+const Navbar = ({setIsLoggedin}) => {
   const [value, setValue] = useState("home");
+  const navigate = useNavigate();
+
   const theme = useTheme();
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -25,8 +27,11 @@ const Navbar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleLogout = () => {
+    setIsLoggedin(false)
+    navigate("/")
+  };
 
-  const navigate = useNavigate();
 
 
   return (
@@ -56,15 +61,15 @@ const Navbar = () => {
                 <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
               </Tabs>
               <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
-              onClick={() => navigate("/")}
+              onClick={handleLogout}
               >
                 Logout
               </Button>
-              <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
-              onClick={() => navigate("/signup")}
+              {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
+              onClick={() => navigate("/")}
               >
                 SignUp
-              </Button>
+              </Button> */}
             </>
           )}
         </Toolbar>

@@ -66,7 +66,7 @@ const style = {
 
 
 
-const Home = () => {
+const Home = ({setIsLoggedin}) => {
 
   const [reservations, setReservations] = useState([]);
 
