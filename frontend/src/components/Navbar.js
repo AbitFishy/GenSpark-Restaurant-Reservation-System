@@ -65,6 +65,7 @@ const Navbar = ({setIsLoggedin}) => {
               >
                 Logout
               </Button>
+              {/* //signup */}
               {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
               >
