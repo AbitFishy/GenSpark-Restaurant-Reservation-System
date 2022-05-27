@@ -105,6 +105,7 @@ public class Controller {
 //    }
 
     // 2fa
+    // http://localhost:8080/generateQRCode/code/350/350
     @GetMapping(value = "/generateQRCode/{codeText}/{width}/{height}")
     public ResponseEntity<byte[]> generateQRCode(
             @PathVariable("codeText") String codeText,
@@ -113,6 +114,7 @@ public class Controller {
             throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(QRCodeGenerator.getQRCodeImage(codeText, width, height));
     }
+    // http://localhost:8080/generateAndDownloadQRCode/code/350/350
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
     @GetMapping(value = "/generateAndDownloadQRCode/{codeText}/{width}/{height}")
     public void download(

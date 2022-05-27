@@ -47,22 +47,21 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.DEV.name())
                 .build();
-        UserDetails jatinPatelUser = User.builder()
-                .username("jatinpatel")
-                .password(passwordEncoder.encode("password"))
-                .roles(ApplicationUserRole.DEV.name())
-                .build();
         UserDetails kevinLinUser = User.builder()
                 .username("kevinlin")
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.DEV.name())
                 .build();
-
+        // need a way to add a new user to be built with their usernames/pw/roles
+        /*UserAccount newUser = User.builder()
+                .username()
+                .password()
+                .roles()
+                .build();*/
         return new InMemoryUserDetailsManager(
                 josephTharpeUser,
                 taeKimUser,
                 robertKowalczykUser,
-                jatinPatelUser,
                 kevinLinUser
         );
     }
