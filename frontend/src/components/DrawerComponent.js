@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Drawer,
   IconButton,
@@ -24,7 +25,9 @@ const DrawerComponent = () => {
           {pages.map((page, index) => (
             <ListItemButton key={index}>
               <ListItemIcon>
-                <ListItemText>{page}</ListItemText>
+                <ListItemText>
+                <Link to={`/${page}`} >{page}</Link>
+                  </ListItemText>
               </ListItemIcon>
             </ListItemButton>
           ))}
