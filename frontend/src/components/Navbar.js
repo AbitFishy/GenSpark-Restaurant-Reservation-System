@@ -58,7 +58,7 @@ const Navbar = () => {
               <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
               >
-                Login
+                Logout
               </Button>
               <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/signup")}
