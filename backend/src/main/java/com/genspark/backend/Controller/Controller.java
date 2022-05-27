@@ -69,7 +69,7 @@ public class Controller {
         return this.reservationService.getAllReservation();
     }
 
-    @GetMapping("/reservations{reservationID}")
+    @GetMapping("/reservation/{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
     }
@@ -79,12 +79,12 @@ public class Controller {
         return this.reservationService.addReservation(reservation);
     }
 
-    @PutMapping("/reservations/{reservationID}")
+    @PutMapping("/reservation/{reservationID}")
     public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
         return this.reservationService.updateReservation(reservation, reservationID);
     }
 
-    @DeleteMapping("/reservations/{reservationID}")
+    @DeleteMapping("/reservation/{reservationID}")
     public String deleteReservation(@PathVariable String reservationID)
     {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
