@@ -73,10 +73,12 @@ const Home = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [userId, setUserId] = useState(null);
+  const [resName, setResName] = useState("");
+  const [resNumber, setResNumber] = useState("");
+  const [dateTime, setDateTime] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useState("");
+  const[resId, setResId] = useState(null);
+  const [type, setType] = useState("");
 
   const [open, setOpen] = React.useState(false);
 
@@ -95,21 +97,23 @@ const Home = () => {
     });
   }, []);
 
-  const handleOpen = () => {
-    // console.log("id: " + employees[index].id);
+  const handleOpen = (index) => {
+    console.log("id: " + reservations[index].resId);
     // console.log("firstName: " + employees[index].firstName);
     // console.log("lastName: " + employees[index].lastName);
     // console.log("email: " + employees[index].email);
-    // let item = employees[index];
-    // setEmail(item.email);
-    // setFirstName(item.firstName);
-    // setLastName(item.lastName);
-    // setUserId(item.id);
+    let item = reservations[index];
+    setDateTime(item.dateTime);
+    setResName(item.resName);
+    setResNumber(item.resNumber);
+    setType(item.type);
+    setResId(item.resId);
+    setNumberOfGuests(item.numberOfGuests);
     setOpen(true);
   };
   
   function deletePost(id) {
-    axios.delete(`${baseURL}/reservations/${id}`).then((response) => {
+    axios.delete(`${baseURL}/reservation/${id}`).then((response) => {
       //   alert(`${id} deleted`);
       setReservations(null);
       // setLoading(false);
@@ -125,22 +129,22 @@ const Home = () => {
     }, 1000);
     navigate("/home");
   }
-/*
+
   function updatePost(id) {
-    let item = { firstName, lastName, email, userId };
-    // console.warn("item", item);
+    let item = { resName, resNumber, type, resId, numberOfGuests, dateTime };
+    console.warn("item", item);
     axios
-      .put(`${baseURL}/${userId}`, item)
+      .put(`${baseURL}/reservation/${id}`, item)
       .then((res) => console.warn("posting data", res));
     setOpen(false);
-    setTimeout(() => {
-      window.location.reload(true);
-    }, 1000);
-    // history.push("/");
+    // setTimeout(() => {
+    //   window.location.reload(true);
+    // }, 1000);
+    // navigate("/home")
     // window.location.reload(true);
   }
 
-  */
+  
   return (
     <>
       <img className="img-home" src="images/home-banner2.jpg" alt="home" />
@@ -245,7 +249,7 @@ const Home = () => {
                         type="submit"
                         variant="none"
                         endIcon={<EditIcon color="secondary" />}
-                        onClick={handleOpen}
+                        onClick={()=> handleOpen(`${index}`)}
                       >
                         Edit
                       </Button>
@@ -265,8 +269,8 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Name"
                                 type="text"
-                                // value={primaryName}
-                                // onChange={(e) => setFirstName(e.target.value)}
+                                value={resName}
+                                onChange={(e) => setResName(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6} sm={6}>
@@ -274,8 +278,8 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="phone"
                                 type="tel"
-                                // value={phoneNumber}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                value={resNumber}
+                                onChange={(e) => setResNumber(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6} sm={6}>
@@ -283,8 +287,9 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Date"
                                 type="datetime-local"
-                                // value={dateTime}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                pattern="\d{4}-\d{2}-\d{2}"
+                                value={dateTime}
+                                onChange={(e) => setDateTime(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={6}>
@@ -293,8 +298,8 @@ const Home = () => {
                                 placeholder="Guest"
                                 type="number"
                                 min="0"
-                                // value={numberOfGuests}
-                                // onChange={(e) => setLastName(e.target.value)}
+                                value={numberOfGuests}
+                                onChange={(e) => setNumberOfGuests(e.target.value)}
                               />
                             </Grid>
                             <Grid item xs={12}>
@@ -308,15 +313,15 @@ const Home = () => {
                                 <Select
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  // value={type}
+                                  value={type}
                                   label="Status"
-                                  // onChange={handleChange}
+                                  onChange={(e) => setType(e.target.value)}
                                 >
-                                  <MenuItem value={0}>Pending</MenuItem>
-                                  <MenuItem value={1}>Confirmed</MenuItem>
-                                  <MenuItem value={2}>Arrived</MenuItem>
-                                  <MenuItem value={3}>Cancelled</MenuItem>
-                                  <MenuItem value={4}>Completed</MenuItem>
+                                  <MenuItem value={"PENDING"}>Pending</MenuItem>
+                                  <MenuItem value={"CONFIRMED"}>Confirmed</MenuItem>
+                                  <MenuItem value={"ARRIVED"}>Arrived</MenuItem>
+                                  <MenuItem value={"CANCELLED"}>Cancelled</MenuItem>
+                                  <MenuItem value={"COMPLETED"}>Completed</MenuItem>
                                 </Select>
                               </FormControl>
                             </Grid>
@@ -328,7 +333,7 @@ const Home = () => {
                               value="Update"
                               fullWidth
                               endIcon={<SendIcon color="secondary" />}
-                              // onClick={() => updatePost(`${reservation.resId}`)}
+                              onClick={() => updatePost(`${reservation.resId}`)}
                             >
                               done
                             </Button>
