@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Entity
