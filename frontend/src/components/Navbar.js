@@ -15,7 +15,7 @@ import {
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
-const Navbar = ({setIsLoggedin}) => {
+const Navbar = () => {
   const [value, setValue] = useState("home");
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const Navbar = ({setIsLoggedin}) => {
     setValue(newValue);
   };
   const handleLogout = () => {
-    setIsLoggedin(false)
+    // setIsLoggedin(false)
     navigate("/")
   };
 
@@ -66,11 +66,11 @@ const Navbar = ({setIsLoggedin}) => {
                 Logout
               </Button>
               {/* //signup */}
-              {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
+              <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
               >
                 SignUp
-              </Button> */}
+              </Button>
             </>
           )}
         </Toolbar>

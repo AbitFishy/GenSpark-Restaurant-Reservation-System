@@ -122,7 +122,7 @@ const Home = ({setIsLoggedin}) => {
     setTimeout(() => {
       window.location.reload(true);
     }, 1000);
-    navigate("/home");
+    // navigate("/home");
   }
 
   function updatePost(id) {

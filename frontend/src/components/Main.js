@@ -41,7 +41,7 @@ const Main = () => {
   const [passwordLog, setPasswordLog] = useState("");
   const [emailLog, setEmailLog] = useState("");
 
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  // const [isLoggedin, setIsLoggedin] = useState(false);
   const navigate = useNavigate();
 
   const postData = (e) => {
@@ -66,12 +66,12 @@ const Main = () => {
       })
       .then((res) => console.warn("posting Login data", res));
       navigate("/home")
-      setIsLoggedin(true)
+      // setIsLoggedin(true)
   };
 
   return (
     <ThemeProvider theme={theme}>
-      {(isLoggedin === true) ? <Navbar setIsLoggedin={setIsLoggedin}/> : null }
+      <Navbar />
       {/* <Navbar /> */}
       <Routes>
         <Route
@@ -103,7 +103,7 @@ const Main = () => {
           }
         />
 
-        <Route path="home" element={<Home />} setIsLoggedin={setIsLoggedin}/>
+        <Route path="home" element={<Home />} />
         <Route path="post" element={<Post />} />
         <Route path="faq" element={<FaqComponent />} />
         <Route path="contact" element={<Contact />} />
