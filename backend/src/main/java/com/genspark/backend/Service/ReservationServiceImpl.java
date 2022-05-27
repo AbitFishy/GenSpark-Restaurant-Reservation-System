@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements ReservationService{
             reservation = r.get();
 
         } else {
-            throw new RuntimeException(" Course not found for id : " + id);
+            throw new RuntimeException("Reservation not found for id : " + id);
         }
         return reservation;
     }
@@ -46,13 +46,31 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public Reservation updateReservation(Reservation reservation, Long reservationID) {
 
-        Reservation r;
+        Optional<Reservation> reservationOptional = this.reservationDao.findById(reservationID);
+        if(!reservationOptional.isPresent())
+        {
+            throw new RuntimeException("user with id: " + reservationID + " not found");
+        }
 
-        Optional<Reservation> o = reservationDao.findById(reservationID);
+        Reservation reservationUpdated = reservationOptional.get();
 
-        r = o.orElse(reservation);
+        if(reservation.getDateTime() != null) {
+            reservationUpdated.setDateTime(reservation.getDateTime());
+        }
+        if(reservation.getType() != null) {
+            reservationUpdated.setType(reservation.getType());
+        }
+        if(reservation.getNumberOfGuests() != 0) {
+            reservationUpdated.setNumberOfGuests(reservation.getNumberOfGuests());
+        }
+        if(reservation.getResName() != null) {
+            reservationUpdated.setResName(reservation.getResName());
+        }
+        if(reservation.getResNumber() != null) {
+            reservationUpdated.setResNumber(reservation.getResNumber());
+        }
 
-        return this.reservationDao.save(r);
+        return this.reservationDao.save(reservationUpdated);
     }
 
     @Override
