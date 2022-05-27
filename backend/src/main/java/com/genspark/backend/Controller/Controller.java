@@ -3,19 +3,16 @@ package com.genspark.backend.Controller;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
 //import com.genspark.backend.Service.EmailService;
+import com.genspark.backend.Service.QRCodeGenerator;
 import com.genspark.backend.Service.ReservationService;
 import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -42,16 +39,6 @@ public class Controller {
     @GetMapping("/user")
     public List<UserAccount> getUserAccounts() {
         return this.userAccountService.getAllUserAccount();
-    }
-
-    @GetMapping("/userp")
-    public ResponseEntity<List<UserAccount>> getAllUserAccounts(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "userId") String sortBy)
-    {
-        List<UserAccount> list = userAccountService.getAllUserAccount(pageNo, pageSize, sortBy);
-        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/userAccounts/{userID}")
@@ -85,17 +72,6 @@ public class Controller {
         return this.reservationService.getAllReservation();
     }
 
-    @GetMapping("/reservationp")
-    public ResponseEntity<List<Reservation>> getAllReservations(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "resId") String sortBy)
-    {
-        List<Reservation> list = reservationService.getAllReservation(pageNo, pageSize, sortBy);
-        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
-    }
-
-
     @GetMapping("/reservation/{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
@@ -127,4 +103,23 @@ public class Controller {
 //                :
 //                "Error while sending email";
 //    }
+
+    // 2fa
+    @GetMapping(value = "/generateQRCode/{codeText}/{width}/{height}")
+    public ResponseEntity<byte[]> generateQRCode(
+            @PathVariable("codeText") String codeText,
+            @PathVariable("width") Integer width,
+            @PathVariable("height") Integer height)
+            throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(QRCodeGenerator.getQRCodeImage(codeText, width, height));
+    }
+    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
+    @GetMapping(value = "/generateAndDownloadQRCode/{codeText}/{width}/{height}")
+    public void download(
+            @PathVariable("codeText") String codeText,
+            @PathVariable("width") Integer width,
+            @PathVariable("height") Integer height)
+            throws Exception {
+        QRCodeGenerator.generateQRCodeImage(codeText, width, height, QR_CODE_IMAGE_PATH);
+    }
 }
