@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Entity
@@ -17,6 +18,8 @@ public class Reservation {
 
     @Column(name="date", nullable = false)
     private String dateTime;
+
+
 
     @Column(nullable = false)
     private int numberOfGuests;
