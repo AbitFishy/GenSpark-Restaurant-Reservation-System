@@ -2,7 +2,6 @@ package com.genspark.backend.Configuration;
 
 import com.genspark.backend.Dao.ReservationDao;
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
