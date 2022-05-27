@@ -17,7 +17,6 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
-// import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
@@ -99,9 +98,7 @@ const Home = () => {
 
   const handleOpen = (index) => {
     console.log("id: " + reservations[index].resId);
-    // console.log("firstName: " + employees[index].firstName);
-    // console.log("lastName: " + employees[index].lastName);
-    // console.log("email: " + employees[index].email);
+ 
     let item = reservations[index];
     setDateTime(item.dateTime);
     setResName(item.resName);
@@ -114,9 +111,7 @@ const Home = () => {
   
   function deletePost(id) {
     axios.delete(`${baseURL}/reservation/${id}`).then((response) => {
-      //   alert(`${id} deleted`);
       setReservations(null);
-      // setLoading(false);
     });
     swal({
       title: "Deleting Reservation...",
@@ -141,7 +136,7 @@ const Home = () => {
       window.location.reload(true);
     }, 1000);
     // navigate("/home")
-    // window.location.reload(true);
+   
   }
 
   
