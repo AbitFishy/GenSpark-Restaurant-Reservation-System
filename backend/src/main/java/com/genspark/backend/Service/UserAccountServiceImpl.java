@@ -3,8 +3,13 @@ package com.genspark.backend.Service;
 import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,5 +77,19 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
 
         return r;
+    }
+
+    @Override
+    public List<UserAccount> getAllUserAccount(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        Page<UserAccount> pagedResult = userAccountDao.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
