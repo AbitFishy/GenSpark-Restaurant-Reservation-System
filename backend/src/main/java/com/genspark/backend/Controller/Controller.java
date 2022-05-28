@@ -54,17 +54,6 @@ public class Controller {
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-//    public  List<UserAccount> findPaginatedUserAccounts(@RequestParam("page") int page,
-//                                                        @RequestParam("size") int size,
-//                                                        UriComponentsBuilder uriBuilder,
-//                                                        HttpServletResponse response) {
-//        Page<UserAccount> resultPage = userAccountService.findPaginated(page, size);
-//        if (page > resultPage.getTotalPages()) {
-//            throw new MyResourceNotFoundException();
-//        }
-//
-//    }
-
     @GetMapping("/userAccounts/{userID}")
     public UserAccount getUserAccount(@PathVariable String userID) {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
@@ -95,6 +84,17 @@ public class Controller {
     public List<Reservation> getReservations() {
         return this.reservationService.getAllReservation();
     }
+
+    @GetMapping("/reservationp")
+    public ResponseEntity<List<Reservation>> getAllReservations(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "resId") String sortBy)
+    {
+        List<Reservation> list = reservationService.getAllReservation(pageNo, pageSize, sortBy);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/reservation/{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {
