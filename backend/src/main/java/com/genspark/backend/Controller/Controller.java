@@ -48,7 +48,7 @@ public class Controller {
     public ResponseEntity<List<UserAccount>> getAllUserAccounts(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy)
+            @RequestParam(defaultValue = "userId") String sortBy)
     {
         List<UserAccount> list = userAccountService.getAllUserAccount(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
