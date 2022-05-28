@@ -28,7 +28,6 @@ const Navbar = () => {
     setValue(newValue);
   };
   const handleLogout = () => {
-    // setIsLoggedin(false)
     navigate("/")
   };
 
@@ -66,11 +65,11 @@ const Navbar = () => {
                 Logout
               </Button>
               {/* //signup */}
-              <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
+              {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
               >
                 SignUp
-              </Button>
+              </Button> */}
             </>
           )}
         </Toolbar>
