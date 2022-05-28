@@ -89,6 +89,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .username(user.getEmail())
                     .password(user.getPassword())
                     .roles(ApplicationUserRole.USER.name())
+                    .authorities(ApplicationUserRole.USER.getGrantedAuthorities())
                     .build();
             security.createUser(details);
         }
@@ -146,8 +147,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // WhiteListing URL's below
-                .antMatchers("/","index","/css/*","/js*","/login*")
-                .permitAll()
+                .antMatchers("/","index","/css/*","/js*","/login*").permitAll()
+                // Authorities for Users
+                .antMatchers("/students/**").hasAuthority(ApplicationUserRole.USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
