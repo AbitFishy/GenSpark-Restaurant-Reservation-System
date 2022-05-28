@@ -56,6 +56,11 @@ public class Controller {
         return this.userAccountService.login(userAccount);
     }
 
+    @PostMapping("/auth")
+    public String authenticateUserAccount(@RequestBody String email, @RequestBody String clearPassword) {
+        return this.userAccountService.authenticateUserAccount(email, clearPassword) ? "true" : "false";
+    }
+
     @PutMapping("/userAccounts/{userID}")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
         return this.userAccountService.updateUserAccount(userAccount, userID);
