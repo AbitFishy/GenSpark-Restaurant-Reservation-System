@@ -2,15 +2,17 @@ package com.genspark.backend.Service;
 
 import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.UserAccount;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
-
     @Autowired
     UserAccountDao userAccountDao;
 
@@ -72,5 +74,10 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
 
         return r;
+    }
+
+    @Override
+    public boolean authenticateUserAccount(String username, String clearTextPassword) {
+        return false;
     }
 }

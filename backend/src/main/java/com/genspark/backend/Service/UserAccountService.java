@@ -11,4 +11,6 @@ public interface UserAccountService {
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
     UserAccount login(UserAccount userAccount);
+
+    boolean authenticateUserAccount(String username, String clearTextPassword);
 }

@@ -7,8 +7,9 @@ import java.util.Set;
 import static com.genspark.backend.Security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    USER(Sets.newHashSet()),
-    DEV(Sets.newHashSet(SYSTEM_READ, SYSTEM_WRITE, USER_READ, USER_WRITE));
+    USER(Sets.newHashSet(USER_ST_CANCEL,USER_ST_CONFIRM,USER_CREATE,USER_EDIT,USER_DELETE)),
+    EMPLOY(Sets.newHashSet(EMPLOY_CREATE,ADMIN_EDIT,EMPLOY_DELETE,EMPLOY_VIEW,EMPLOY_ST_CONFIRM,ADMIN_ST_CANCEL,EMPLOY_ST_ARRIVED,EMPLOY_ST_COMPLETE)),
+    ADMIN(Sets.newHashSet(ADMIN_CREATE,ADMIN_EDIT,ADMIN_DELETE,ADMIN_VIEW,ADMIN_ST_CONFIRM,ADMIN_ST_CANCEL,ADMIN_ST_ARRIVED,ADMIN_ST_COMPLETE));
     private final Set<ApplicationUserPermission> permissions;
 
     public Set<ApplicationUserPermission> getPermissions() {
