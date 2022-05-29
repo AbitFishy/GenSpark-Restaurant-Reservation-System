@@ -1,10 +1,10 @@
 /* eslint-disable */
-import React, {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, TableFooter, Typography } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,7 +16,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
@@ -24,11 +24,21 @@ import swal from "sweetalert";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+
+//testing page
+// import Pagination from "@mui/material/Pagination";
+import TablePagination from "@mui/material/TablePagination";
+
+import IconButton from "@mui/material/IconButton";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import LastPageIcon from "@mui/icons-material/LastPage";
+import PropTypes from "prop-types";
 
 import "../App.css";
 
@@ -64,11 +74,15 @@ const style = {
   p: 4,
 };
 
-
-
-const Home = ({setIsLoggedin}) => {
-
+const Home = () => {
   const [reservations, setReservations] = useState([]);
+
+  //testing pagination
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const [pageSize, setPageSize] = useState(5)
+  // const [pageNumber, setPageNumber] = useState(1)
+  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -76,13 +90,22 @@ const Home = ({setIsLoggedin}) => {
   const [resNumber, setResNumber] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
-  const[resId, setResId] = useState(null);
+  const [resId, setResId] = useState(null);
   const [type, setType] = useState("");
 
   const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
 
+ 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -91,14 +114,15 @@ const Home = ({setIsLoggedin}) => {
   const baseURL = "http://localhost:8080/api";
 
   useEffect(() => {
-    axios.get(baseURL + "/reservation").then((response) => {
+    axios.get(`${baseURL}/reservation`).then((response) => {
       setReservations(response.data);
     });
   }, []);
 
+ 
   const handleOpen = (index) => {
     console.log("id: " + reservations[index].resId);
- 
+
     let item = reservations[index];
     setDateTime(item.dateTime);
     setResName(item.resName);
@@ -108,7 +132,7 @@ const Home = ({setIsLoggedin}) => {
     setNumberOfGuests(item.numberOfGuests);
     setOpen(true);
   };
-  
+
   function deletePost(id) {
     axios.delete(`${baseURL}/reservation/${id}`).then((response) => {
       setReservations(null);
@@ -136,17 +160,15 @@ const Home = ({setIsLoggedin}) => {
       window.location.reload(true);
     }, 1000);
     // navigate("/home")
-   
   }
 
-  
   return (
     <>
       <img className="img-home" src="images/home-banner2.jpg" alt="home" />
       <Container sx={{ marginTop: 8, marginBottom: 10 }}>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
-            <Typography variant="h2" sx={{fontWeight: 'bold'}}>
+            <Typography variant="h2" sx={{ fontWeight: "bold" }}>
               Reservations List
             </Typography>
           </Grid>
@@ -180,7 +202,7 @@ const Home = ({setIsLoggedin}) => {
                 fullWidth
                 label="Search Name.."
                 id="fullWidth"
-                onChange={(e)=> setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 value={searchTerm}
               />
             </Box>
@@ -208,149 +230,203 @@ const Home = ({setIsLoggedin}) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {reservations.filter(reservation => {
-                    if(searchTerm === ""){
-                      return reservation
-                    } else if(reservation.resName.toLowerCase().includes(searchTerm.toLowerCase())){
-                      return reservation
-                    } 
-                  }) 
-                  .map((reservation, index) => ( 
-                  <StyledTableRow key={index}>
-                    <StyledTableCell
-                      className="table-cell"
-                      component="th"
-                      scope="row"
-                    >
-                      {reservation.resId}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      {reservation.resName}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      {reservation.resNumber}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      {reservation.dateTime}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      {reservation.numberOfGuests}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      {reservation.type}
-                    </StyledTableCell>
-                    <StyledTableCell className="table-cell" align="right">
-                      <Button
-                        type="submit"
-                        variant="none"
-                        endIcon={<EditIcon color="secondary" />}
-                        onClick={()=> handleOpen(`${index}`)}
-                      >
-                        Edit
-                      </Button>
-                    </StyledTableCell>
+                  {reservations
+                    .filter((reservation) => {
+                      if (searchTerm === "") {
+                        return reservation;
+                      } else if (
+                        reservation.resName
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())
+                      ) {
+                        return reservation;
+                      }
+                    })
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((reservation, index) => (
+                      <StyledTableRow key={index}>
+                        <StyledTableCell
+                          className="table-cell"
+                          component="th"
+                          scope="row"
+                        >
+                          {reservation.resId}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          {reservation.resName}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          {reservation.resNumber}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          {reservation.dateTime}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          {reservation.numberOfGuests}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          {reservation.type}
+                        </StyledTableCell>
+                        <StyledTableCell className="table-cell" align="right">
+                          <Button
+                            type="submit"
+                            variant="none"
+                            endIcon={<EditIcon color="secondary" />}
+                            onClick={() => handleOpen(`${index}`)}
+                          >
+                            Edit
+                          </Button>
+                        </StyledTableCell>
 
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style}>
-                        <Paper className="form-paper" elevation={10}>
-                          <Grid container spacing={1} sx={{ padding: 1 }}>
-                            <Grid item xs={6} sm={6}>
-                              <input
-                                className="form-control"
-                                placeholder="Name"
-                                type="text"
-                                value={resName}
-                                onChange={(e) => setResName(e.target.value)}
-                              />
-                            </Grid>
-                            <Grid item xs={6} sm={6}>
-                              <input
-                                className="form-control"
-                                placeholder="phone"
-                                type="tel"
-                                value={resNumber}
-                                onChange={(e) => setResNumber(e.target.value)}
-                              />
-                            </Grid>
-                            <Grid item xs={6} sm={6}>
-                              <input
-                                className="form-control"
-                                placeholder="Date"
-                                type="datetime-local"
-                                pattern="\d{4}-\d{2}-\d{2}"
-                                value={dateTime}
-                                onChange={(e) => setDateTime(e.target.value)}
-                              />
-                            </Grid>
-                            <Grid item xs={6}>
-                              <input
-                                className="form-control"
-                                placeholder="Guest"
-                                type="number"
-                                min="0"
-                                value={numberOfGuests}
-                                onChange={(e) => setNumberOfGuests(e.target.value)}
-                              />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <FormControl
-                                sx={{ m: 0, minWidth: 120 }}
-                                size="small"
+                        <Modal
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style}>
+                            <Paper className="form-paper" elevation={10}>
+                              <Grid container spacing={1} sx={{ padding: 1 }}>
+                                <Grid item xs={6} sm={6}>
+                                  <input
+                                    className="form-control"
+                                    placeholder="Name"
+                                    type="text"
+                                    value={resName}
+                                    onChange={(e) => setResName(e.target.value)}
+                                  />
+                                </Grid>
+                                <Grid item xs={6} sm={6}>
+                                  <input
+                                    className="form-control"
+                                    placeholder="phone"
+                                    type="tel"
+                                    value={resNumber}
+                                    onChange={(e) =>
+                                      setResNumber(e.target.value)
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={6} sm={6}>
+                                  <input
+                                    className="form-control"
+                                    placeholder="Date"
+                                    type="datetime-local"
+                                    pattern="\d{4}-\d{2}-\d{2}"
+                                    value={dateTime}
+                                    onChange={(e) =>
+                                      setDateTime(e.target.value)
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <input
+                                    className="form-control"
+                                    placeholder="Guest"
+                                    type="number"
+                                    min="0"
+                                    value={numberOfGuests}
+                                    onChange={(e) =>
+                                      setNumberOfGuests(e.target.value)
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <FormControl
+                                    sx={{ m: 0, minWidth: 120 }}
+                                    size="small"
+                                  >
+                                    <InputLabel id="demo-simple-select-label">
+                                      Status
+                                    </InputLabel>
+                                    <Select
+                                      labelId="demo-simple-select-label"
+                                      id="demo-simple-select"
+                                      value={type}
+                                      label="Status"
+                                      onChange={(e) => setType(e.target.value)}
+                                    >
+                                      <MenuItem
+                                        value={"PENDING"}
+                                        sx={{ color: "#FFBF00" }}
+                                      >
+                                        Pending
+                                      </MenuItem>
+                                      <MenuItem
+                                        value={"CONFIRMED"}
+                                        sx={{ color: "#097969" }}
+                                      >
+                                        Confirmed
+                                      </MenuItem>
+                                      <MenuItem
+                                        value={"ARRIVED"}
+                                        sx={{ color: "#16EE1E" }}
+                                      >
+                                        Arrived
+                                      </MenuItem>
+                                      <MenuItem
+                                        value={"CANCELLED"}
+                                        sx={{ color: "#DC143C" }}
+                                      >
+                                        Cancelled
+                                      </MenuItem>
+                                      <MenuItem
+                                        value={"COMPLETED"}
+                                        sx={{ color: "#16EE1E" }}
+                                      >
+                                        Completed
+                                      </MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
+                              </Grid>
+                              <div
+                                className="post-button"
+                                sx={{ marginTop: 2 }}
                               >
-                                <InputLabel id="demo-simple-select-label">
-                                  Status
-                                </InputLabel>
-                                <Select
-                                  labelId="demo-simple-select-label"
-                                  id="demo-simple-select"
-                                  value={type}
-                                  label="Status"
-                                  onChange={(e) => setType(e.target.value)}
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  value="Update"
+                                  fullWidth
+                                  endIcon={<SendIcon color="secondary" />}
+                                  onClick={() =>
+                                    updatePost(`${reservation.resId}`)
+                                  }
                                 >
-                                  <MenuItem value={"PENDING"} sx={{color: "#FFBF00"}}>Pending</MenuItem>
-                                  <MenuItem value={"CONFIRMED"} sx={{color: "#097969"}}>Confirmed</MenuItem>
-                                  <MenuItem value={"ARRIVED"} sx={{color: "#16EE1E"}}>Arrived</MenuItem>
-                                  <MenuItem value={"CANCELLED"} sx={{color: "#DC143C"}}>Cancelled</MenuItem>
-                                  <MenuItem value={"COMPLETED"} sx={{color: "#16EE1E"}}>Completed</MenuItem>
-                                </Select>
-                              </FormControl>
-                            </Grid>
-                          </Grid>
-                          <div className="post-button" sx={{ marginTop: 2 }}>
-                            <Button
-                              type="submit"
-                              variant="contained"
-                              value="Update"
-                              fullWidth
-                              endIcon={<SendIcon color="secondary" />}
-                              onClick={() => updatePost(`${reservation.resId}`)}
-                            >
-                              done
-                            </Button>
-                          </div>
-                        </Paper>
-                      </Box>
-                    </Modal>
+                                  done
+                                </Button>
+                              </div>
+                            </Paper>
+                          </Box>
+                        </Modal>
 
-                    <StyledTableCell className="table-cell" align="right">
-                      <Button
-                        id="delete"
-                        type="submit"
-                        variant="none"
-                        endIcon={<DeleteIcon color="error" />}
-                        onClick={() => deletePost(`${reservation.resId}`)}
-                      >
-                        Delete
-                      </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                   ))} 
+                        <StyledTableCell className="table-cell" align="right">
+                          <Button
+                            id="delete"
+                            type="submit"
+                            variant="none"
+                            endIcon={<DeleteIcon color="error" />}
+                            onClick={() => deletePost(`${reservation.resId}`)}
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
                 </TableBody>
+                <TableFooter>
+                  <StyledTableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 50]}
+                      count={reservations.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </StyledTableRow>
+                </TableFooter>
               </Table>
             </TableContainer>
           </Grid>
