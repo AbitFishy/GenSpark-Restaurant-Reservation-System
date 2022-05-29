@@ -53,21 +53,25 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .username("josephtharpe")
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.ADMIN.name())
+                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
                 .build();
         UserDetails taeKimUser = User.builder()
                 .username("taekim")
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.ADMIN.name())
+                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
                 .build();
         UserDetails robertKowalczykUser = User.builder()
                 .username("robertkowalczyk")
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.ADMIN.name())
+                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
                 .build();
         UserDetails kevinLinUser = User.builder()
                 .username("kevinlin")
                 .password(passwordEncoder.encode("password"))
                 .roles(ApplicationUserRole.ADMIN.name())
+                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
                 .build();
         // need a way to add a new user to be built with their usernames/pw/roles
         /*UserAccount newUser = User.builder()
@@ -149,7 +153,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 // WhiteListing URL's below
                 .antMatchers("/","index","/css/*","/js*","/login*").permitAll()
                 // Authorities for Users
-                .antMatchers("/students/**").hasAuthority(ApplicationUserRole.USER.name())
+                .antMatchers("/users/**").hasAuthority(ApplicationUserRole.USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()

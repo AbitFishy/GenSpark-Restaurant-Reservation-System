@@ -21,8 +21,8 @@ public class UserManagementController {
         return this.userAccountService.getAllUserAccount();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOY', 'ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/userAccounts/{userID}")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOY', 'ROLE_ADMIN', 'ROLE_USER')")
     public UserAccount getUserAccount(@PathVariable String userID) {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
     }
