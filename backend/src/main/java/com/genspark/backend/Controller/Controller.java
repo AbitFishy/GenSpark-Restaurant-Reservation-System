@@ -8,8 +8,14 @@ import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -36,6 +42,16 @@ public class Controller {
     @GetMapping("/user")
     public List<UserAccount> getUserAccounts() {
         return this.userAccountService.getAllUserAccount();
+    }
+
+    @GetMapping("/userp")
+    public ResponseEntity<List<UserAccount>> getAllUserAccounts(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "userId") String sortBy)
+    {
+        List<UserAccount> list = userAccountService.getAllUserAccount(pageNo, pageSize, sortBy);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/userAccounts/{userID}")
@@ -68,6 +84,17 @@ public class Controller {
     public List<Reservation> getReservations() {
         return this.reservationService.getAllReservation();
     }
+
+    @GetMapping("/reservationp")
+    public ResponseEntity<List<Reservation>> getAllReservations(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "resId") String sortBy)
+    {
+        List<Reservation> list = reservationService.getAllReservation(pageNo, pageSize, sortBy);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/reservation/{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {

@@ -18,8 +18,6 @@ public class Reservation {
     @Column(name="date", nullable = false)
     private String dateTime;
 
-
-
     @Column(nullable = false)
     private int numberOfGuests;
 

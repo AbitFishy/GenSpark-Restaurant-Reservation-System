@@ -11,4 +11,5 @@ public interface UserAccountService {
     UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID);
     String deleteUserAccountById(Long id);
     UserAccount login(UserAccount userAccount);
+    List<UserAccount> getAllUserAccount(Integer pageNo, Integer pageSize, String sortBy);
 }
