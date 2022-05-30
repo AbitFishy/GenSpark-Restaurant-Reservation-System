@@ -24,15 +24,15 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public void sendReservationReminder(Reservation reservation) {
-        var user = reservation.getUserAccount();
-        LocalDateTime timeDate = LocalDateTime.from(reservation.getDateTime());
-        StringBuilder sb = new StringBuilder();
-        sb.append("Hello ").append(user.getPrimaryName()).append(". You have a reservation at Restaurant ");
-        sb.append(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(timeDate)).append(" at ");
-        sb.append(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(timeDate));
-        sb.append("\n\nIf you need to change your reservation or cancel, please visit our website at localhost:8080/reservations");
-        sb.append("or call us at 555-555-5555.\n\nThank you for eating at Restaurant!");
-        sendEmail(reservation.getUserAccount().getEmail(), reservationReminderTitle, sb.toString());
+//        var user = reservation.getUserAccount();
+//        LocalDateTime timeDate = LocalDateTime.from(reservation.getDateTime());
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Hello ").append(user.getPrimaryName()).append(". You have a reservation at Restaurant ");
+//        sb.append(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(timeDate)).append(" at ");
+//        sb.append(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(timeDate));
+//        sb.append("\n\nIf you need to change your reservation or cancel, please visit our website at localhost:8080/reservations");
+//        sb.append("or call us at 555-555-5555.\n\nThank you for eating at RESTaurant!");
+//        sendEmail(reservation.getUserAccount().getEmail(), reservationReminderTitle, sb.toString());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService{
     public boolean sendEmail(String to, String subject, String body) {
         var email = new SimpleMailMessage();
         email.setTo(to);
-        email.setFrom("Restaurant.catdogramb@gmail.com");
+        email.setFrom("RESTaurantGenSpark@gmail.com");
         email.setSubject(subject);
         email.setText(body);
         try {
