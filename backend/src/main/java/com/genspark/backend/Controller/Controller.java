@@ -12,11 +12,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -60,8 +65,9 @@ public class Controller {
     }
 
     @PostMapping("/user")
-    public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.addUserAccount(userAccount);
+    ResponseEntity<String> addUserAccount(@Valid @RequestBody UserAccount userAccount) {
+//        return this.userAccountService.addUserAccount(userAccount);
+        return ResponseEntity.ok("valid");
     }
 
     @PostMapping("/login")
@@ -127,4 +133,17 @@ public class Controller {
 //                :
 //                "Error while sending email";
 //    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
 }

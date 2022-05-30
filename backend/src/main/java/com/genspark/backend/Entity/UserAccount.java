@@ -1,6 +1,11 @@
 package com.genspark.backend.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 @Entity
 @Table(name = "user_accounts", uniqueConstraints = {
         @UniqueConstraint(name="user_email_unique", columnNames = "user_email")})
@@ -9,18 +14,26 @@ public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
+    @NotNull
     private long userId;
 
     @Column(name = "user_name", nullable = false)
+    @NotBlank(message = "Name is required")
     private String userName;
 
     @Column(name = "user_number", nullable = false)
+    @NotBlank(message = "Phone number is required")
+//    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$",
+//            message="Mobile number is invalid")
     private String userNumber;
 
     @Column(name = "user_password", nullable = false)
+    @NotNull
     private String password;
 
+    @Email
     @Column(name = "user_email", nullable = false)
+    @NotBlank(message = "Email is required")
     private String email;
 
     public UserAccount() {
