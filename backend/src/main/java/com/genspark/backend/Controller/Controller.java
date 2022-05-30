@@ -66,8 +66,7 @@ public class Controller {
 
     @PostMapping("/user")
     ResponseEntity<String> addUserAccount(@Valid @RequestBody UserAccount userAccount) {
-//        return this.userAccountService.addUserAccount(userAccount);
-        return ResponseEntity.ok("valid");
+        return this.userAccountService.addUserAccount(userAccount);
     }
 
     @PostMapping("/login")

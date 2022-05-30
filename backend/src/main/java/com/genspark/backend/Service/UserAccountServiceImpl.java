@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,8 +42,9 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount addUserAccount(UserAccount userAccount) {
-        return this.userAccountDao.save(userAccount);
+    public ResponseEntity<String> addUserAccount(UserAccount userAccount) {
+        this.userAccountDao.save(userAccount);
+        return ResponseEntity.ok("valid");
     }
 
     @Override
