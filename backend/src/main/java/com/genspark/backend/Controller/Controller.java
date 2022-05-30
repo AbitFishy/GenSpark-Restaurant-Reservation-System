@@ -104,6 +104,17 @@ public class Controller {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
     }
 
-
+//--------------------------------------------------------------------------------------------------------------------//
+    // Extras
+    // 2fa
+    // http://localhost:8080/generateQRCode/code/350/350
+    @GetMapping(value = "/generateQRCode/{userID}/{width}/{height}")
+    public ResponseEntity<byte[]> generateQRCode(
+            @PathVariable("codeText") String codeText,
+            @PathVariable("width") Integer width,
+            @PathVariable("height") Integer height)
+            throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(QRCodeGenerator.getQRCodeImage(codeText, width, height));
+    }
 
 }
