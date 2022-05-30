@@ -1,12 +1,6 @@
 package com.genspark.backend.Security;
 
 public enum ApplicationUserPermission {
-/*    USER_READ("user:read"),
-    USER_WRITE("user:write"),
-    SYSTEM_READ("system:read"),
-    SYSTEM_WRITE("system:write"),
-    */
-
     USER_CREATE("user:create"),
     USER_EDIT("user:edit"),
     USER_DELETE("user:delete"),
