@@ -117,4 +117,15 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body(QRCodeGenerator.getQRCodeImage(codeText, width, height));
     }
 
+    //    @GetMapping("/dev/testing/email")
+//    public String sendTestEmail(){
+//        return emailService.sendEmail("catdogramb@gmail.com",
+//                "Test from Restaurant",
+//                "this was a test message")
+//                ?
+//                "Successfully sent email"
+//                :
+//                "Error while sending email";
+//    }
+
 }
