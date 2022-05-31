@@ -30,8 +30,7 @@ function Copyright(props) {
   }
 
   //login function
-const Login = ({ emailLog,
-  setEmailLog,
+const Login = ({ userLog, setUserLog,
   passwordLog,
   setPasswordLog,
   postLogin}
@@ -62,12 +61,12 @@ const Login = ({ emailLog,
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={emailLog}
-            onChange={(e)=> setEmailLog(e.target.value)}
+            id="username"
+            label="username"
+            name="username"
+            autoComplete="username"
+            value={userLog}
+            onChange={(e)=> setUserLog(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -96,8 +95,8 @@ const Login = ({ emailLog,
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/" variant="body2">
-                Forgot password?
+              <Link href="/contact" variant="body2">
+                Admin signin?
               </Link>
             </Grid>
             <Grid item>

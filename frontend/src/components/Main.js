@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+//testings for
 import axios from "axios";
 
 //file imports
@@ -7,6 +8,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
 import Post from "./Post";
+// import Navbar from "./Navbar";
 import Contact from "./Contact";
 import FaqComponent from "./FaqComponent";
 
@@ -14,6 +16,7 @@ import FaqComponent from "./FaqComponent";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import WithNav from "./Navigation rendering/WithNav";
 import WithOut from "./Navigation rendering/WithOut";
+// import Testing from "./Testing";
 
 const theme = createTheme({
   palette: {
@@ -34,38 +37,69 @@ const theme = createTheme({
 });
 
 const Main = () => {
-  const [userName, setUserName] = useState("");
-  const [userNumber, setUserNumber] = useState("");
+  const [username, setUserName] = useState("");
+  const [role, setRole] = useState([]);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const [passwordLog, setPasswordLog] = useState("");
-  const [emailLog, setEmailLog] = useState("");
+  const [userLog, setUserLog] = useState("");
 
   const navigate = useNavigate();
 
+  // const postData = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post("http://localhost:8080/api/user", {
+  //       userName,
+  //       userNumber,
+  //       password,
+  //       email,
+  //     })
+  //     .then((res) => console.warn("posting data", res));
+  //   navigate("/");
+  // };
   const postData = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/user", {
-        userName,
-        userNumber,
+      .post("http://localhost:8080/api/auth/signup", {
+        username,
+        role,
         password,
         email,
       })
-      .then((res) => console.warn("posting data", res));
+      .then((res) => { 
+        const data = res.data.roles
+        console.warn("posting signup data", res)
+        console.warn("posting signup roles", data)
+        // console.warn(data.includes("ROLE_ADMIN") + "includes ROLE_ADMIN")
+        // if( data.includes("ROLE_ADMIN")){
+        //   navigate("/faq");
+        // } else {
+        //   navigate("/home");
+        // }
+      });
     navigate("/");
   };
 
   const postLogin = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/login", {
-        email: emailLog,
+      .post("http://localhost:8080/api/auth/signin", {
+        username: userLog,
         password: passwordLog,
       })
-      .then((res) => console.warn("posting Login data", res));
-    navigate("/home");
+      .then((res) =>{ 
+        const data = res.data.roles
+        console.warn("posting Login data", res.data)
+        // console.warn(data.includes("ROLE_ADMIN") + "includes ROLE_ADMIN")
+        if( data.includes("ROLE_ADMIN")){
+          // navigate("/faq");
+        } else {
+          // navigate("/home");
+        }
+      });
+    // navigate("/home");
   };
 
   return (
@@ -79,8 +113,8 @@ const Main = () => {
               element={
                 <Login
                   passwordLog={passwordLog}
-                  emailLog={emailLog}
-                  setEmailLog={setEmailLog}
+                  userLog={userLog}
+                  setUserLog={setUserLog}
                   setPasswordLog={setPasswordLog}
                   postLogin={postLogin}
                 />
@@ -90,15 +124,15 @@ const Main = () => {
               path="signup"
               element={
                 <Signup
-                  userName={userName}
-                  userNumber={userNumber}
+                  username={username}
                   password={password}
                   email={email}
                   setEmail={setEmail}
                   setPassword={setPassword}
                   setUserName={setUserName}
-                  setUserNumber={setUserNumber}
                   postData={postData}
+                  role={role}
+                  setRole={setRole}
                 />
               }
             />
