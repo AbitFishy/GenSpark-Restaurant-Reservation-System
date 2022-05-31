@@ -7,12 +7,13 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Home from "./Home";
 import Post from "./Post";
-import Navbar from "./Navbar";
 import Contact from "./Contact";
 import FaqComponent from "./FaqComponent";
 
 //material imports
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import WithNav from "./Navigation rendering/WithNav";
+import WithOut from "./Navigation rendering/WithOut";
 
 const theme = createTheme({
   palette: {
@@ -53,7 +54,7 @@ const Main = () => {
         email,
       })
       .then((res) => console.warn("posting data", res));
-      navigate("/")
+    navigate("/");
   };
 
   const postLogin = (e) => {
@@ -64,48 +65,54 @@ const Main = () => {
         password: passwordLog,
       })
       .then((res) => console.warn("posting Login data", res));
-      navigate("/home")
+    navigate("/home");
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Login
-              passwordLog={passwordLog}
-              emailLog={emailLog}
-              setEmailLog={setEmailLog}
-              setPasswordLog={setPasswordLog}
-              postLogin={postLogin}
+    <>
+      <ThemeProvider theme={theme}>
+        {/* {isShown && <Navbar />} */}
+        <Routes>
+          <Route element={<WithOut />}>
+            <Route
+              path="/"
+              element={
+                <Login
+                  passwordLog={passwordLog}
+                  emailLog={emailLog}
+                  setEmailLog={setEmailLog}
+                  setPasswordLog={setPasswordLog}
+                  postLogin={postLogin}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <Signup
-              userName={userName}
-              userNumber={userNumber}
-              password={password}
-              email={email}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              setUserName={setUserName}
-              setUserNumber={setUserNumber}
-              postData={postData}
+            <Route
+              path="signup"
+              element={
+                <Signup
+                  userName={userName}
+                  userNumber={userNumber}
+                  password={password}
+                  email={email}
+                  setEmail={setEmail}
+                  setPassword={setPassword}
+                  setUserName={setUserName}
+                  setUserNumber={setUserNumber}
+                  postData={postData}
+                />
+              }
             />
-          }
-        />
+          </Route>
 
-        <Route path="home" element={<Home />} />
-        <Route path="post" element={<Post />} />
-        <Route path="faq" element={<FaqComponent />} />
-        <Route path="contact" element={<Contact />} />
-      </Routes>
-    </ThemeProvider>
+          <Route element={<WithNav />}>
+            <Route path="home" element={<Home />} />
+            <Route path="post" element={<Post />} />
+            <Route path="faq" element={<FaqComponent />} />
+            <Route path="contact" element={<Contact />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </>
   );
 };
 

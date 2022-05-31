@@ -37,7 +37,7 @@ const Post = () => {
       })
       .then((res) => console.log("posting data", res));
       navigate("/home")
-      // window.location.reload(true);
+      window.location.reload(true);
   };
 
   return (

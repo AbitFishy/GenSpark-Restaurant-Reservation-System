@@ -16,7 +16,9 @@ import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
 const Navbar = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("home");
+  const navigate = useNavigate();
+
   const theme = useTheme();
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -25,8 +27,10 @@ const Navbar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleLogout = () => {
+    navigate("/")
+  };
 
-  const navigate = useNavigate();
 
 
   return (
@@ -50,21 +54,22 @@ const Navbar = () => {
                 value={value}
                 onChange={handleChange}
               >
-                <Tab label="Home" value="0" onClick={() => navigate("/home")}/>
-                <Tab label="Post" value="1" onClick={() => navigate("/post")}/>
-                <Tab label="Faq" value="2" onClick={() => navigate("/faq")}/>
-                <Tab label="Contact" value="3" onClick={() => navigate("/contact")}/>
+                <Tab label="Home" value="home" onClick={() => navigate("/home")}/>
+                <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
+                <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
+                <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
               </Tabs>
               <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
+              onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              {/* //signup */}
+              {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
               onClick={() => navigate("/")}
               >
-                Login
-              </Button>
-              <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
-              onClick={() => navigate("/signup")}
-              >
                 SignUp
-              </Button>
+              </Button> */}
             </>
           )}
         </Toolbar>

@@ -26,6 +26,7 @@ const HaveQuestions = () => {
   return (
     <Container sx={{ marginTop: 10 }}>
       <Button
+      sx={{'&:hover':{backgroundColor: "secondary.main" } }}
         id="basic-button"
         variant="contained"
         aria-controls={open ? "basic-menu" : undefined}
