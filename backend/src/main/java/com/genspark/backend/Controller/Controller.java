@@ -119,7 +119,7 @@ public class Controller {
 
     @GetMapping("/dev/testing/email")
     public String sendTestEmail(){
-        return emailService.sendEmail("tkim013@gmail.com",
+        return emailService.sendEmail("catdogramb@gmail.com",
                 "Test from Restaurant",
                 "this was a test message")
                 ?

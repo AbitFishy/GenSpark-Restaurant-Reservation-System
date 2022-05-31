@@ -1,7 +1,10 @@
 package com.genspark.backend.Service;
 
+import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
@@ -11,9 +14,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Arrays;
 
 @Service
 public class EmailServiceImpl implements EmailService{
+
+    Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     private final String reservationReminderTitle = "A Reminder About Your Reservation at Restaurant";
     @Autowired
@@ -47,13 +53,16 @@ public class EmailServiceImpl implements EmailService{
         email.setFrom("RESTaurantGenSpark@gmail.com");
         email.setSubject(subject);
         email.setText(body);
-        try {
-            this.mailSender.send(email);
-            return true;
-        }
-        catch (MailException me){
-            me.printStackTrace();
-        }
-        return false;
+
+        new Thread( () -> {
+            try {
+                this.mailSender.send(email);
+                logger.info("Email sent to " + Arrays.toString(email.getTo()) + " successfully");
+            } catch (MailException me) {
+                logger.warn("Did not send email: " +  email.toString());
+                me.printStackTrace();
+            }
+        }).start();
+        return true;
     }
 }
