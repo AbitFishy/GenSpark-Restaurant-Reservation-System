@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 
 @Entity
@@ -26,6 +25,9 @@ public class Reservation {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "guest_reservation")
+    private boolean guestReservation;
+
     private StatusType type;
 
     public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email) {
@@ -35,6 +37,16 @@ public class Reservation {
         this.resName = resName;
         this.resNumber = resNumber;
         this.email = email;
+        this.guestReservation=  false;
+    }
+    public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email, boolean isGuest) {
+        this.dateTime = LocalDateTime.parse(dateTime);
+        this.numberOfGuests = numberOfGuests;
+        this.type = type;
+        this.resName = resName;
+        this.resNumber = resNumber;
+        this.email = email;
+        this.guestReservation=  isGuest;
     }
     public Reservation(LocalDateTime dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email) {
         this.dateTime = dateTime;
@@ -43,6 +55,7 @@ public class Reservation {
         this.resName = resName;
         this.resNumber = resNumber;
         this.email = email;
+        this.guestReservation = false;
     }
 
     @Column(name = "primaryName", nullable = false)
@@ -108,6 +121,10 @@ public class Reservation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isGuestReservation() {
+        return guestReservation;
     }
 
     public enum StatusType {

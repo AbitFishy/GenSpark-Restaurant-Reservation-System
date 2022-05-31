@@ -35,6 +35,9 @@ public class UserAccount {
     @NotBlank(message = "Email is required")
     private String email;
 
+    @Column(name = "guest_account")
+    private boolean isGuestAccount;
+
     public UserAccount() {
     }
 
@@ -43,7 +46,19 @@ public class UserAccount {
         this.userNumber = userNumber;
         this.password = password;
         this.email = email;
+        this.isGuestAccount = false;
     }
+
+    private  UserAccount(String userName, String userNumber, String password, String email, boolean isGuestAccount ) {
+        this.userName = userName;
+        this.userNumber = userNumber;
+        this.password = password;
+        this.email = email;
+        this.isGuestAccount = isGuestAccount;
+    }
+
+    public static final UserAccount guestAccount = new UserAccount("Guest", "000-000-0000",
+            "", "Guest@restaurant.restaurant",true);
 
     public UserAccount(String password, String email) {
         this.password = password;
@@ -99,5 +114,13 @@ public class UserAccount {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public boolean isGuestAccount() {
+        return isGuestAccount;
+    }
+
+    public void setGuestAccount(boolean guestAccount) {
+        isGuestAccount = guestAccount;
     }
 }
