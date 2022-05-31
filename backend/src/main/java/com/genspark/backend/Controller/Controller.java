@@ -63,6 +63,10 @@ public class Controller {
     public UserAccount getUserAccount(@PathVariable String userID) {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
     }
+    @GetMapping("user/{email}")
+    public UserAccount getUserAccountEmail(@PathVariable String email){
+        return this.userAccountService.getUserAccountByEmail(email);
+    }
 
     @PostMapping("/user")
     ResponseEntity<String> addUserAccount(@Valid @RequestBody UserAccount userAccount) {
@@ -104,6 +108,15 @@ public class Controller {
     @GetMapping("/reservation/{reservationID}")
     public Reservation getReservation(@PathVariable String reservationID) {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
+    }
+
+/*    @GetMapping("/reservatione/{email}")
+    public Reservation getReservationByEmail(@PathVariable String email){
+    return this.reservationService.getReservationByEmail(email);
+    }*/
+    @GetMapping("/reservationse/{email}")
+    public List<Reservation> getReservationsByEmail(@PathVariable String email){
+        return this.reservationService.getAllReservationsByEmail(email);
     }
 
     @PostMapping("/reservation")

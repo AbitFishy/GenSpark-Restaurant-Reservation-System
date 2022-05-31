@@ -13,4 +13,6 @@ public interface UserAccountService {
     String deleteUserAccountById(Long id);
     UserAccount login(UserAccount userAccount);
     List<UserAccount> getAllUserAccount(Integer pageNo, Integer pageSize, String sortBy);
+
+    UserAccount getUserAccountByEmail(String email);
 }

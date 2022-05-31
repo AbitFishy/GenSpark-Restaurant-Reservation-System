@@ -12,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +45,20 @@ public class ReservationServiceImpl implements ReservationService{
             throw new RuntimeException("Reservation not found for id : " + id);
         }
         return reservation;
+    }
+
+/*    @Override
+    public Reservation getReservationByEmail(String email) {
+        var ress = getAllReservationsByEmail(email);
+        return ress.get(0);
+
+    }*/
+
+    @Override
+    public List<Reservation> getAllReservationsByEmail(String email) {
+      var ress= reservationDao.findAllReservationsByEmail(email);
+      ress.sort((l,r) -> l.getDateTime().compareTo(r.getDateTime()));
+      return ress;
     }
 
     @Override
@@ -98,6 +115,8 @@ public class ReservationServiceImpl implements ReservationService{
             return new ArrayList<>();
         }
     }
+
+
 
 //    public void sendEmail(String address, String subject, String body) {
 //        String from = "restaurant@restaurant.fake";

@@ -111,4 +111,9 @@ public class UserAccountServiceImpl implements UserAccountService {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public UserAccount getUserAccountByEmail(String email) {
+        return userAccountDao.findUserAccountByEmail(email);
+    }
 }
