@@ -8,14 +8,11 @@ import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -121,7 +118,7 @@ public class Controller {
     public String sendTestEmail(){
         return emailService.sendEmail("catdogramb@gmail.com",
                 "Test from Restaurant",
-                "this was a test message")
+                "this was a test message", true)
                 ?
                 "Successfully sent email"
                 :

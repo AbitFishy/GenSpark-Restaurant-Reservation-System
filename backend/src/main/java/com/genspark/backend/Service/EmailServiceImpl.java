@@ -1,6 +1,5 @@
 package com.genspark.backend.Service;
 
-import com.genspark.backend.Dao.UserAccountDao;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
 import org.slf4j.Logger;
@@ -11,9 +10,6 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Arrays;
 
 @Service
@@ -47,22 +43,34 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public boolean sendEmail(String to, String subject, String body) {
+    public boolean sendEmail(String to, String subject, String body, boolean sendAsync) {
         var email = new SimpleMailMessage();
         email.setTo(to);
         email.setFrom("RESTaurantGenSpark@gmail.com");
         email.setSubject(subject);
         email.setText(body);
 
-        new Thread( () -> {
-            try {
-                this.mailSender.send(email);
-                logger.info("Email sent to " + Arrays.toString(email.getTo()) + " successfully");
-            } catch (MailException me) {
-                logger.warn("Did not send email: " +  email.toString());
-                me.printStackTrace();
-            }
-        }).start();
-        return true;
+        if (sendAsync) {
+            new Thread(() -> {
+                    var res = sendEmailInternal(email);
+                }).start();
+            return true;
+        }
+        else{
+            return sendEmailInternal(email);
+
+        }
+    }
+
+    private boolean sendEmailInternal(SimpleMailMessage email) {
+        try {
+            this.mailSender.send(email);
+            logger.info("Email sent to " + Arrays.toString(email.getTo()) + " successfully");
+            return true;
+        } catch (MailException me) {
+            logger.warn("Did not send email: " +  email.toString());
+            me.printStackTrace();
+            return false;
+        }
     }
 }
