@@ -2,7 +2,7 @@ package com.genspark.backend.Controller;
 
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
-//import com.genspark.backend.Service.EmailService;
+import com.genspark.backend.Service.EmailService;
 import com.genspark.backend.Service.ReservationService;
 import com.genspark.backend.Service.UserAccountService;
 import org.slf4j.Logger;
@@ -36,8 +36,8 @@ public class Controller {
     @Autowired
     private ReservationService reservationService;
 
-//    @Autowired
-//    private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/")
     public String home() {
@@ -122,16 +122,16 @@ public class Controller {
         return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
     }
 
-//    @GetMapping("/dev/testing/email")
-//    public String sendTestEmail(){
-//        return emailService.sendEmail("catdogramb@gmail.com",
-//                "Test from Restaurant",
-//                "this was a test message")
-//                ?
-//                "Successfully sent email"
-//                :
-//                "Error while sending email";
-//    }
+    @GetMapping("/dev/testing/email")
+    public String sendTestEmail(){
+        return emailService.sendEmail("tkim013@gmail.com",
+                "Test from Restaurant",
+                "this was a test message")
+                ?
+                "Successfully sent email"
+                :
+                "Error while sending email";
+
 
     //When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the
     //default JSR 380 implementation — Hibernate Validator — and validates the argument.
