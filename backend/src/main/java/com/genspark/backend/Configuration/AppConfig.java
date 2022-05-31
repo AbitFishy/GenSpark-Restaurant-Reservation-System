@@ -2,8 +2,11 @@
 package com.genspark.backend.Configuration;
 
 import com.genspark.backend.Dao.ReservationDao;
+import com.genspark.backend.Dao.RoleRepository;
 import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
+import com.genspark.backend.Entity.Role;
 import com.genspark.backend.Entity.UserAccount;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
@@ -17,35 +20,37 @@ import java.util.List;
 @Configuration
 public class AppConfig {
     @Bean
-    public CommandLineRunner loadUserData(UserAccountDao userAccountDao){
-        List<UserAccount> USERACCOUNT = Arrays.asList(
-                new UserAccount
-                        ("ElonMusk","1", "password", "Elon@Tesla.com"),
-                new UserAccount
-                        ("BillGates","2", "password", "bill@microsoft.com"),
-                new UserAccount
-                        ("UnderTaker","3", "password", "taker@wwe.com"),
-                new UserAccount
-                        ("JoeBiden","4", "password", "biden@whitehouse.gov"),
-                new UserAccount
-                        ("Megatron","5", "password", "Deceptacons@space.com"),
-                new UserAccount
-                        ("Cthulu","6", "password", "cult@deepsea.com"),
-                new UserAccount
-                        ("FishMan","7", "password", "joe@fish.com"),
-                new UserAccount
-                        ("Naruto","7", "password", "ninja@fireofwill.com"),
-                new UserAccount
-                        ("Luffy","9", "password", "captain@onepiece.com"),
-                new UserAccount
-                        ("QueenElizabeth","10", "password", "queen@royal.com"),
-                new UserAccount
-                        ("Kanye","11", "password", "west@yeezy.com")
+    public CommandLineRunner loadRoleData(RoleRepository roleRepository){
+        List<Role> role = Arrays.asList(
+                new Role(ERole.ROLE_USER),
+                new Role(ERole.ROLE_MODERATOR),
+                new Role(ERole.ROLE_ADMIN)
+
+//                new UserAccount
+//                        ("BillGates","2", "password", "bill@microsoft.com"),
+//                new UserAccount
+//                        ("UnderTaker","3", "password", "taker@wwe.com"),
+//                new UserAccount
+//                        ("JoeBiden","4", "password", "biden@whitehouse.gov"),
+//                new UserAccount
+//                        ("Megatron","5", "password", "Deceptacons@space.com"),
+//                new UserAccount
+//                        ("Cthulu","6", "password", "cult@deepsea.com"),
+//                new UserAccount
+//                        ("FishMan","7", "password", "joe@fish.com"),
+//                new UserAccount
+//                        ("Naruto","7", "password", "ninja@fireofwill.com"),
+//                new UserAccount
+//                        ("Luffy","9", "password", "captain@onepiece.com"),
+//                new UserAccount
+//                        ("QueenElizabeth","10", "password", "queen@royal.com"),
+//                new UserAccount
+//                        ("Kanye","11", "password", "west@yeezy.com")
         );
         return (args) -> {
-            userAccountDao.saveAll(USERACCOUNT);
-            userAccountDao.save(new UserAccount
-                    ("Bob","1", "password", "bob@google.com"));
+            roleRepository.saveAll(role);
+//            userAccountDao.save(new UserAccount
+//                    ("Bob","1", "password", "bob@google.com"));
         };
     }
 
