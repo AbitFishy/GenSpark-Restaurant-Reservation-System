@@ -12,11 +12,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -60,7 +65,7 @@ public class Controller {
     }
 
     @PostMapping("/user")
-    public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
+    ResponseEntity<String> addUserAccount(@Valid @RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
@@ -127,4 +132,21 @@ public class Controller {
 //                :
 //                "Error while sending email";
 //    }
+
+    //When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the
+    //default JSR 380 implementation — Hibernate Validator — and validates the argument.
+    //When the target argument fails to pass the validation, Spring Boot throws a MethodArgumentNotValidException exception.
+    //The @ExceptionHandler annotation allows us to handle specified types of exceptions through one single method.
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
 }
