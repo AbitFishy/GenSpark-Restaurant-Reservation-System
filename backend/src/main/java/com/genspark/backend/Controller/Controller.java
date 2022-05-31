@@ -74,12 +74,12 @@ public class Controller {
         return this.userAccountService.login(userAccount);
     }
 
-    @PutMapping("/userAccounts/{userID}")
+    @PutMapping("/user/{userID}")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
         return this.userAccountService.updateUserAccount(userAccount, userID);
     }
 
-    @DeleteMapping("/userAccounts/{userID}")
+    @DeleteMapping("/user/{userID}")
     public String deleteAccount(@PathVariable String userID)
     {
         return this.userAccountService.deleteUserAccountById(Long.parseLong(userID));

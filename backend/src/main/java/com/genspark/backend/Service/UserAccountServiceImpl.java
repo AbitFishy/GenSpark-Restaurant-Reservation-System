@@ -1,6 +1,7 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,13 +51,29 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID) {
 
-        UserAccount u;
+        Optional<UserAccount> o = this.userAccountDao.findById(userAccountID);
 
-        Optional<UserAccount> o = userAccountDao.findById(userAccountID);
+        if(!o.isPresent())
+        {
+            throw new RuntimeException("user with id: " + userAccountID + " not found");
+        }
 
-        u = o.orElse(userAccount);
+        UserAccount userAccountUpdated = o.get();
 
-        return this.userAccountDao.save(u);
+        if(userAccount.getUserName() != null) {
+            userAccountUpdated.setUserName(userAccount.getUserName());
+        }
+        if(userAccount.getUserNumber() != null) {
+            userAccountUpdated.setUserNumber(userAccount.getUserNumber());
+        }
+        if(userAccount.getPassword() != null) {
+            userAccountUpdated.setPassword(userAccount.getPassword());
+        }
+        if(userAccount.getEmail() != null) {
+            userAccountUpdated.setEmail(userAccount.getEmail());
+        }
+
+        return this.userAccountDao.save(userAccountUpdated);
     }
 
     @Override
