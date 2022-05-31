@@ -94,9 +94,9 @@ const Main = () => {
         console.warn("posting Login data", res.data)
         // console.warn(data.includes("ROLE_ADMIN") + "includes ROLE_ADMIN")
         if( data.includes("ROLE_ADMIN")){
-          navigate("/faq");
+          // navigate("/faq");
         } else {
-          navigate("/home");
+          // navigate("/home");
         }
       });
     // navigate("/home");
