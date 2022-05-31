@@ -2,6 +2,8 @@ package com.genspark.backend.Security;
 
 import com.genspark.backend.Controller.Controller;
 import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Service.UserAccountServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +29,13 @@ import static com.genspark.backend.Security.ApplicationUserRole.*;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     final Logger logger = LoggerFactory.getLogger(Controller.class);
-    
-    private final RestaurantUserDetailService userDetailsService;
+
+    private final UserAccountServiceImpl userDetailsService;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, RestaurantUserDetailService userDetailsService) {
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, UserAccountServiceImpl userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
     }
@@ -75,8 +77,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()*/
                 //.httpBasic();
     }
-
-   /* @Override
+    @Override
     @Bean // Adding students
     protected UserDetailsService userDetailsService() {
         UserDetails josephTharpeUser = User.builder()
@@ -103,12 +104,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.roles(ApplicationUserRole.ADMIN.name())
                 .authorities(ADMIN.getGrantedAuthorities())
                 .build();
-        // need a way to add a new user to be built with their usernames/pw/roles
-        *//*UserAccount newUser = User.builder()
-                .username()
-                .password()
-                .roles()
-                .build();*//*
 
         var security = new InMemoryUserDetailsManager(
                 josephTharpeUser,
@@ -117,7 +112,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 kevinLinUser
         );
 
-        var userList = userAccountDao.findAll();
+        var userList = userDetailsService.getAllUserAccount();
         for (var user : userList){
             UserDetails details = User.builder()
                     .username(user.getEmail())
@@ -130,7 +125,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         return security;
-    }*/
+    }
+
 /*
     AuthenticationManager userAuthenticationManager() {
         return authentication -> {

@@ -98,9 +98,6 @@ public class Reservation {
         CANCELLED,
         COMPLETED;
 
-
-
-
     }
 
     @Override
