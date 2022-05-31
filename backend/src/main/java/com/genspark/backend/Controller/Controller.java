@@ -123,7 +123,7 @@ public class Controller {
     }
 
     @GetMapping("/dev/testing/email")
-    public String sendTestEmail(){
+    public String sendTestEmail() {
         return emailService.sendEmail("tkim013@gmail.com",
                 "Test from Restaurant",
                 "this was a test message")
@@ -131,7 +131,7 @@ public class Controller {
                 "Successfully sent email"
                 :
                 "Error while sending email";
-
+    }
 
     //When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the
     //default JSR 380 implementation — Hibernate Validator — and validates the argument.
