@@ -14,38 +14,40 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.genspark.backend.Security.ApplicationUserRole.*;
+
 @Configuration
 public class AppConfig {
     @Bean
     public CommandLineRunner loadUserData(UserAccountDao userAccountDao){
         List<UserAccount> USERACCOUNT = Arrays.asList(
                 new UserAccount
-                        ("ElonMusk","1", "password", "Elon@Tesla.com"),
+                        ("ElonMusk","1", "password", "Elon@Tesla.com", USER, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("BillGates","2", "password", "bill@microsoft.com"),
+                        ("BillGates","2", "password", "bill@microsoft.com",  EMPLOY, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("UnderTaker","3", "password", "taker@wwe.com"),
+                        ("UnderTaker","3", "password", "taker@wwe.com",  USER, USER.getGrantedAuthorities(),false),
                 new UserAccount
-                        ("JoeBiden","4", "password", "biden@whitehouse.gov"),
+                        ("JoeBiden","4", "password", "biden@whitehouse.gov",  ADMIN, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("Megatron","5", "password", "Deceptacons@space.com"),
+                        ("Megatron","5", "password", "Deceptacons@space.com",  USER, USER.getGrantedAuthorities(),false),
                 new UserAccount
-                        ("Cthulu","6", "password", "cult@deepsea.com"),
+                        ("Cthulu","6", "password", "cult@deepsea.com",  EMPLOY, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("FishMan","7", "password", "joe@fish.com"),
+                        ("FishMan","7", "password", "joe@fish.com",  USER, USER.getGrantedAuthorities(),false),
                 new UserAccount
-                        ("Naruto","7", "password", "ninja@fireofwill.com"),
+                        ("Naruto","7", "password", "ninja@fireofwill.com",  USER, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("Luffy","9", "password", "captain@onepiece.com"),
+                        ("Luffy","9", "password", "captain@onepiece.com",  USER, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("QueenElizabeth","10", "password", "queen@royal.com"),
+                        ("QueenElizabeth","10", "password", "queen@royal.com",  USER, USER.getGrantedAuthorities(),true),
                 new UserAccount
-                        ("Kanye","11", "password", "west@yeezy.com")
+                        ("Kanye","11", "password", "west@yeezy.com",  USER, USER.getGrantedAuthorities(),true)
         );
         return (args) -> {
             userAccountDao.saveAll(USERACCOUNT);
             userAccountDao.save(new UserAccount
-                    ("Bob","1", "password", "bob@google.com"));
+                    ("Bob","1", "password", "bob@google.com", USER, USER.getGrantedAuthorities(),true));
         };
     }
 
@@ -55,27 +57,27 @@ public class AppConfig {
 
         List<Reservation> RESERVATIONS = Arrays.asList(
                 new Reservation
-                        ("2022-07-21T12:30",1, Reservation.StatusType.TYPE1, "Joey", "02"),
+                        ("2022-07-21T12:30",1, Reservation.StatusType.PENDING, "Joey", "02"),
                 new Reservation
-                        ("2023-07-30T10:22",14, Reservation.StatusType.TYPE2, "David", "78"),
+                        ("2023-07-30T10:22",14, Reservation.StatusType.ARRIVED, "David", "78"),
                 new Reservation
-                        ("2022-08-16T09:15",10, Reservation.StatusType.TYPE3, "Sarah", "100"),
+                        ("2022-08-16T09:15",10, Reservation.StatusType.PENDING, "Sarah", "100"),
                 new Reservation
-                        ("2022-04-05T22:55",4, Reservation.StatusType.TYPE4, "Angela", "6"),
+                        ("2022-04-05T22:55",4, Reservation.StatusType.COMPLETED, "Angela", "6"),
                 new Reservation
-                        ("2022-12-12T11:30",50, Reservation.StatusType.TYPE5, "Michael", "40"),
+                        ("2022-12-12T11:30",50, Reservation.StatusType.PENDING, "Michael", "40"),
                 new Reservation
-                        ("2022-11-09T03:40",100, Reservation.StatusType.TYPE1, "Jim", "52"),
+                        ("2022-11-09T03:40",100, Reservation.StatusType.ARRIVED, "Jim", "52"),
                 new Reservation
-                        ("2022-09-05T09:30",45, Reservation.StatusType.TYPE2, "Pam", "76"),
+                        ("2022-09-05T09:30",45, Reservation.StatusType.CANCELLED, "Pam", "76"),
                 new Reservation
-                        ("2023-01-23T05:15",67, Reservation.StatusType.TYPE3, "Stanley", "55"),
+                        ("2023-01-23T05:15",67, Reservation.StatusType.CONFIRMED, "Stanley", "55"),
                 new Reservation
-                        ("2023-06-24T12:50",25, Reservation.StatusType.TYPE4, "Dwight", "33"),
+                        ("2023-06-24T12:50",25, Reservation.StatusType.ARRIVED, "Dwight", "33"),
                 new Reservation
-                        ("2022-08-30T01:30",47, Reservation.StatusType.TYPE5, "Cartman", "22"),
+                        ("2022-08-30T01:30",47, Reservation.StatusType.CONFIRMED, "Cartman", "22"),
                 new Reservation
-                        ("2022-09-24T06:40",28, Reservation.StatusType.TYPE2, "Jesus", "0000")
+                        ("2022-09-24T06:40",28, Reservation.StatusType.CANCELLED, "Jesus", "0000")
 
         );
 
@@ -84,7 +86,7 @@ public class AppConfig {
             reservationDao.saveAll(RESERVATIONS);
             // load values
             reservationDao.save(new Reservation
-                    ("11-01-2022T06:40",1, Reservation.StatusType.TYPE1, "state", "222"));
+                    ("11-01-2022T06:40",1, Reservation.StatusType.CANCELLED, "state", "222"));
         };
     }
 }

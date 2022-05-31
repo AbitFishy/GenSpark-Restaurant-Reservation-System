@@ -3,6 +3,7 @@ package com.genspark.backend.Entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+
 import javax.persistence.*;
 import java.util.stream.Stream;
 
@@ -21,6 +22,8 @@ public class Reservation {
     @Column(nullable = false)
     private int numberOfGuests;
 
+    @Column(name="reservation_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private StatusType type;
 
     public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber) {
@@ -89,24 +92,15 @@ public class Reservation {
     }
 
     public enum StatusType {
-        TYPE1("PENDING"), TYPE2("CONFIRMED"),
-        TYPE3("ARRIVED"), TYPE4("CANCELLED"), TYPE5("COMPLETED");
+        PENDING,
+        CONFIRMED,
+        ARRIVED,
+        CANCELLED,
+        COMPLETED;
 
-        private final String code;
 
-        StatusType(String code){
-            this.code = code;
-        }
 
-        @JsonCreator
-        public static StatusType decode(final String code) {
-            return Stream.of(StatusType.values()).filter(targetEnum -> targetEnum.code.equals(code)).findFirst().orElse(null);
-        }
 
-        @JsonValue
-        public String getCode() {
-            return code;
-        }
     }
 
     @Override

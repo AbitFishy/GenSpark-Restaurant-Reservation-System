@@ -28,27 +28,33 @@ public class Controller {
 
     final Logger logger = LoggerFactory.getLogger(Controller.class);
 
-    @GetMapping("/user")
+    @GetMapping("/index")
+    public String home(){
+        return "Welcome to the Home Page." + "\n" +
+                "Directory:" + "\n" +
+                "/api/user " + "/api/user/{userid}" + "\n" +
+                "/api/reservation " + "/api/reservation/{reservationid}";
+    }
+    @GetMapping(path="/user")
     // using 'ROLE_ --> because of ApplicationUserRole class --> method getGrantedAuthority()
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOY')")
     public List<UserAccount> getUserAccounts() {
         return this.userAccountService.getAllUserAccount();
     }
 
-    @GetMapping("/userAccounts/{userID}")
+    @GetMapping("/user/{userID}")
     @PreAuthorize("hasAnyRole('ROLE_EMPLOY', 'ROLE_ADMIN')")
     public UserAccount getUserAccount(@PathVariable String userID) {
         return this.userAccountService.getUserAccountById(Long.parseLong(userID));
     }
 
-    @PostMapping("/user")
+    @PostMapping(path="/user")
     @PreAuthorize("hasAuthority('admin:create')")
     public UserAccount addUserAccount(@RequestBody UserAccount userAccount) {
         return this.userAccountService.addUserAccount(userAccount);
     }
 
     @PostMapping("/login")
-    @PreAuthorize("hasAuthority('admin:create', 'employ_create')")
     public UserAccount login(@RequestBody UserAccount userAccount) {
         return this.userAccountService.login(userAccount);
     }
@@ -59,7 +65,7 @@ public class Controller {
         return this.userAccountService.authenticateUserAccount(email, clearPassword) ? "true" : "false";
     }
 
-    @PutMapping("/userAccounts/{userID}")
+    @PutMapping(path ="{userID}")
     @PreAuthorize("hasAuthority('admin:edit')")
     public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
         return this.userAccountService.updateUserAccount(userAccount, userID);
@@ -80,7 +86,7 @@ public class Controller {
     }
 
     @GetMapping("/reservation/{reservationID}")
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOY', 'ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOY', 'ROLE_ADMIN')")
     public Reservation getReservation(@PathVariable String reservationID) {
         return this.reservationService.getReservationById(Long.parseLong(reservationID));
     }
@@ -107,8 +113,8 @@ public class Controller {
 //--------------------------------------------------------------------------------------------------------------------//
     // Extras
     // 2fa
-    // http://localhost:8080/generateQRCode/code/350/350
-    @GetMapping(value = "/generateQRCode/{userID}/{width}/{height}")
+    // http://localhost:8080/api/user/{userid}/generateQRCode/code/350/350
+    @GetMapping(value = "/user/{userID}/generateQRCode/{width}/{height}")
     public ResponseEntity<byte[]> generateQRCode(
             @PathVariable("codeText") String codeText,
             @PathVariable("width") Integer width,

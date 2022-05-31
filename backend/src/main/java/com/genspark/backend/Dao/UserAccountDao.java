@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface UserAccountDao extends JpaRepository<UserAccount, Long> {
 
     Logger logger = LoggerFactory.getLogger(UserAccountDao.class);
