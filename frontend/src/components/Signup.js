@@ -13,17 +13,22 @@ import {
 } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 const Signup = ({
   email,
   setEmail,
   password,
   setPassword,
-  userName,
+  username,
   setUserName,
-  userNumber,
-  setUserNumber,
   postData,
+
+  role,
+  setRole,
 }) => {
   console.log(email);
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
@@ -32,7 +37,11 @@ const Signup = ({
   const navigate = useNavigate();
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: 13, marginBottom: 10 }}>
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ marginTop: 13, marginBottom: 10 }}
+    >
       <Grid>
         <Paper elevation={20} style={paperStyle}>
           <Grid align="center">
@@ -44,14 +53,15 @@ const Signup = ({
               Please fill this form to create an account !
             </Typography>
           </Grid>
-          <form onSubmit={()=> navigate("/")}>
+          <form onSubmit={() => navigate("/")}>
             <TextField
               fullWidth
-              label="Name"
-              placeholder="Enter your name"
+              label="Username"
+              placeholder="Enter username"
+              type="text"
               required
-              value={userName}
-              onChange={(e)=> setUserName(e.target.value)}
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <TextField
               fullWidth
@@ -60,16 +70,7 @@ const Signup = ({
               placeholder="Enter your email"
               required
               value={email}
-              onChange={(e)=> setEmail(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              label="Phone Number"
-              type="tel"
-              placeholder="Enter your phone number"
-              required
-              value={userNumber}
-              onChange={(e)=> setUserNumber(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               fullWidth
@@ -78,8 +79,42 @@ const Signup = ({
               placeholder="Enter your password"
               required
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
+            {/* <TextField
+              fullWidth
+              label="Roles"
+              type="text"
+              placeholder="Enter your role"
+              required
+              value={role}
+              onChange={(e)=> setRole(e.target.value)}
+            /> */}
+
+            <Grid item xs={12} sx={{ marginTop: 1, marginBottom: 1 }}>
+              <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
+                <InputLabel id="demo-simple-select-label">Roles</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={role}
+                  multiple="true"
+                  label="ROLES"
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <MenuItem value={"USER"} sx={{ color: "#FFBF00" }}>
+                    user
+                  </MenuItem>
+                  <MenuItem value={"MOD"} sx={{ color: "#DC143C" }}>
+                    mod
+                  </MenuItem>
+                  <MenuItem value={"ADMIN"} sx={{ color: "#097969" }}>
+                    admin
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
             <Button
               sx={{ "&:hover": { backgroundColor: "secondary.main" } }}
               type="submit"
