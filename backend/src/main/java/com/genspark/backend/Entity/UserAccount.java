@@ -14,7 +14,6 @@ public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    @NotNull
     private long userId;
 
     @Column(name = "user_name", nullable = false)
@@ -28,7 +27,7 @@ public class UserAccount {
     private String userNumber;
 
     @Column(name = "user_password", nullable = false)
-    @NotNull
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Email

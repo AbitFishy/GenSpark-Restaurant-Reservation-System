@@ -133,6 +133,10 @@ public class Controller {
 //                "Error while sending email";
 //    }
 
+    //When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the
+    //default JSR 380 implementation — Hibernate Validator — and validates the argument.
+    //When the target argument fails to pass the validation, Spring Boot throws a MethodArgumentNotValidException exception.
+    //The @ExceptionHandler annotation allows us to handle specified types of exceptions through one single method.
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
