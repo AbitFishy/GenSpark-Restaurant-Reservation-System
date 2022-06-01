@@ -11,6 +11,7 @@ import Post from "./Post";
 // import Navbar from "./Navbar";
 import Contact from "./Contact";
 import FaqComponent from "./FaqComponent";
+import Footer from "./Footer";
 
 //material imports
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -171,6 +172,7 @@ const Main = () => {
             <Route path="contact" element={<Contact />} />
           </Route>
         </Routes>
+        <Footer />
       </ThemeProvider>
     </>
   );

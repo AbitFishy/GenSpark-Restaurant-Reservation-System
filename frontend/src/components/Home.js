@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeCustom from "./HomeCustom";
 
 import axios from "axios";
 
@@ -16,7 +17,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
@@ -33,12 +34,12 @@ import FormControl from "@mui/material/FormControl";
 // import Pagination from "@mui/material/Pagination";
 import TablePagination from "@mui/material/TablePagination";
 
-import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import PropTypes from "prop-types";
+// import IconButton from "@mui/material/IconButton";
+// import FirstPageIcon from "@mui/icons-material/FirstPage";
+// import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+// import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+// import LastPageIcon from "@mui/icons-material/LastPage";
+// import PropTypes from "prop-types";
 
 import "../App.css";
 
@@ -165,6 +166,7 @@ const Home = () => {
   return (
     <>
       <img className="img-home" src="images/home-banner2.jpg" alt="home" />
+      <HomeCustom />
       <Container sx={{ marginTop: 8, marginBottom: 10 }}>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
@@ -271,6 +273,7 @@ const Home = () => {
                           <Button
                             type="submit"
                             variant="none"
+                            disabled="true"
                             endIcon={<EditIcon color="secondary" />}
                             onClick={() => handleOpen(`${index}`)}
                           >
@@ -405,6 +408,7 @@ const Home = () => {
                           <Button
                             id="delete"
                             type="submit"
+                            disabled="true"
                             variant="none"
                             endIcon={<DeleteIcon color="error" />}
                             onClick={() => deletePost(`${reservation.resId}`)}
