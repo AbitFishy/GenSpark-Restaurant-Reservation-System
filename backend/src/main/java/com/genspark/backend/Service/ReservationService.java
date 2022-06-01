@@ -1,7 +1,6 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
 
 import java.util.List;
 

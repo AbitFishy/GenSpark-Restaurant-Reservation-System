@@ -80,20 +80,6 @@ public class UserServiceImpl implements UserService {
         return "Deleted Successfully";
     }
 
-//    @Override
-//    public User login(User user) {
-//
-//        User r = null;
-//
-//        User u = this.userRepository.findUserByEmail(user.getEmail());
-//
-//        if (u != null) {
-//            r = u;
-//        }
-//
-//        return r;
-//    }
-
     @Override
     public List<User> getAllUser(Integer pageNo, Integer pageSize, String sortBy)
     {

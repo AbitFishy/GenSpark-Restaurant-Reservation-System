@@ -11,6 +11,5 @@ public interface UserService {
     ResponseEntity<String> addUser(User user);
     User updateUser(User user, Long userID);
     String deleteUserById(Long id);
-//    User login(User user);
     List<User> getAllUser(Integer pageNo, Integer pageSize, String sortBy);
 }

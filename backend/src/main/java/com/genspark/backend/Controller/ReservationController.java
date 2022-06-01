@@ -62,7 +62,7 @@ public class ReservationController {
   }
 
   @PutMapping("/reservation/{reservationID}")
-  @PreAuthorize("hasRole('ADMIN') or hasRole('ADMIN')")
+  @PreAuthorize("hasRole('ADMIN')")
   public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
     return this.reservationService.updateReservation(reservation, reservationID);
   }

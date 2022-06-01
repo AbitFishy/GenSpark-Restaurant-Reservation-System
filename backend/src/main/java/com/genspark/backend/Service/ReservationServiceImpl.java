@@ -3,8 +3,6 @@ package com.genspark.backend.Service;
 import com.genspark.backend.Repository.ReservationRepository;
 import com.genspark.backend.Entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.SimpleMailMessage;
-//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
