@@ -21,7 +21,7 @@ public class ReservationController {
     return this.reservationService.getAllReservation();
   }
 
-  @GetMapping("/user")
+  @GetMapping("/usertest")
   @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   public String userAccess() {
     return "User Content.";
