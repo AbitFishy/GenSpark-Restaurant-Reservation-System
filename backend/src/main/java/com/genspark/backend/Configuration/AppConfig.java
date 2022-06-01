@@ -32,42 +32,38 @@ public class AppConfig {
 
     @Bean
     public CommandLineRunner loadUserData(UserRepository userRepository){
-        List<User> USERACCOUNT = Arrays.asList(
+        List<User> userAccounts = Arrays.asList(
                 new User
-                        ("ElonMusk","1", "password", "Elon@Tesla.com"),
+                        ("ElonMusk", "Elon@Tesla.com","8446665555", "password"),
                 new User
-                        ("BillGates","2", "password", "bill@microsoft.com"),
+                        ("BillGates", "bill@microsoft.com","8446665555", "password"),
                 new User
-                        ("UnderTaker","3", "password", "taker@wwe.com"),
+                        ("UnderTaker","taker@wwe.com","8446665555", "password" ),
                 new User
-                        ("JoeBiden","4", "password", "biden@whitehouse.gov"),
+                        ("JoeBiden", "biden@whitehouse.gov","8446665555", "password"),
                 new User
-                        ("Megatron","5", "password", "Deceptacons@space.com"),
+                        ("Megatron", "Deceptacons@space.com","8446665555", "password"),
                 new User
-                        ("Cthulu","6", "password", "cult@deepsea.com"),
+                        ("Cthulu", "cult@deepsea.com","8446665555", "password"),
                 new User
-                        ("FishMan","7", "password", "joe@fish.com"),
+                        ("FishMan", "joe@fish.com","8446665555", "password"),
                 new User
-                        ("Naruto","7", "password", "ninja@fireofwill.com"),
+                        ("Naruto", "ninja@fireofwill.com","8446655555", "password"),
                 new User
-                        ("Luffy","9", "password", "captain@onepiece.com"),
+                        ("Luffy", "captain@onepiece.com","8446655555", "password"),
                 new User
-                        ("QueenElizabeth","10", "password", "queen@royal.com"),
+                        ("QueenElizabeth", "queen@royal.com","84466615550", "password"),
                 new User
-                        ("Kanye","11", "password", "west@yeezy.com")
+                        ("Kanye", "west@yeezy.com","8446365555", "password")
         );
-        return (args) -> {
-            userRepository.saveAll(USERACCOUNT);
-            userRepository.save(new User
-                    ("Bob","1", "password", "bob@google.com"));
-        };
+        return (args) -> userRepository.saveAll(userAccounts);
     }
 
 
     @Bean
     public ApplicationRunner loadReservationData(ReservationRepository reservationRepository) {
 
-        List<Reservation> RESERVATIONS = Arrays.asList(
+        List<Reservation> reservations = Arrays.asList(
                 new Reservation
                         ("2022-07-21T12:30:00", 1, Reservation.StatusType.TYPE1, "Joey", "02", "joey@fake.com"),
                 new Reservation
@@ -93,7 +89,7 @@ public class AppConfig {
 
         );
 
-        return (args) -> reservationRepository.saveAll(RESERVATIONS);
+        return (args) -> reservationRepository.saveAll(reservations);
     }
 }
 
