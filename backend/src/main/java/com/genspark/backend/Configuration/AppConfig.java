@@ -1,19 +1,23 @@
 
 package com.genspark.backend.Configuration;
 
-import com.genspark.backend.Repository.ReservationRepository;
-import com.genspark.backend.Repository.RoleRepository;
 import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.Role;
+import com.genspark.backend.Entity.User;
+import com.genspark.backend.Repository.ReservationRepository;
+import com.genspark.backend.Repository.RoleRepository;
+import com.genspark.backend.Repository.UserRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.genspark.backend.Entity.ERole.ROLE_ADMIN;
 
 @Configuration
 public class AppConfig {
@@ -22,33 +26,11 @@ public class AppConfig {
         List<Role> role = Arrays.asList(
                 new Role(ERole.ROLE_USER),
                 new Role(ERole.ROLE_MODERATOR),
-                new Role(ERole.ROLE_ADMIN)
+                new Role(ROLE_ADMIN)
 
-//                new UserAccount
-//                        ("BillGates","2", "password", "bill@microsoft.com"),
-//                new UserAccount
-//                        ("UnderTaker","3", "password", "taker@wwe.com"),
-//                new UserAccount
-//                        ("JoeBiden","4", "password", "biden@whitehouse.gov"),
-//                new UserAccount
-//                        ("Megatron","5", "password", "Deceptacons@space.com"),
-//                new UserAccount
-//                        ("Cthulu","6", "password", "cult@deepsea.com"),
-//                new UserAccount
-//                        ("FishMan","7", "password", "joe@fish.com"),
-//                new UserAccount
-//                        ("Naruto","7", "password", "ninja@fireofwill.com"),
-//                new UserAccount
-//                        ("Luffy","9", "password", "captain@onepiece.com"),
-//                new UserAccount
-//                        ("QueenElizabeth","10", "password", "queen@royal.com"),
-//                new UserAccount
-//                        ("Kanye","11", "password", "west@yeezy.com")
         );
         return (args) -> {
             roleRepository.saveAll(role);
-//            userAccountDao.save(new UserAccount
-//                    ("Bob","1", "password", "bob@google.com"));
         };
     }
 
@@ -85,6 +67,23 @@ public class AppConfig {
         return (args) -> {
 
             reservationRepository.saveAll(RESERVATIONS);
+        };
+    }
+
+    @Bean
+    public ApplicationRunner loadUserData(UserRepository userRepository) {
+
+        List<User> users = Arrays.asList(
+                new User ("bob", "bob@bobbert.com", new BCryptPasswordEncoder().encode("password")),
+                new User ("user", "user@domain.com", new BCryptPasswordEncoder().encode("password")),
+                new User ("raven", "nevar@google.com", new BCryptPasswordEncoder().encode("password")),
+                new User ("batman", "manbat@batcave.com", new BCryptPasswordEncoder().encode("password")),
+                new User ("manbearpig", "manbearpig@something.com", new BCryptPasswordEncoder().encode("password"))
+        );
+//  new HashSet<>(Arrays.asList(new Role(ERole.ROLE_ADMIN)))
+        return (args) -> {
+
+            userRepository.saveAll(users);
         };
     }
 }
