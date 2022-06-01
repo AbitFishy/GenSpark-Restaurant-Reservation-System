@@ -1,8 +1,8 @@
 package com.genspark.backend.Service;
 
-import com.genspark.backend.Dao.ReservationDao;
-import com.genspark.backend.Dao.UserAccountDao;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
+import com.genspark.backend.Repository.ReservationRepository;
+import com.genspark.backend.Repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,38 +18,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserAccountServiceImpl implements UserAccountService {
+public class UserServiceImpl implements UserService {
 
-    final Logger logger = LoggerFactory.getLogger(ReservationDao.class);
-
-/*    public UserAccountServiceImpl(){
-        var res = userAccountDao.findUserAccountByEmail(UserAccount.guestAccount.getEmail());
-        UserAccount guest = UserAccount.guestAccount;
-        if (res == null){
-            guest = userAccountDao.saveAndFlush(UserAccount.guestAccount);
-        }
-        guestAccountID = guest.getUserId();
-    }*/
-
+    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
 
     @Autowired
-    UserAccountDao userAccountDao;
+    UserRepository userRepository;
 
     @Override
-    public List<UserAccount> getAllUserAccount() {
-        return this.userAccountDao.findAll();
+    public List<User> getAllUser() {
+        return this.userRepository.findAll();
     }
 
     @Override
-    public UserAccount getUserAccountById(Long id) {
+    public User getUserById(Long id) {
 
         if (id < 0){
             logger.info("ID out of range: " + id);
         }
 
-        Optional<UserAccount> a = this.userAccountDao.findById(id);
+        Optional<User> a = this.userRepository.findById(id);
 
-        UserAccount userAccount;
+        User userAccount;
 
         if (a.isPresent())
         {
@@ -61,74 +51,74 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public ResponseEntity<String> addUserAccount(UserAccount userAccount) {
-        if (userAccount == null){
+    public ResponseEntity<String> addUser(User user) {
+        if (user == null){
             logger.warn("Trying to save NULL UserAccount");
             return null;
         }
-        this.userAccountDao.save(userAccount);
+        this.userRepository.save(user);
         return ResponseEntity.ok("valid");
     }
 
     @Override
-    public UserAccount updateUserAccount(UserAccount userAccount, Long userAccountID) {
-        if (userAccount == null){
+    public User updateUser(User user, Long userID) {
+        if (user == null){
             logger.warn("UpdateUserAccount with NULL userAccount");
             return null;
         }
-        if (userAccountID < 0){
-            logger.warn("ID out of Range: " + userAccountID);
+        if (userID < 0){
+            logger.warn("ID out of Range: " + userID);
             return null;
         }
 
-        Optional<UserAccount> o = this.userAccountDao.findById(userAccountID);
+        Optional<User> o = this.userRepository.findById(userID);
 
         if(!o.isPresent())
         {
-            throw new RuntimeException("user with id: " + userAccountID + " not found");
+            throw new RuntimeException("user with id: " + userID + " not found");
         }
 
-        UserAccount userAccountUpdated = o.get();
+        User userAccountUpdated = o.get();
 
-        if(userAccount.getUserName() != null) {
-            userAccountUpdated.setUserName(userAccount.getUserName());
+        if(user.getUsername() != null) {
+            userAccountUpdated.setUsername(user.getUsername());
         }
-        if(userAccount.getUserNumber() != null) {
-            userAccountUpdated.setUserNumber(userAccount.getUserNumber());
+        if(user.getUsername() != null) {
+            userAccountUpdated.setUsername(user.getUsername());
         }
-        if(userAccount.getPassword() != null) {
-            userAccountUpdated.setPassword(userAccount.getPassword());
+        if(user.getPassword() != null) {
+            userAccountUpdated.setPassword(user.getPassword());
         }
-        if(userAccount.getEmail() != null) {
-            userAccountUpdated.setEmail(userAccount.getEmail());
+        if(user.getEmail() != null) {
+            userAccountUpdated.setEmail(user.getEmail());
         }
 
-        return this.userAccountDao.save(userAccountUpdated);
+        return this.userRepository.save(userAccountUpdated);
     }
 
     @Override
-    public String deleteUserAccountById(Long id) {
+    public String deleteUserById(Long id) {
 
         if (id < 0){
             logger.warn("ID out of Range: " + id);
             return "ID out of range";
         }
 
-        this.userAccountDao.deleteById(id);
+        this.userRepository.deleteById(id);
 
         return "Deleted Successfully";
     }
 
     @Override
-    public UserAccount login(UserAccount userAccount) {
-        if (userAccount == null){
+    public User login(User user) {
+        if (user == null){
             logger.warn("NULL userAccount login attempt");
             return null;
         }
 
-        UserAccount r = null;
+        User r = null;
 
-        UserAccount u = this.userAccountDao.findUserAccountByEmail(userAccount.getEmail());
+        User u = this.userRepository.findUserAccountByEmail(user.getEmail());
 
         if (u != null) {
             r = u;
@@ -138,11 +128,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public List<UserAccount> getAllUserAccount(Integer pageNo, Integer pageSize, String sortBy)
+    public List<User> getAllUser(Integer pageNo, Integer pageSize, String sortBy)
     {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        Page<UserAccount> pagedResult = userAccountDao.findAll(paging);
+        Page<User> pagedResult = userRepository.findAll(paging);
 
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
@@ -152,11 +142,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount getUserAccountByEmail(String email) {
+    public User getUserByEmail(String email) {
         if (email == null){
             return null;
         }
-        return userAccountDao.findUserAccountByEmail(email);
+        return userRepository.findUserAccountByEmail(email);
     }
     @Override
     public String checkPasswordComplexity(String clearTextPassword) {
@@ -225,35 +215,35 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public boolean checkIsDuplicateEmail(String email){
         if (email != null && email.length() >3) {
-            return userAccountDao.findUserAccountByEmail(email) == null;
+            return userRepository.findUserAccountByEmail(email) == null;
         }
         return false;
     }
 
     @Override
-    public String validateUserAccount(UserAccount userAccount){
-        if (userAccount == null){
+    public String validateUserAccount(User user){
+        if (user == null){
             logger.warn("Try to validate NULL useraccount");
             return "Try to validate NULL useraccount";
         }
 
-        if (userAccount.isGuestAccount()){
+        if (user.isGuestAccount()){
             return "Guest";
         }
-        if (!checkNumber(userAccount.getUserNumber())) {
-            String str = "Invalid Phone Number: " + userAccount.getUserNumber();
+        if (!checkNumber(user.getPhoneNumber())) {
+            String str = "Invalid Phone Number: " + user.getPhoneNumber();
             logger.info(str);
             return str;
         }
 
-        if(!checkEmailForAtSign(userAccount.getEmail())) {
-           String str = "Invalid Email: " + userAccount.getEmail();
+        if(!checkEmailForAtSign(user.getEmail())) {
+           String str = "Invalid Email: " + user.getEmail();
            logger.info(str);
            return str;
         }
 
         {
-            var res = checkPasswordComplexity(userAccount.getPassword());
+            var res = checkPasswordComplexity(user.getPassword());
             if (!"True".equals(res)) {
                 String str = "Password Lacks Complexity: " + res;
                 logger.info(str);

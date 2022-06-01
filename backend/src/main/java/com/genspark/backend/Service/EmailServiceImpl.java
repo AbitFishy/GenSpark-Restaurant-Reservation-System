@@ -1,16 +1,12 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 @Service
 public class EmailServiceImpl implements EmailService{
@@ -36,7 +32,7 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public void sendNewUserWelcomeMessage(UserAccount userAccount) {
+    public void sendNewUserWelcomeMessage(User userAccount) {
 
     }
 

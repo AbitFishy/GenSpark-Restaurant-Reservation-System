@@ -1,10 +1,10 @@
 
 package com.genspark.backend.Configuration;
 
-import com.genspark.backend.Dao.ReservationDao;
-import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Repository.ReservationRepository;
+import com.genspark.backend.Repository.UserRepository;
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -17,41 +17,41 @@ import java.util.List;
 @Configuration
 public class AppConfig {
     @Bean
-    public CommandLineRunner loadUserData(UserAccountDao userAccountDao){
-        List<UserAccount> USERACCOUNT = Arrays.asList(
-                new UserAccount
+    public CommandLineRunner loadUserData(UserRepository userRepository){
+        List<User> USERACCOUNT = Arrays.asList(
+                new User
                         ("ElonMusk","1", "password", "Elon@Tesla.com"),
-                new UserAccount
+                new User
                         ("BillGates","2", "password", "bill@microsoft.com"),
-                new UserAccount
+                new User
                         ("UnderTaker","3", "password", "taker@wwe.com"),
-                new UserAccount
+                new User
                         ("JoeBiden","4", "password", "biden@whitehouse.gov"),
-                new UserAccount
+                new User
                         ("Megatron","5", "password", "Deceptacons@space.com"),
-                new UserAccount
+                new User
                         ("Cthulu","6", "password", "cult@deepsea.com"),
-                new UserAccount
+                new User
                         ("FishMan","7", "password", "joe@fish.com"),
-                new UserAccount
+                new User
                         ("Naruto","7", "password", "ninja@fireofwill.com"),
-                new UserAccount
+                new User
                         ("Luffy","9", "password", "captain@onepiece.com"),
-                new UserAccount
+                new User
                         ("QueenElizabeth","10", "password", "queen@royal.com"),
-                new UserAccount
+                new User
                         ("Kanye","11", "password", "west@yeezy.com")
         );
         return (args) -> {
-            userAccountDao.saveAll(USERACCOUNT);
-            userAccountDao.save(new UserAccount
+            userRepository.saveAll(USERACCOUNT);
+            userRepository.save(new User
                     ("Bob","1", "password", "bob@google.com"));
         };
     }
 
 
     @Bean
-    public ApplicationRunner loadReservationData(ReservationDao reservationDao) {
+    public ApplicationRunner loadReservationData(ReservationRepository reservationRepository) {
 
         List<Reservation> RESERVATIONS = Arrays.asList(
                 new Reservation
@@ -81,7 +81,7 @@ public class AppConfig {
 
         return (args) -> {
 
-            reservationDao.saveAll(RESERVATIONS);
+            reservationRepository.saveAll(RESERVATIONS);
             // load values
 
         };

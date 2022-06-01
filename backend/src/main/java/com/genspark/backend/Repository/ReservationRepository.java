@@ -1,4 +1,4 @@
-package com.genspark.backend.Dao;
+package com.genspark.backend.Repository;
 
 import com.genspark.backend.Entity.Reservation;
 import org.slf4j.Logger;
@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ReservationDao extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    final Logger logger = LoggerFactory.getLogger(ReservationDao.class);
+    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
 
     @Query("SELECT res FROM Reservation res WHERE res.email = ?1")
     List<Reservation> findAllReservationsByEmail(String email);

@@ -1,9 +1,9 @@
 package com.genspark.backend.Service;
 
-import com.genspark.backend.Dao.ReservationDao;
-import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Entity.User;
+import com.genspark.backend.Repository.ReservationRepository;
+import com.genspark.backend.Repository.UserRepository;
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +21,25 @@ import java.util.*;
 @Service
 public class ReservationServiceImpl implements ReservationService{
 
-    final Logger logger = LoggerFactory.getLogger(ReservationDao.class);
+    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
 
     @Autowired
-    ReservationDao reservationDao;
+    ReservationRepository reservationRepository;
     @Autowired
-    UserAccountDao userAccountDao;
+    UserRepository userRepository;
 
     @Autowired
-    UserAccountService userAccountService;
+    UserService userService;
 
     @Override
     public List<Reservation> getAllReservation() {
-        return this.reservationDao.findAll();
+        return this.reservationRepository.findAll();
     }
 
     @Override
     public Reservation getReservationById(Long id) {
 
-        Optional<Reservation> r = this.reservationDao.findById(id);
+        Optional<Reservation> r = this.reservationRepository.findById(id);
         Reservation reservation;
         if (r.isPresent())
         {
@@ -54,7 +54,11 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public List<Reservation> getAllReservationsByEmail(String email) {
-      var ress= reservationDao.findAllReservationsByEmail(email);
+        if (email.length() < 3){
+            logger.warn("Email + " + email + " too short to be valid");
+            return null;
+        }
+      var ress= reservationRepository.findAllReservationsByEmail(email);
       if (ress != null) {
           ress.sort(Comparator.comparing(Reservation::getDateTime));
       }
@@ -65,16 +69,22 @@ public class ReservationServiceImpl implements ReservationService{
     public Reservation addReservation(Reservation reservation) {
 
         if (Objects.equals(validateNewReservation(reservation), "")){
-            return this.reservationDao.save(reservation);
+            logger.trace("reservation validated");
+            var res =  this.reservationRepository.save(reservation);
+            logger.trace("reservation add with id " + res.getResId());
         }
+        logger.warn("Reservation failed validation");
         return null;
 
     }
 
     @Override
     public Reservation updateReservation(Reservation reservation, Long reservationID) {
-
-        Optional<Reservation> reservationOptional = this.reservationDao.findById(reservationID);
+        if (reservation == null){
+            logger.warn("Attempting to update with NULL reservation");
+            return null;
+        }
+        Optional<Reservation> reservationOptional = this.reservationRepository.findById(reservationID);
         if(reservationOptional.isEmpty())
         {
             logger.error("User with id: " + reservationID + " not found during updateReservation");
@@ -103,13 +113,13 @@ public class ReservationServiceImpl implements ReservationService{
             reservationUpdated.setResNumber(reservation.getResNumber());
         }
 
-        return this.reservationDao.save(reservationUpdated);
+        return this.reservationRepository.save(reservationUpdated);
     }
 
     @Override
     public String deleteReservationById(Long id) {
 
-        this.reservationDao.deleteById(id);
+        this.reservationRepository.deleteById(id);
         return "Deleted Successfully";
     }
 
@@ -117,7 +127,7 @@ public class ReservationServiceImpl implements ReservationService{
     public List<Reservation> getAllReservation(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        Page<Reservation> pagedResult = reservationDao.findAll(paging);
+        Page<Reservation> pagedResult = reservationRepository.findAll(paging);
 
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
@@ -143,7 +153,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public boolean checkIsUserInDatabase(String email){
-        return email != null && userAccountDao.findUserAccountByEmail(email) != null;
+        return email != null && userRepository.findUserAccountByEmail(email) != null;
     }
 
     @Override
@@ -173,14 +183,14 @@ public class ReservationServiceImpl implements ReservationService{
                 }
 
                 if (!
-                        userAccountService.checkEmailForAtSign(reservation.getEmail())) {
+                        userService.checkEmailForAtSign(reservation.getEmail())) {
 
                     String str = "Invalid Email: " + reservation.getEmail();
                     logger.info(str);
                     return str;
                 }
 
-                if (!userAccountService.checkNumber(reservation.getResNumber())) {
+                if (!userService.checkNumber(reservation.getResNumber())) {
                     String str = "Invalid number: " + reservation.getResNumber();
                     logger.info(str);
                     return str;
@@ -192,9 +202,9 @@ public class ReservationServiceImpl implements ReservationService{
                 return str;
             }
         } else if (this.checkIsUserInDatabase(reservation.getEmail())) {
-            UserAccount user = userAccountDao.findUserAccountByEmail(reservation.getEmail());
+            var user = userRepository.findUserAccountByEmail(reservation.getEmail());
             if (reservation.getResName() == null) {
-                reservation.setResName(user.getUserName());
+                reservation.setResName(user.getUsername());
             }
             if (reservation.getResName().length() > 2) {
                 String str = "Need Name longer than 2 characters: " + reservation.getResName();
@@ -212,9 +222,9 @@ public class ReservationServiceImpl implements ReservationService{
                 return str;
             }
             if (reservation.getResNumber() == null) {
-                reservation.setResNumber(user.getUserNumber());
+                reservation.setResNumber(user.getUsername());
             }
-            if (!userAccountService.checkNumber(reservation.getResNumber())) {
+            if (!userService.checkNumber(reservation.getResNumber())) {
                 String str = "Invalid number: " + reservation.getResNumber();
                 logger.info(str);
                 return str;

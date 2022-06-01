@@ -1,23 +1,20 @@
 package com.genspark.backend.Controller;
 
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
 import com.genspark.backend.Service.EmailService;
 import com.genspark.backend.Service.ReservationService;
-import com.genspark.backend.Service.UserAccountService;
+import com.genspark.backend.Service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +28,7 @@ public class Controller {
     final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @Autowired
-    private UserAccountService userAccountService;
+    private UserService userService;
 
     @Autowired
     private ReservationService reservationService;
@@ -45,48 +42,48 @@ public class Controller {
     }
 
     @GetMapping("/user")
-    public List<UserAccount> getUserAccounts() {
-        return this.userAccountService.getAllUserAccount();
+    public List<User> getUsers() {
+        return this.userService.getAllUser();
     }
 
     @GetMapping("/userp")
-    public ResponseEntity<List<UserAccount>> getAllUserAccounts(
+    public ResponseEntity<List<User>> getAllUsers(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "userId") String sortBy)
     {
-        List<UserAccount> list = userAccountService.getAllUserAccount(pageNo, pageSize, sortBy);
+        List<User> list = userService.getAllUser(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/userAccounts/{userID}")
-    public UserAccount getUserAccount(@PathVariable String userID) {
-        return this.userAccountService.getUserAccountById(Long.parseLong(userID));
+    public User getUser(@PathVariable String userID) {
+        return this.userService.getUserById(Long.parseLong(userID));
     }
     @GetMapping("user/{email}")
-    public UserAccount getUserAccountEmail(@PathVariable String email){
-        return this.userAccountService.getUserAccountByEmail(email);
+    public User getUserEmail(@PathVariable String email){
+        return this.userService.getUserByEmail(email);
     }
 
     @PostMapping("/user")
-    ResponseEntity<String> addUserAccount(@Valid @RequestBody UserAccount userAccount) {
-        return this.userAccountService.addUserAccount(userAccount);
+    ResponseEntity<String> addUser(@Valid @RequestBody User userAccount) {
+        return this.userService.addUser(userAccount);
     }
 
     @PostMapping("/login")
-    public UserAccount login(@RequestBody UserAccount userAccount) {
-        return this.userAccountService.login(userAccount);
+    public User login(@RequestBody User userAccount) {
+        return this.userService.login(userAccount);
     }
 
     @PutMapping("/user/{userID}")
-    public UserAccount updateUserAccount(@RequestBody UserAccount userAccount, @PathVariable Long userID) {
-        return this.userAccountService.updateUserAccount(userAccount, userID);
+    public User updateUser(@RequestBody User userAccount, @PathVariable Long userID) {
+        return this.userService.updateUser(userAccount, userID);
     }
 
     @DeleteMapping("/user/{userID}")
     public String deleteAccount(@PathVariable String userID)
     {
-        return this.userAccountService.deleteUserAccountById(Long.parseLong(userID));
+        return this.userService.deleteUserById(Long.parseLong(userID));
     }
 
     @GetMapping("/reservation")
