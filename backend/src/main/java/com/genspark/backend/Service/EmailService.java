@@ -8,5 +8,6 @@ public interface EmailService {
 
     void sendReservationReminder(Reservation reservation);
     void sendNewUserWelcomeMessage(User userAccount);
-    boolean sendEmail(String to, String subject, String body);
+
+    boolean sendEmail(String to, String subject, String body, boolean sendAsync);
 }

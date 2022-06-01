@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> o = this.userRepository.findById(userID);
 
-        if(!o.isPresent())
+        if(o.isEmpty())
         {
             throw new RuntimeException("user with id: " + userID + " not found");
         }
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
         User r = null;
 
-        User u = this.userRepository.findUserAccountByEmail(user.getEmail());
+        User u = this.userRepository.findUserByEmail(user.getEmail());
 
         if (u != null) {
             r = u;
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
         if (email == null){
             return null;
         }
-        return userRepository.findUserAccountByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
     @Override
     public String checkPasswordComplexity(String clearTextPassword) {
@@ -212,7 +212,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkIsDuplicateEmail(String email){
         if (email != null && email.length() >3) {
-            return userRepository.findUserAccountByEmail(email) == null;
+            return userRepository.findUserByEmail(email) == null;
         }
         return false;
     }

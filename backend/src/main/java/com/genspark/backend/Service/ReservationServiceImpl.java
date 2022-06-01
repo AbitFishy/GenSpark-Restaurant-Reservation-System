@@ -23,8 +23,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Autowired
     ReservationRepository reservationRepository;
-    @Autowired
-    ReservationRepository reservationRepository;
+
     @Autowired
     UserRepository userRepository;
 
@@ -153,7 +152,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public boolean checkIsUserInDatabase(String email){
-        return email != null && userRepository.findUserAccountByEmail(email) != null;
+        return email != null && userRepository.findUserByEmail(email) != null;
     }
 
     @Override
@@ -202,7 +201,7 @@ public class ReservationServiceImpl implements ReservationService{
                 return str;
             }
         } else if (this.checkIsUserInDatabase(reservation.getEmail())) {
-            var user = userRepository.findUserAccountByEmail(reservation.getEmail());
+            var user = userRepository.findUserByEmail(reservation.getEmail());
             if (reservation.getResName() == null) {
                 reservation.setResName(user.getUsername());
             }

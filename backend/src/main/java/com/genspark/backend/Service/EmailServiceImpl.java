@@ -1,7 +1,7 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
