@@ -3,6 +3,7 @@ package com.genspark.backend.Controller;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,20 +56,20 @@ public class ReservationController {
     return this.reservationService.getReservationById(Long.parseLong(reservationID));
   }
 
-  @PostMapping("/reservation")
-  @PreAuthorize("hasRole('USER')")
+  @PostMapping("/reservation/add")
+//  @PostAuthorize("hasRole('USER')")
   public Reservation addReservation(@RequestBody Reservation reservation) {
     return this.reservationService.addReservation(reservation);
   }
 
   @PutMapping("/reservation/{reservationID}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public Reservation updateReservation(@RequestBody Reservation reservation, @PathVariable Long reservationID) {
     return this.reservationService.updateReservation(reservation, reservationID);
   }
 
   @DeleteMapping("/reservation/{reservationID}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PostAuthorize("hasRole('ADMIN')")
   public String deleteReservation(@PathVariable String reservationID)
   {
     return this.reservationService.deleteReservationById(Long.parseLong(reservationID));
