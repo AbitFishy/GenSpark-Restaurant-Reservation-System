@@ -51,8 +51,8 @@ public class UserController {
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/userAccounts/{userID}")
-    public User getUserAccount(@PathVariable String userID) {
+    @GetMapping("/user/{userID}")
+    public User getUserById(@PathVariable String userID) {
         return this.userService.getUserById(Long.parseLong(userID));
     }
 
