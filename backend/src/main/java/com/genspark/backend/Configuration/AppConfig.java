@@ -85,9 +85,6 @@ public class AppConfig {
         return (args) -> {
 
             reservationRepository.saveAll(RESERVATIONS);
-            // load values
-            reservationRepository.save(new Reservation
-                    ("11-01-2022T06:40",1, Reservation.StatusType.TYPE1, "state", "222"));
         };
     }
 }
