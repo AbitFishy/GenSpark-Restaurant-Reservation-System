@@ -3,23 +3,18 @@ package com.genspark.backend.Configuration;
 
 import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.User;
 import com.genspark.backend.Entity.Role;
 import com.genspark.backend.Entity.User;
 import com.genspark.backend.Repository.ReservationRepository;
 import com.genspark.backend.Repository.RoleRepository;
 import com.genspark.backend.Repository.UserRepository;
-import com.genspark.backend.Repository.UserRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static com.genspark.backend.Entity.ERole.ROLE_ADMIN;
 
 @Configuration
 public class AppConfig {
