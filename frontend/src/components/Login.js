@@ -95,8 +95,8 @@ const Login = ({ userLog, setUserLog,
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/contact" variant="body2">
-                Admin signin?
+              <Link href="/home" variant="body2">
+                reservation as guess ?
               </Link>
             </Grid>
             <Grid item>
