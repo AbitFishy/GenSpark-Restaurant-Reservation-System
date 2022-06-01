@@ -6,9 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-@Entity
-@Table(name = "user_accounts", uniqueConstraints = {
-        @UniqueConstraint(name="user_email_unique", columnNames = "user_email")})
+//@Entity
+//@Table(name = "user_accounts", uniqueConstraints = {
+//        @UniqueConstraint(name="user_email_unique", columnNames = "user_email")})
 
 public class UserAccount {
     @Id
