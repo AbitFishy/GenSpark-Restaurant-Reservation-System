@@ -90,7 +90,7 @@ public class Controller {
     public String sendTestEmail() {
         return emailService.sendEmail("tkim013@gmail.com",
                 "Test from Restaurant",
-                "this was a test message")
+                "this was a test message", true)
                 ?
                 "Successfully sent email"
                 :
