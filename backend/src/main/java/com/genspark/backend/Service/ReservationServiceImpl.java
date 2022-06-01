@@ -30,6 +30,9 @@ public class ReservationServiceImpl implements ReservationService{
     @Autowired
     UserService userService;
 
+    @Autowired
+    EmailService emailService;
+
     @Override
     public List<Reservation> getAllReservation() {
         return this.reservationRepository.findAll();
@@ -65,11 +68,18 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public List<Reservation> getAllReservationsByUserID(Long userID) {
+        String email = userService.getUserById(userID).getEmail();
+        return getAllReservationsByEmail(email);
+    }
+
+    @Override
     public Reservation addReservation(Reservation reservation) {
 
         if (Objects.equals(validateNewReservation(reservation), "")){
             logger.trace("reservation validated");
             var res =  this.reservationRepository.save(reservation);
+            emailService.sendReservationReminder(res);
             logger.trace("reservation add with id " + res.getResId());
         }
         logger.warn("Reservation failed validation");

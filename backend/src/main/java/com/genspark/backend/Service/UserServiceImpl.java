@@ -220,8 +220,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String validateUserAccount(User user){
         if (user == null){
-            logger.warn("Try to validate NULL useraccount");
-            return "Try to validate NULL useraccount";
+            logger.warn("Trying to validate NULL useraccount");
+            return "Trying to validate NULL useraccount";
         }
 
         if (user.isGuestAccount()){

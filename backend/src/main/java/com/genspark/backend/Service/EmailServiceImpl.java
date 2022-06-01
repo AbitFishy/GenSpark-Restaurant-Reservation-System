@@ -2,7 +2,6 @@ package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.User;
-import com.genspark.backend.Repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import java.util.Arrays;
 @Service
 public class EmailServiceImpl implements EmailService{
 
+    private final String companyEmail = "RESTaurantGenSpark@gmail.com";
     Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     @Autowired
@@ -41,15 +41,23 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public void sendNewUserWelcomeMessage(User userAccount) {
+    public void sendNewUserWelcomeMessage(User user) {
+        var email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setFrom(companyEmail);
+        email.setSubject("Welcome " + user.getUsername() + " to RESTaurant!");
 
+        email.setText("Welcome " + user.getUsername() + " to RESTaurant!");
+        new Thread(() -> {
+            var res = sendEmailInternal(email);
+        }).start();
     }
 
     @Override
     public boolean sendEmail(String to, String subject, String body, boolean sendAsync) {
         var email = new SimpleMailMessage();
         email.setTo(to);
-        email.setFrom("RESTaurantGenSpark@gmail.com");
+        email.setFrom(companyEmail);
         email.setSubject(subject);
         email.setText(body);
 
@@ -63,6 +71,31 @@ public class EmailServiceImpl implements EmailService{
             return sendEmailInternal(email);
 
         }
+    }
+
+    @Override
+    public boolean sendContactEmail(String name, String replyEmail, String message) {
+        var email = new SimpleMailMessage();
+        email.setTo(companyEmail);
+        email.setFrom(companyEmail);
+        email.setSubject("Contact Message from " + name);
+        email.setText("Name: " +name + "\nEmail: " + replyEmail + "\nMessage:\n"+ message);
+        return sendEmailInternal(email);
+    }
+
+    @Override
+    public void sendNewUserConfirmationEmail(User user) {
+        var email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setFrom(companyEmail);
+        email.setSubject("Please Confirm your account at RESTaurant!");
+
+        email.setText("Welcome " + user.getUsername() + "!\n + Please click here or copy this" +
+                " link and paste in your browswer to confirm your account at RESTaurant!"+
+                " LINK GOES HERE");
+        new Thread(() -> {
+            var res = sendEmailInternal(email);
+        }).start();
     }
 
     private boolean sendEmailInternal(SimpleMailMessage email) {

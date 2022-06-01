@@ -12,6 +12,7 @@ public interface ReservationService {
     //Reservation getReservationByEmail(String Email) ;
 
     List<Reservation> getAllReservationsByEmail(String Email);
+    List<Reservation> getAllReservationsByUserID(Long userID);
     Reservation addReservation(Reservation reservation);
     Reservation updateReservation(Reservation reservation, Long reservationID);
     String deleteReservationById(Long id);

@@ -10,4 +10,7 @@ public interface EmailService {
     void sendNewUserWelcomeMessage(User userAccount);
 
     boolean sendEmail(String to, String subject, String body, boolean sendAsync);
+    boolean sendContactEmail(String name, String replyEmail, String message);
+
+    void sendNewUserConfirmationEmail(User userAccount);
 }
