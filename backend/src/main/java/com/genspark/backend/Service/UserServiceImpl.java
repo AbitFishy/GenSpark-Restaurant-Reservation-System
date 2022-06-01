@@ -78,22 +78,19 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("user with id: " + userID + " not found");
         }
 
-        User userAccountUpdated = o.get();
+        User userUpdated = o.get();
 
         if(user.getUsername() != null) {
-            userAccountUpdated.setUsername(user.getUsername());
-        }
-        if(user.getUsername() != null) {
-            userAccountUpdated.setUsername(user.getUsername());
+            userUpdated.setUsername(user.getUsername());
         }
         if(user.getPassword() != null) {
-            userAccountUpdated.setPassword(user.getPassword());
+            userUpdated.setPassword(user.getPassword());
         }
         if(user.getEmail() != null) {
-            userAccountUpdated.setEmail(user.getEmail());
+            userUpdated.setEmail(user.getEmail());
         }
 
-        return this.userRepository.save(userAccountUpdated);
+        return this.userRepository.save(userUpdated);
     }
 
     @Override

@@ -7,8 +7,6 @@ import com.genspark.backend.Entity.Reservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.SimpleMailMessage;
-//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,8 @@ public class ReservationServiceImpl implements ReservationService{
 
     final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
 
+    @Autowired
+    ReservationRepository reservationRepository;
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired

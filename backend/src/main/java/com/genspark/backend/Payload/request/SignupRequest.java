@@ -15,7 +15,6 @@ public class SignupRequest {
     @Email
     private String email;
 
-
     @Size(max = 20)
     private String phoneNumber;
     
@@ -48,7 +47,6 @@ public class SignupRequest {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
 
     public String getPassword() {
         return password;

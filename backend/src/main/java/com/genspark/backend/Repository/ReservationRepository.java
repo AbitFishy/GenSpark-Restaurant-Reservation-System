@@ -14,7 +14,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT res FROM Reservation res WHERE res.email = ?1")
     List<Reservation> findAllReservationsByEmail(String email);
-
-/*    @Query("SELECT u FROM Reservation u WHERE u.email and max(u.date) = ?1")
-    Reservation findMostRecentReservationEmail(String email);*/
 }

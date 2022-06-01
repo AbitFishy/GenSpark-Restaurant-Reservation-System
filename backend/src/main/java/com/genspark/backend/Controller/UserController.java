@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -79,7 +87,7 @@ public class UserController {
     public String sendTestEmail() {
         return emailService.sendEmail("tkim013@gmail.com",
                 "Test from Restaurant",
-                "this was a test message")
+                "this was a test message", true)
                 ?
                 "Successfully sent email"
                 :

@@ -2,9 +2,11 @@
 package com.genspark.backend.Configuration;
 
 import com.genspark.backend.Repository.ReservationRepository;
-import com.genspark.backend.Repository.UserRepository;
+import com.genspark.backend.Repository.RoleRepository;
+import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.User;
+import com.genspark.backend.Entity.Role;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,19 @@ import java.util.List;
 
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public CommandLineRunner loadRoleData(RoleRepository roleRepository){
+        List<Role> role = Arrays.asList(
+                new Role(ERole.ROLE_USER),
+                new Role(ERole.ROLE_MODERATOR),
+                new Role(ERole.ROLE_ADMIN)
+        );
+        return (args) -> {
+            roleRepository.saveAll(role);
+        };
+    }
+
     @Bean
     public CommandLineRunner loadUserData(UserRepository userRepository){
         List<User> USERACCOUNT = Arrays.asList(
@@ -82,8 +97,6 @@ public class AppConfig {
         return (args) -> {
 
             reservationRepository.saveAll(RESERVATIONS);
-            // load values
-
         };
     }
 }
