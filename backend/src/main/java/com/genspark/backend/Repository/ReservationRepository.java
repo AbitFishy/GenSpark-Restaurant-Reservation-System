@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
+    Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
 
     @Query("SELECT res FROM Reservation res WHERE res.email = ?1")
     List<Reservation> findAllReservationsByEmail(String email);

@@ -3,8 +3,6 @@ package com.genspark.backend.Controller;
 import com.genspark.backend.Entity.User;
 import com.genspark.backend.Service.EmailService;
 import com.genspark.backend.Service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,21 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "api")
 public class UserController {
-
-    final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -35,11 +23,6 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
-//    @GetMapping("/")
-//    public String home() {
-//        return "Hi there.";
-//    }
-//
     @GetMapping("/user")
     public List<User> getUsers() {
         return this.userService.getAllUser();
@@ -64,12 +47,7 @@ public class UserController {
     ResponseEntity<String> addUser(@Valid @RequestBody User user) {
         return this.userService.addUser(user);
     }
-//
-//    @PostMapping("/login")
-//    public UserAccount login(@RequestBody UserAccount userAccount) {
-//        return this.userAccountService.login(userAccount);
-//    }
-//
+
     @PutMapping("/user/{userID}")
     public User updateUser(@RequestBody User user, @PathVariable Long userID) {
         return this.userService.updateUser(user, userID);

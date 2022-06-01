@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
+    final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     UserRepository userRepository;
@@ -38,9 +38,6 @@ public class UserServiceImpl implements UserService {
         }
 
         Optional<User> a = this.userRepository.findById(id);
-
-        User userAccount;
-
         if (a.isPresent())
         {
             return a.get();
@@ -52,11 +49,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> addUser(User user) {
-        if (user == null){
-            logger.warn("Trying to save NULL UserAccount");
+        var res = validateUserAccount(user);
+        if ( res.compareTo("") == 0 || res.compareTo("Guest") == 0 ){
+            logger.warn("Trying to add Invalid user");
             return null;
         }
-        this.userRepository.save(user);
+        logger.trace("Added user: " + this.userRepository.save(user));
         return ResponseEntity.ok("valid");
     }
 
@@ -75,7 +73,8 @@ public class UserServiceImpl implements UserService {
 
         if(o.isEmpty())
         {
-            throw new RuntimeException("user with id: " + userID + " not found");
+            logger.warn("user with id: " + userID + " not found");
+            return null;
         }
 
         User userUpdated = o.get();
@@ -102,11 +101,12 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.deleteById(id);
+        logger.trace("Deleted User ID: " + id);
 
         return "Deleted Successfully";
     }
 
-    @Override
+/*    @Override
     public User login(User user) {
         if (user == null){
             logger.warn("NULL userAccount login attempt");
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return r;
-    }
+    }*/
 
     @Override
     public List<User> getAllUser(Integer pageNo, Integer pageSize, String sortBy)

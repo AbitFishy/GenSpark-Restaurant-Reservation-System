@@ -11,7 +11,7 @@ public interface UserService {
     ResponseEntity<String> addUser(User userAccount);
     User updateUser(User user, Long userID);
     String deleteUserById(Long id);
-    User login(User user);
+//    User login(User user);
     List<User> getAllUser(Integer pageNo, Integer pageSize, String sortBy);
     User getUserByEmail(String email);
     String checkPasswordComplexity(String clearTextPassword);

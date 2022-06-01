@@ -19,7 +19,7 @@ import java.util.*;
 @Service
 public class ReservationServiceImpl implements ReservationService{
 
-    final Logger logger = LoggerFactory.getLogger(ReservationRepository.class);
+    final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     @Autowired
     ReservationRepository reservationRepository;
