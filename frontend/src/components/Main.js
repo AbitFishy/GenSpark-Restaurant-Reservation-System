@@ -16,7 +16,13 @@ import FaqComponent from "./FaqComponent";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import WithNav from "./Navigation rendering/WithNav";
 import WithOut from "./Navigation rendering/WithOut";
-// import Testing from "./Testing";
+
+// import Testing from "admin";\
+import AdminPage from "./AdminPage"
+import WithAdmin from "./Navigation rendering/WithAdmin";
+import Reservation from './Admin/Reservation'
+import User from "./Admin/User";
+
 
 const theme = createTheme({
   palette: {
@@ -35,6 +41,7 @@ const theme = createTheme({
     fontFamily: "Garamond",
   },
 });
+
 
 const Main = () => {
   const [username, setUserName] = useState("");
@@ -68,10 +75,10 @@ const Main = () => {
         password,
         email,
       })
-      .then((res) => { 
-        const data = res.data.roles
-        console.warn("posting signup data", res)
-        console.warn("posting signup roles", data)
+      .then((res) => {
+        const data = res.data.roles;
+        console.warn("posting signup data", res);
+        console.warn("posting signup roles", data);
         // console.warn(data.includes("ROLE_ADMIN") + "includes ROLE_ADMIN")
         // if( data.includes("ROLE_ADMIN")){
         //   navigate("/faq");
@@ -89,17 +96,30 @@ const Main = () => {
         username: userLog,
         password: passwordLog,
       })
-      .then((res) =>{ 
-        const data = res.data.roles
-        console.warn("posting Login data", res.data)
+      .then((res) => {
+        const data = res.data.roles;
+        console.warn("posting Login data", res.data);
         // console.warn(data.includes("ROLE_ADMIN") + "includes ROLE_ADMIN")
-        if( data.includes("ROLE_ADMIN")){
-          // navigate("/faq");
+        if (data.includes("ROLE_ADMIN")) {
+          navigate("/admin");
         } else {
-          // navigate("/home");
+          navigate("/home");
         }
       });
     // navigate("/home");
+  };
+
+  //logout
+  const handleLogout = () => {
+    axios
+      .post("http://localhost:8080/api/auth/signout", {
+        // username: userLog,
+        // password: passwordLog,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+    navigate("/");
   };
 
   return (
@@ -137,8 +157,14 @@ const Main = () => {
               }
             />
           </Route>
+          <Route element={<WithAdmin handleLogout={handleLogout} />}>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/reservation" element={<Reservation />} />
+          </Route>
 
-          <Route element={<WithNav />}>
+
+          <Route element={<WithNav handleLogout={handleLogout} />}>
             <Route path="home" element={<Home />} />
             <Route path="post" element={<Post />} />
             <Route path="faq" element={<FaqComponent />} />
