@@ -1,7 +1,7 @@
 package com.genspark.backend.Service;
 
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
+import com.genspark.backend.Entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +10,17 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Arrays;
 
 @Service
 public class EmailServiceImpl implements EmailService{
 
+    private final String companyEmail = "RESTaurantGenSpark@gmail.com";
     Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    private final String reservationReminderTitle = "A Reminder About Your Reservation at Restaurant";
     @Autowired
     private MailSender mailSender;
     public void setMailSender(MailSender mailSender) {
@@ -26,27 +29,35 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public void sendReservationReminder(Reservation reservation) {
-//        var user = reservation.getUserAccount();
-//        LocalDateTime timeDate = LocalDateTime.from(reservation.getDateTime());
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Hello ").append(user.getPrimaryName()).append(". You have a reservation at Restaurant ");
-//        sb.append(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(timeDate)).append(" at ");
-//        sb.append(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(timeDate));
-//        sb.append("\n\nIf you need to change your reservation or cancel, please visit our website at localhost:8080/reservations");
-//        sb.append("or call us at 555-555-5555.\n\nThank you for eating at RESTaurant!");
-//        sendEmail(reservation.getUserAccount().getEmail(), reservationReminderTitle, sb.toString());
+
+        LocalDateTime timeDate = LocalDateTime.from(reservation.getDateTime());
+        String sb = "Hello " + reservation.getResName() + ". You have a reservation at Restaurant " +
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(timeDate) + " at " +
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(timeDate) +
+                "\n\nIf you need to change your reservation or cancel, please visit our website at localhost:8080/reservations" +
+                "or call us at 555-555-5555.\n\nThank you for eating at RESTaurant!";
+        String reservationReminderTitle = "A Reminder About Your Reservation at Restaurant";
+        sendEmail(reservation.getEmail(), reservationReminderTitle, sb, true);
     }
 
     @Override
-    public void sendNewUserWelcomeMessage(UserAccount userAccount) {
+    public void sendNewUserWelcomeMessage(User user) {
+        var email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setFrom(companyEmail);
+        email.setSubject("Welcome " + user.getUsername() + " to RESTaurant!");
 
+        email.setText("Welcome " + user.getUsername() + " to RESTaurant!");
+        new Thread(() -> {
+            var res = sendEmailInternal(email);
+        }).start();
     }
 
     @Override
     public boolean sendEmail(String to, String subject, String body, boolean sendAsync) {
         var email = new SimpleMailMessage();
         email.setTo(to);
-        email.setFrom("RESTaurantGenSpark@gmail.com");
+        email.setFrom(companyEmail);
         email.setSubject(subject);
         email.setText(body);
 
@@ -60,6 +71,31 @@ public class EmailServiceImpl implements EmailService{
             return sendEmailInternal(email);
 
         }
+    }
+
+    @Override
+    public boolean sendContactEmail(String name, String replyEmail, String message) {
+        var email = new SimpleMailMessage();
+        email.setTo(companyEmail);
+        email.setFrom(companyEmail);
+        email.setSubject("Contact Message from " + name);
+        email.setText("Name: " +name + "\nEmail: " + replyEmail + "\nMessage:\n"+ message);
+        return sendEmailInternal(email);
+    }
+
+    @Override
+    public void sendNewUserConfirmationEmail(User user) {
+        var email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setFrom(companyEmail);
+        email.setSubject("Please Confirm your account at RESTaurant!");
+
+        email.setText("Welcome " + user.getUsername() + "!\n + Please click here or copy this" +
+                " link and paste in your browswer to confirm your account at RESTaurant!"+
+                " LINK GOES HERE");
+        new Thread(() -> {
+            var res = sendEmailInternal(email);
+        }).start();
     }
 
     private boolean sendEmailInternal(SimpleMailMessage email) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Entity
@@ -16,19 +17,45 @@ public class Reservation {
     private long resId;
 
     @Column(name="date", nullable = false)
-    private String dateTime;
+    private LocalDateTime dateTime;
 
     @Column(nullable = false)
     private int numberOfGuests;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "guest_reservation")
+    private boolean guestReservation;
+
     private StatusType type;
 
-    public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber) {
+    public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email) {
+        this.dateTime = LocalDateTime.parse(dateTime);
+        this.numberOfGuests = numberOfGuests;
+        this.type = type;
+        this.resName = resName;
+        this.resNumber = resNumber;
+        this.email = email;
+        this.guestReservation=  false;
+    }
+    public Reservation(String dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email, boolean isGuest) {
+        this.dateTime = LocalDateTime.parse(dateTime);
+        this.numberOfGuests = numberOfGuests;
+        this.type = type;
+        this.resName = resName;
+        this.resNumber = resNumber;
+        this.email = email;
+        this.guestReservation=  isGuest;
+    }
+    public Reservation(LocalDateTime dateTime, int numberOfGuests, StatusType type, String resName, String resNumber, String email) {
         this.dateTime = dateTime;
         this.numberOfGuests = numberOfGuests;
         this.type = type;
         this.resName = resName;
         this.resNumber = resNumber;
+        this.email = email;
+        this.guestReservation = false;
     }
 
     @Column(name = "primaryName", nullable = false)
@@ -64,11 +91,11 @@ public class Reservation {
         this.resId = resId;
     }
 
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -86,6 +113,18 @@ public class Reservation {
 
     public void setType(StatusType type) {
         this.type = type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isGuestReservation() {
+        return guestReservation;
     }
 
     public enum StatusType {
@@ -118,4 +157,9 @@ public class Reservation {
                 ", type=" + type +
                 '}';
     }
+
+    //"2022-07-21T12:30"
+/*    private LocalDateTime getDateTimeFromString(String dateString){
+        //return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyy-MM-ddHH:mm"));
+    }*/
 }

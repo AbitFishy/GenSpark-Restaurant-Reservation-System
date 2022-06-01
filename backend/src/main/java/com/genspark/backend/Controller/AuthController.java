@@ -11,6 +11,10 @@ import com.genspark.backend.Repository.RoleRepository;
 import com.genspark.backend.Repository.UserRepository;
 import com.genspark.backend.Security.jwt.JwtUtils;
 import com.genspark.backend.Security.services.UserDetailsImpl;
+import com.genspark.backend.Service.EmailService;
+import com.genspark.backend.Service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -33,6 +37,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+  final Logger logger = LoggerFactory.getLogger(AuthController.class);
   @Autowired
   AuthenticationManager authenticationManager;
 
@@ -43,32 +49,46 @@ public class AuthController {
   RoleRepository roleRepository;
 
   @Autowired
+  UserService userService;
+
+  @Autowired
+  EmailService emailService;
+
+  @Autowired
   PasswordEncoder encoder;
 
   @Autowired
   JwtUtils jwtUtils;
 
+
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    Authentication authentication = authenticationManager
-            .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    try {
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
+      Authentication authentication = authenticationManager
+              .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+      SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+      UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-    List<String> roles = userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.toList());
+      ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-            .body(new UserInfoResponse(userDetails.getId(),
-                    userDetails.getUsername(),
-                    userDetails.getEmail(),
-                    roles));
+      List<String> roles = userDetails.getAuthorities().stream()
+              .map(GrantedAuthority::getAuthority)
+              .collect(Collectors.toList());
+
+      return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+              .body(new UserInfoResponse(userDetails.getId(),
+                      userDetails.getUsername(),
+                      userDetails.getEmail(),
+                      roles));
+    }
+    catch (Exception e){
+      logger.error("Authentication Error for " + loginRequest.getUsername());
+      return ResponseEntity.badRequest().build();
+    }
   }
 
   @PostMapping("/signup")
@@ -81,11 +101,27 @@ public class AuthController {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
 
+
     // Create new user's account
     User user = new User(signUpRequest.getUsername(),
-            signUpRequest.getEmail(),
-            encoder.encode(signUpRequest.getPassword()));
+            signUpRequest.getEmail(), signUpRequest.getPhoneNumber(),
+            signUpRequest.getPassword());
 
+    var res = userService.validateUserAccount(user);
+    if (res.equals("")){
+      var role = new Role(ERole.ROLE_USER);
+      user.setPassword(encoder.encode(user.getPassword()));
+      Set<Role> roles = new HashSet<>();
+      roles.add(role);
+      user.setRoles(roles);
+      userRepository.save(user);
+      emailService.sendNewUserWelcomeMessage(user);
+      return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    return ResponseEntity.ok(new MessageResponse(res));
+
+/*  //Other roles should be accessed by different login urls that are admin only
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
 
@@ -119,7 +155,9 @@ public class AuthController {
     user.setRoles(roles);
     userRepository.save(user);
 
-    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));*/
+
+    //return ResponseEntity.badRequest().build();
   }
 
   @PostMapping("/signout")

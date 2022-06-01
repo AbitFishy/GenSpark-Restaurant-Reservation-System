@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,24 +23,20 @@ import java.util.Map;
 public class UserController {
 
     final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private EmailService emailService;
 
-//    @GetMapping("/")
-//    public String home() {
-//        return "Hi there.";
-//    }
-//
     @GetMapping("/user")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<User> getUsers() {
         return this.userService.getAllUser();
     }
 
     @GetMapping("/userp")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<List<User>> getAllUser(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
@@ -52,26 +47,38 @@ public class UserController {
     }
 
     @GetMapping("/user/{userID}")
-    public User getUserById(@PathVariable String userID) {
-        return this.userService.getUserById(Long.parseLong(userID));
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public User getUserById(@Valid @PathVariable Long userID) {
+        try {
+           if(Objects.equals(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(), userID)) {
+               return this.userService.getUserById(userID);
+           }
+        }
+        catch (Exception ignored){
+
+        }
+        logger.warn("Cannot get userID: " + userID);
+        return null;
     }
 
-    @PostMapping("/user")
+/*    @PostMapping("/user")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     ResponseEntity<String> addUser(@Valid @RequestBody User user) {
         return this.userService.addUser(user);
-    }
-//
-//    @PostMapping("/login")
-//    public UserAccount login(@RequestBody UserAccount userAccount) {
-//        return this.userAccountService.login(userAccount);
-//    }
-//
+    }*/
+
     @PutMapping("/user/{userID}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public User updateUser(@RequestBody User user, @PathVariable Long userID) {
-        return this.userService.updateUser(user, userID);
+        if(Objects.equals(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(), userID)) {
+            return this.userService.updateUser(user, userID);
+        }
+        logger.warn("Cannot update userID: " +  userID);
+        return null;
     }
 
     @DeleteMapping("/user/{userID}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteUserById(@PathVariable String userID)
     {
         return this.userService.deleteUserById(Long.parseLong(userID));
@@ -80,6 +87,7 @@ public class UserController {
 
 
     @GetMapping("/dev/testing/email")
+    @PreAuthorize("hasRole('ADMIN')")
     public String sendTestEmail() {
         return emailService.sendEmail("tkim013@gmail.com",
                 "Test from Restaurant",

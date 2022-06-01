@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.genspark.backend.Entity.ERole.ROLE_GUEST;
+
 @Entity
 @Table(name = "users",
        uniqueConstraints = {
@@ -27,6 +29,11 @@ public class User {
   @Email
   private String email;
 
+
+  @Column()
+  @Size(max = 20)
+  private String phoneNumber;
+
   @NotBlank
   @Size(max = 120)
   private String password;
@@ -46,9 +53,10 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String phoneNumber, String password) {
     this.username = username;
     this.email = email;
+    this.phoneNumber = phoneNumber;
     this.password = password;
   }
 
@@ -76,6 +84,14 @@ public class User {
     this.email = email;
   }
 
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
   public String getPassword() {
     return password;
   }
@@ -90,5 +106,22 @@ public class User {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public boolean isGuestAccount(){
+    Role role = new Role(ROLE_GUEST);
+    return roles.contains(role);
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", email='" + email + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
+            ", roles=" + roles +
+            ", reservation=" + reservation +
+            '}';
   }
 }

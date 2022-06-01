@@ -1,7 +1,7 @@
 package com.genspark.backend.Security.services;
 
-import com.genspark.backend.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.genspark.backend.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
