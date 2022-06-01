@@ -7,6 +7,7 @@ import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.User;
 import com.genspark.backend.Entity.Role;
+import com.genspark.backend.Repository.UserRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -26,9 +27,7 @@ public class AppConfig {
                 new Role(ERole.ROLE_MODERATOR),
                 new Role(ERole.ROLE_ADMIN)
         );
-        return (args) -> {
-            roleRepository.saveAll(role);
-        };
+        return (args) -> roleRepository.saveAll(role);
     }
 
     @Bean
@@ -94,10 +93,7 @@ public class AppConfig {
 
         );
 
-        return (args) -> {
-
-            reservationRepository.saveAll(RESERVATIONS);
-        };
+        return (args) -> reservationRepository.saveAll(RESERVATIONS);
     }
 }
 
