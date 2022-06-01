@@ -25,7 +25,8 @@ public class AppConfig {
         List<Role> role = Arrays.asList(
                 new Role(ERole.ROLE_USER),
                 new Role(ERole.ROLE_MODERATOR),
-                new Role(ERole.ROLE_ADMIN)
+                new Role(ERole.ROLE_ADMIN),
+                new Role(ERole.ROLE_GUEST)
         );
         return (args) -> roleRepository.saveAll(role);
     }
