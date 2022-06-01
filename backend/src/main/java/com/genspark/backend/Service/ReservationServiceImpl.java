@@ -1,8 +1,7 @@
 package com.genspark.backend.Service;
 
-import com.genspark.backend.Dao.ReservationDao;
+import com.genspark.backend.Repository.ReservationRepository;
 import com.genspark.backend.Entity.Reservation;
-import com.genspark.backend.Entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.mail.SimpleMailMessage;
 //import org.springframework.mail.javamail.JavaMailSender;
@@ -20,19 +19,19 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService{
 
     @Autowired
-    ReservationDao reservationDao;
+    ReservationRepository reservationRepository;
 
 //    @Autowired
 //    private JavaMailSender mailSender;
     @Override
     public List<Reservation> getAllReservation() {
-        return this.reservationDao.findAll();
+        return this.reservationRepository.findAll();
     }
 
     @Override
     public Reservation getReservationById(Long id) {
 
-        Optional<Reservation> r = this.reservationDao.findById(id);
+        Optional<Reservation> r = this.reservationRepository.findById(id);
         Reservation reservation;
         if (r.isPresent())
         {
@@ -46,13 +45,13 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public Reservation addReservation(Reservation reservation) {
-        return this.reservationDao.save(reservation);
+        return this.reservationRepository.save(reservation);
     }
 
     @Override
     public Reservation updateReservation(Reservation reservation, Long reservationID) {
 
-        Optional<Reservation> reservationOptional = this.reservationDao.findById(reservationID);
+        Optional<Reservation> reservationOptional = this.reservationRepository.findById(reservationID);
         if(!reservationOptional.isPresent())
         {
             throw new RuntimeException("user with id: " + reservationID + " not found");
@@ -76,13 +75,13 @@ public class ReservationServiceImpl implements ReservationService{
             reservationUpdated.setResNumber(reservation.getResNumber());
         }
 
-        return this.reservationDao.save(reservationUpdated);
+        return this.reservationRepository.save(reservationUpdated);
     }
 
     @Override
     public String deleteReservationById(Long id) {
 
-        this.reservationDao.deleteById(id);
+        this.reservationRepository.deleteById(id);
         return "Deleted Successfully";
     }
 
@@ -90,7 +89,7 @@ public class ReservationServiceImpl implements ReservationService{
     public List<Reservation> getAllReservation(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        Page<Reservation> pagedResult = reservationDao.findAll(paging);
+        Page<Reservation> pagedResult = reservationRepository.findAll(paging);
 
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();

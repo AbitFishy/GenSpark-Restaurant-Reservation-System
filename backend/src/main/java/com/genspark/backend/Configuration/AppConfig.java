@@ -1,13 +1,11 @@
 
 package com.genspark.backend.Configuration;
 
-import com.genspark.backend.Dao.ReservationDao;
-import com.genspark.backend.Dao.RoleRepository;
-import com.genspark.backend.Dao.UserAccountDao;
+import com.genspark.backend.Repository.ReservationRepository;
+import com.genspark.backend.Repository.RoleRepository;
 import com.genspark.backend.Entity.ERole;
 import com.genspark.backend.Entity.Reservation;
 import com.genspark.backend.Entity.Role;
-import com.genspark.backend.Entity.UserAccount;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +54,7 @@ public class AppConfig {
 
 
     @Bean
-    public ApplicationRunner loadReservationData(ReservationDao reservationDao) {
+    public ApplicationRunner loadReservationData(ReservationRepository reservationRepository) {
 
         List<Reservation> RESERVATIONS = Arrays.asList(
                 new Reservation
@@ -86,9 +84,9 @@ public class AppConfig {
 
         return (args) -> {
 
-            reservationDao.saveAll(RESERVATIONS);
+            reservationRepository.saveAll(RESERVATIONS);
             // load values
-            reservationDao.save(new Reservation
+            reservationRepository.save(new Reservation
                     ("11-01-2022T06:40",1, Reservation.StatusType.TYPE1, "state", "222"));
         };
     }

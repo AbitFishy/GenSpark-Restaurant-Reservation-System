@@ -1,7 +1,7 @@
 package com.genspark.backend.Security.services;
 
 import com.genspark.backend.Entity.User;
-import com.genspark.backend.Dao.UserRepository;
+import com.genspark.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
