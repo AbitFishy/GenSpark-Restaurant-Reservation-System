@@ -61,7 +61,7 @@ const Navbar = ({handleLogout, isRegistered}) => {
                 value={value}
                 onChange={handleChange}
               >
-                <Tab label="Home" value="home" onClick={() => navigate("/")}/>
+                <Tab label="Home" value="/" onClick={() => navigate("/")}/>
                 <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
                 <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
