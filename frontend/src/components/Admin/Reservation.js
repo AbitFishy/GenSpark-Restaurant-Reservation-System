@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import ResStepper from './ResStepper'
+
 
 import axios from "axios";
 
@@ -33,12 +35,6 @@ import FormControl from "@mui/material/FormControl";
 // import Pagination from "@mui/material/Pagination";
 import TablePagination from "@mui/material/TablePagination";
 
-import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import PropTypes from "prop-types";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -73,7 +69,7 @@ const style = {
   p: 4,
 };
 
-const Home = () => {
+const Reservation = () => {
   const [reservations, setReservations] = useState([]);
 
   //testing pagination
@@ -117,6 +113,8 @@ const Home = () => {
       setReservations(response.data);
     });
   }, []);
+
+  
 
  
   const handleOpen = (index) => {
@@ -162,10 +160,20 @@ const Home = () => {
     // navigate("/home")
   }
 
+  var sortRes = [...reservations].reverse();  console.log(sortRes);
+
   return (
     <>
       {/* <img className="img-home" src="images/home-banner2.jpg" alt="home" /> */}
-      <Container sx={{ marginTop: 8, marginBottom: 10 }}>
+      <Container sx={{ marginTop: 15, marginBottom: 10 }}>
+      <Grid container>
+        <Grid item xs={12} sm={12}>
+          <Typography variant="h4" gutterBottom>
+            Reservation assignments
+          </Typography>
+          <ResStepper />
+        </Grid>
+        </Grid>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
@@ -230,7 +238,7 @@ const Home = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {reservations
+                  {sortRes
                     .filter((reservation) => {
                       if (searchTerm === "") {
                         return reservation;
@@ -438,4 +446,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Reservation;

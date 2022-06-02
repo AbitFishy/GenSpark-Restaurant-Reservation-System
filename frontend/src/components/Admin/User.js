@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import TodoStepper from './TodoStepper'
+
 
 import axios from "axios";
 
@@ -33,12 +35,6 @@ import FormControl from "@mui/material/FormControl";
 // import Pagination from "@mui/material/Pagination";
 import TablePagination from "@mui/material/TablePagination";
 
-import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import PropTypes from "prop-types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -158,11 +154,22 @@ const User = () => {
     // navigate("/home")
   }
 
+  var sortRes = [...users].reverse();  console.log(sortRes);
+
   return (
     <>
       {/* <img className="img-home" src="images/home-banner2.jpg" alt="home" /> */}
-      <Container sx={{ marginTop: 10, marginBottom: 10 }}>
-        <Grid container sx={{ objectFit: "cover" }}>
+      <Container sx={{ marginTop: 15,  marginBottom:10}}>
+        <Grid container>
+        <Grid item xs={12} sm={12}>
+          <Typography variant="h4" gutterBottom>
+            User assignments
+          </Typography>
+          <TodoStepper />
+        </Grid>
+        </Grid>
+      
+        <Grid container sx={{ marginTop: 5}}>
           <Grid item xs={12}>
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
               Users List
@@ -221,7 +228,7 @@ const User = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {users
+                  {sortRes
                     .filter((user) => {
                       if (searchTerm === "") {
                         return user;

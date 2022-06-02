@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import HomeCustom from "./HomeCustom";
 
 import axios from "axios";
@@ -17,7 +17,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
@@ -34,14 +34,15 @@ import FormControl from "@mui/material/FormControl";
 // import Pagination from "@mui/material/Pagination";
 import TablePagination from "@mui/material/TablePagination";
 
-// import IconButton from "@mui/material/IconButton";
-// import FirstPageIcon from "@mui/icons-material/FirstPage";
-// import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-// import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-// import LastPageIcon from "@mui/icons-material/LastPage";
-// import PropTypes from "prop-types";
+import IconButton from "@mui/material/IconButton";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import LastPageIcon from "@mui/icons-material/LastPage";
+import PropTypes from "prop-types";
 
 import "../App.css";
+import Testimony from "./Testimony";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -98,7 +99,6 @@ const Home = () => {
 
   const navigate = useNavigate();
 
- 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -120,7 +120,6 @@ const Home = () => {
     });
   }, []);
 
- 
   const handleOpen = (index) => {
     console.log("id: " + reservations[index].resId);
 
@@ -163,11 +162,19 @@ const Home = () => {
     // navigate("/home")
   }
 
+  var sortRes = [...reservations].reverse();  console.log(sortRes);
+
   return (
     <>
       <img className="img-home" src="images/home-banner2.jpg" alt="home" />
       <HomeCustom />
-      <Container sx={{ marginTop: 8, marginBottom: 10 }}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Testimony />
+        </Grid>
+      </Grid>
+
+      <Container sx={{ marginTop: 10, marginBottom: 10 }}>
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
@@ -232,7 +239,7 @@ const Home = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {reservations
+                  {sortRes
                     .filter((reservation) => {
                       if (searchTerm === "") {
                         return reservation;
