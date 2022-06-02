@@ -1,8 +1,9 @@
 package com.genspark.backend;
 
+import com.genspark.backend.Controller.ControllersTest;
+import com.genspark.backend.Controller.ReservationController;
 import com.genspark.backend.Controller.UserController;
 import com.genspark.backend.Entity.User;
-import com.genspark.backend.Entity.UserAccount;
 import com.genspark.backend.Repository.UserRepository;
 import com.genspark.backend.Service.UserService;
 import org.junit.jupiter.api.Test;
@@ -16,24 +17,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.swing.text.IconView;
-
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @WebMvcTest(UserController.class)
 public class UserServiceTest {
+
+    @Autowired
+    private ControllersTest authController;
+
+    @Autowired
+    private ReservationController reservationController;
+
+    @Autowired
+    private UserController userController;
 
     @Autowired
     private UserRepository userRepository;
@@ -41,6 +40,14 @@ public class UserServiceTest {
     private MockMvc mockMvc;
     @MockBean
     private UserService userService;
+
+    @Test
+    public void contextLoads() throws Exception {
+        assertThat(authController).isNotNull();
+        assertThat(reservationController).isNotNull();
+        assertThat(userController).isNotNull();
+    }
+
     @Test
     public void testUserServiceGetMethod() throws Exception {
         User user = new User("bowwy","password", "k@genspark.net");
@@ -50,7 +57,8 @@ public class UserServiceTest {
                 .willReturn(user);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/user/1"))
+                .get("/user/1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status()
                         .isOk())
                 .andExpect(MockMvcResultMatchers.content()
