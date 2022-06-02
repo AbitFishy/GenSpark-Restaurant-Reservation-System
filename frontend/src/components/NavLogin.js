@@ -17,7 +17,7 @@ import {
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerLogin from "./DrawerLogin";
 
-const NavbLogin = () => {
+const Navbar = ({handleLogout}) => {
   const [value, setValue] = useState("home");
   const navigate = useNavigate();
 
@@ -54,14 +54,19 @@ const NavbLogin = () => {
                 value={value}
                 onChange={handleChange}
               >
-                <Tab label="Home" value="home" onClick={() => navigate("/home")}/>
+                <Tab label="Home" value="home" onClick={() => navigate("/")}/>
                 <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
                 <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
               </Tabs>
+              {/* <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
+              onClick={handleLogout}
+              >
+                Logout
+              </Button> */}
               {/* //signup */}
               <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/login")}
               >
                 SignUp
               </Button>
@@ -73,4 +78,4 @@ const NavbLogin = () => {
   );
 };
 
-export default NavLogin;
+export default Navbar;

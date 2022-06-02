@@ -1,14 +1,12 @@
-/* eslint-disable */
-
 import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../Navbar';
 
 
-const WithNav = () => {
+const WithNav = ({handleLogout, isRegistered}) => {
   return (
     <>
-    <Navbar />
+    <Navbar handleLogout={handleLogout} isRegistered={isRegistered}/>
     <Outlet />
     </>
   )

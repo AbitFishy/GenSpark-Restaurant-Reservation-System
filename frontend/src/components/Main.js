@@ -53,6 +53,8 @@ const Main = () => {
   const [passwordLog, setPasswordLog] = useState("");
   const [userLog, setUserLog] = useState("");
 
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const navigate = useNavigate();
 
   // const postData = (e) => {
@@ -88,6 +90,7 @@ const Main = () => {
         // }
       });
     navigate("/");
+    
   };
 
   const postLogin = (e) => {
@@ -104,9 +107,10 @@ const Main = () => {
         if (data.includes("ROLE_ADMIN")) {
           navigate("/admin");
         } else {
-          navigate("/home");
+          navigate("/");
         }
       });
+      setIsRegistered(true)
     // navigate("/home");
   };
 
@@ -120,7 +124,8 @@ const Main = () => {
       .then((res) => {
         console.log(res);
       });
-    navigate("/");
+    navigate("/login");
+    setIsRegistered(false)
   };
 
   return (
@@ -130,7 +135,7 @@ const Main = () => {
         <Routes>
           <Route element={<WithOut />}>
             <Route
-              path="/"
+              path="/login"
               element={
                 <Login
                   passwordLog={passwordLog}
@@ -165,8 +170,8 @@ const Main = () => {
           </Route>
 
 
-          <Route element={<WithNav handleLogout={handleLogout} />}>
-            <Route path="home" element={<Home />} />
+          <Route element={<WithNav handleLogout={handleLogout} isRegistered={isRegistered} />}>
+            <Route path="/" element={<Home />} />
             <Route path="post" element={<Post />} />
             <Route path="faq" element={<FaqComponent />} />
             <Route path="contact" element={<Contact />} />

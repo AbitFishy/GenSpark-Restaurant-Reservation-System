@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// import axios from "axios";
+
 import {
   AppBar,
   Button,
@@ -15,7 +17,7 @@ import {
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerComponent from "./DrawerComponent";
 
-const Navbar = () => {
+const Navbar = ({handleLogout, isRegistered}) => {
   const [value, setValue] = useState("home");
   const navigate = useNavigate();
 
@@ -27,9 +29,14 @@ const Navbar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const handleLogout = () => {
-    navigate("/")
-  };
+  // const handleLogout = () => {
+  //   axios.post("http://localhost:8080/api/auth/sigout", {
+     
+  //   }) .then((res) => { 
+  //     console.log(res)
+  //   })
+  //   // navigate("/")
+  // };
 
 
 
@@ -54,19 +61,21 @@ const Navbar = () => {
                 value={value}
                 onChange={handleChange}
               >
-                <Tab label="Home" value="home" onClick={() => navigate("/home")}/>
+                <Tab label="Home" value="home" onClick={() => navigate("/")}/>
                 <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
                 <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>
               </Tabs>
               <Button sx={{ marginLeft: "auto", backgroundColor: "#097969" }} variant="contained"
               onClick={handleLogout}
-              >
-                Logout
+              >{isRegistered === true ? "Logout": "Signup"
+              
+              }
+                {/* Logout */}
               </Button>
               {/* //signup */}
               {/* <Button sx={{ marginLeft: "10px", backgroundColor: "#097969" }} variant="contained"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/login")}
               >
                 SignUp
               </Button> */}

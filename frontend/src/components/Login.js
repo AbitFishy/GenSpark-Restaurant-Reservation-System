@@ -100,8 +100,8 @@ const Login = ({ userLog, setUserLog,
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/login" variant="body2">
+                {"have account ?"}
               </Link>
             </Grid>
           </Grid>
