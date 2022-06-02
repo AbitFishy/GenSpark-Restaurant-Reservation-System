@@ -40,7 +40,7 @@ const Signup = ({
     <Container
       component="main"
       maxWidth="xs"
-      sx={{ marginTop: 13, marginBottom: 10 }}
+      sx={{ marginTop: 2, marginBottom: 2, padding: 2 }}
     >
       <Grid>
         <Paper elevation={20} style={paperStyle}>
@@ -91,7 +91,7 @@ const Signup = ({
               onChange={(e)=> setRole(e.target.value)}
             /> */}
 
-            <Grid item xs={12} sx={{ marginTop: 1, marginBottom: 1 }}>
+            {/* <Grid item xs={12} sx={{ marginTop: 1, marginBottom: 1 }}>
               <FormControl sx={{ m: 0, minWidth: 120 }} size="small">
                 <InputLabel id="demo-simple-select-label">Roles</InputLabel>
                 <Select
@@ -113,10 +113,10 @@ const Signup = ({
                   </MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
 
             <Button
-              sx={{ "&:hover": { backgroundColor: "secondary.main" } }}
+              sx={{ "&:hover": { backgroundColor: "secondary.main", marginTop: 1 } }}
               type="submit"
               variant="contained"
               color="primary"

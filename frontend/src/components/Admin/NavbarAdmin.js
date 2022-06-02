@@ -20,7 +20,7 @@ import DrawerComponent from "./DrawerComponent";
 const NavbarAdmin = ({handleLogout}) => {
   
     
-    const [value, setValue] = useState("user");
+    const [value, setValue] = useState("admin");
     const navigate = useNavigate();
   
     const theme = useTheme();
@@ -63,8 +63,8 @@ const NavbarAdmin = ({handleLogout}) => {
                   value={value}
                   onChange={handleChange}
                 >
-                  <Tab label="admin" value="admin" onClick={() => navigate("/admin")}/>
-                  <Tab label="user" value="user" onClick={() => navigate("/user")}/>
+                  <Tab label="Admin" value="admin" onClick={() => navigate("/admin")}/>
+                  <Tab label="User" value="user" onClick={() => navigate("/user")}/>
                   <Tab label="Reservation" value="reservation" onClick={() => navigate("/reservation")}/>
                   {/* <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
                   <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/> */}

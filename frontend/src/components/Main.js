@@ -108,6 +108,7 @@ const Main = () => {
           navigate("/admin");
         } else {
           navigate("/");
+          setIsRegistered(true)
         }
       });
       setIsRegistered(true)

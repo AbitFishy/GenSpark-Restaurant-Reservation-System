@@ -18,7 +18,7 @@ import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import DrawerLogin from "./DrawerLogin";
 
 const Navbar = ({handleLogout}) => {
-  const [value, setValue] = useState("home");
+  const [value, setValue] = useState("/");
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -54,7 +54,7 @@ const Navbar = ({handleLogout}) => {
                 value={value}
                 onChange={handleChange}
               >
-                <Tab label="Home" value="home" onClick={() => navigate("/")}/>
+                <Tab label="Home" value="/" onClick={() => navigate("/")}/>
                 <Tab label="Reservation" value="post" onClick={() => navigate("/post")}/>
                 <Tab label="Faq" value="faq" onClick={() => navigate("/faq")}/>
                 <Tab label="Contact" value="contact" onClick={() => navigate("/contact")}/>

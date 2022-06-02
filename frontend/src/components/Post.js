@@ -28,7 +28,7 @@ const Post = () => {
   const postRes = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/reservation", {
+      .post("http://localhost:8080/api/reservation/add", {
         resName,
         resNumber,
         dateTime,
@@ -36,7 +36,7 @@ const Post = () => {
         type
       })
       .then((res) => console.log("posting data", res));
-      navigate("/home")
+      navigate("/")
       window.location.reload(true);
   };
 

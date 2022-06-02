@@ -315,7 +315,7 @@ const User = () => {
                                   />
                                 </Grid> */}
 
-                                <Grid
+                                {/* <Grid
                                   item
                                   xs={12}
                                   sx={{ marginTop: 1, marginBottom: 1 }}
@@ -355,7 +355,7 @@ const User = () => {
                                       </MenuItem>
                                     </Select>
                                   </FormControl>
-                                </Grid>
+                                </Grid> */}
                               </Grid>
                               <div
                                 className="post-button"
