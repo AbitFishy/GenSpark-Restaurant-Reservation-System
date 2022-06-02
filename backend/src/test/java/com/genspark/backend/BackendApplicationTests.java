@@ -14,7 +14,7 @@ class BackendApplicationTests {
 	}
 
 
-	void sendEmail(){
+	/*void sendEmail(){
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
@@ -26,6 +26,6 @@ class BackendApplicationTests {
 		properties.setProperty("mail.smtp.starttls.enable", "true");
 
 		mailSender.setJavaMailProperties(properties);
-	}
+	}*/
 
 }

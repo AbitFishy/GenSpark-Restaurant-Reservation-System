@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-  Logger logger = LoggerFactory.getLogger(RoleRepository.class);
-  Optional<Role> findByName(ERole type);
+    Logger logger = LoggerFactory.getLogger(RoleRepository.class);
+
+    Optional<Role> findByName(ERole type);
 }

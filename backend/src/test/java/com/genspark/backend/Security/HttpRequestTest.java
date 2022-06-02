@@ -1,4 +1,4 @@
-package com.genspark.backend;
+package com.genspark.backend.Security;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +20,13 @@ public class HttpRequestTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void greetingShouldReturnDefaultMessage() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
-                String.class)).contains("Hi there.");
+    public void backendURLTest() throws Exception {
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/test",
+                String.class)).contains("Backend Test Response to /api/test successful!");
     }
+
+
+
+
+
 }

@@ -1,3 +1,4 @@
+/*
 package com.genspark.backend;
 
 
@@ -15,3 +16,4 @@ public class EmailTest {
         System.out.println("success");
     }
 }
+*/
