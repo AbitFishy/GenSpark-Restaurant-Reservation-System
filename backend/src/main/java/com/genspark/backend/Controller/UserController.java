@@ -2,6 +2,7 @@ package com.genspark.backend.Controller;
 
 import com.genspark.backend.Entity.User;
 import com.genspark.backend.Service.EmailService;
+import com.genspark.backend.Service.TextServiceImpl;
 import com.genspark.backend.Service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,13 +82,21 @@ public class UserController {
 
     @GetMapping("/dev/testing/email")
     public String sendTestEmail() {
-        return emailService.sendEmail("tkim013@gmail.com",
+        return emailService.sendEmail("jatinjay10@gmail.com",
                 "Test from Restaurant",
                 "this was a test message", true)
                 ?
                 "Successfully sent email"
                 :
                 "Error while sending email";
+    }
+    @GetMapping("/dev/testing/text")
+    public String sendTestText() {
+        return TextServiceImpl.sendSMS("+18564057466","tett2")
+                ?
+                "Successfully sent text"
+                :
+                "Error while sending text";
     }
 
     //When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the
