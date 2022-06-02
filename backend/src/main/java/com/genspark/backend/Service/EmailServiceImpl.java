@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Service
 public class EmailServiceImpl implements EmailService{
 
-    private final String companyEmail = "RESTaurantGenSpark@gmail.com";
+    private final String companyEmail = "RESTaurantmmmFoodIsGood@gmail.com";
     Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     @Autowired
