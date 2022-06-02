@@ -178,7 +178,7 @@ const Home = () => {
         <Grid container sx={{ objectFit: "cover" }}>
           <Grid item xs={12}>
             <Typography variant="h2" sx={{ fontWeight: "bold" }}>
-              Reservations List
+              Reservations
             </Typography>
           </Grid>
         </Grid>
